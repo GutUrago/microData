@@ -1,0 +1,28 @@
+Package: microData
+Title: microData Assistant
+Version: 0.0.0.9000
+Authors@R: 
+    person("Gutama Girja", "Urago", , "girjagutama@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-5588-2301"))
+Description: This package assists the process of obtaining and manipulating 
+    microdata published by Worldbank, FAO, UNHCR and IHSN. The work flow starts 
+    with creating `new_workbook()`, obtaining `metadata()` then loading `dictionary()` 
+    to write them to the workbook.
+    `dictionary()` function extracts variable names and their descriptions 
+    from the web. Then, use `to_workbook()` to write the new table to an existing 
+    excel work book. Finally, the `import_csv()` function reads local data and 
+    applies data attributes from the excel workbook.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports: 
+    collapse,
+    data.table,
+    dplyr,
+    openxlsx,
+    readxl,
+    rvest,
+    stringr
+URL: https://github.com/GutUrago/microData
+BugReports: https://github.com/GutUrago/microData/issues

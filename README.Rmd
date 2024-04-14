@@ -1,0 +1,90 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# microData
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of microData is to assist the process of obtaining complex metadata of datasets provided by different organizations. At the moment, it supports four organizations, namely, Worldbank, FAO, UNHCR and IHSN. It can extract the names of available dataasets along with their descriptions and dimensions. Moreover, it has an ability to assist obtaining the names of variables along with their labels. It enables you to select only variables that you want and rename them while assigning variable descriptions as their label attributes. For this process to happen, you must have an excel installed on your local machine.
+
+## Installation
+
+You can install the development version of microData from [GitHub](https://github.com/GutUrago/microData) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("GutUrago/microData")
+```
+
+## Metadata
+
+The function `metadata()` helps to extract provided file descriptions.
+
+```{r results='asis'}
+library(microData)
+md <- metadata(2939)            # Returns a data table
+# gt::gt(md[1:10])
+kableExtra::kable(md[1:10])
+```
+
+
+## Dictionary
+
+The function `dictionary()` helps to extract provided variables along with their descriptions.
+
+```{r results='asis'}
+dct <- dictionary(2939, "F17", namecol = FALSE)            # Returns a data table
+# gt::gt(dct)
+kableExtra::kable(dct)
+```
+
+# Creating Workbook              
+
+For excel table manipulations, this package depends on `openxlsx` package. So, I recommend to use it to organize workbook instead of this function if you are familiar with the usage of that package.
+
+```{r eval=FALSE}
+wb <- new_workbook()    # Run this code only once
+```
+
+
+# Dictionary to Workbook
+
+Multiple dictionary files can be written to the same workbook but different sheets as follows.
+
+```{r eval=FALSE}
+dictionary(2939, "F17") |> to_workbook(wb, "Goods")
+dictionary(2939, "F18") |> to_workbook(wb, "Machines")
+```
+
+Then save the workbook to local machine.
+
+```{r eval=FALSE}
+openxlsx::saveWorkbook(wb, "My workbook.xlsx")
+```
+
+
+# Importing Data
+
+Before importing the data, you have to open your excel and set the names of variable of interest under the name column. This function only selects variables with the name provided under this colummn and sets attributes including new name and descriptions.
+
+```{r eval=FALSE}
+my_data <- import_csv(data, 
+                      excel = "My workbook.xlsx", 
+                      sheet = "Goods")
+```
+
+
+
