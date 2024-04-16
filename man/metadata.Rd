@@ -8,7 +8,7 @@ metadata(catalog, org = "wb")
 }
 \arguments{
 \item{catalog}{An integer number located in the link after \verb{catalog/} that
-identifies the catalog}
+identifies the catalog. You can also get it using \code{surveys()}.}
 
 \item{org}{Name of an organization. \code{default = 'wb'}, also supports 'fao', 'unchr' and 'ihsn'.}
 }
@@ -20,4 +20,7 @@ Extracts names of available datasets along with their description and dimensions
 }
 \examples{
 metadata(1970)
+}
+\author{
+Gutama Girja Urago
 }

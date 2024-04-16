@@ -5,13 +5,15 @@ Authors@R:
     person("Gutama Girja", "Urago", , "girjagutama@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5588-2301"))
 Description: This package assists the process of obtaining and manipulating 
-    microdata published by Worldbank, FAO, UNHCR and IHSN. The work flow starts 
-    with creating `new_workbook()`, obtaining `metadata()` then loading `dictionary()` 
-    to write them to the workbook.
+    microdata published by Worldbank, FAO, UNHCR and IHSN. The workflow starts 
+    with getting available surveys using `surveys()` function. After finding the 
+    survey catalog number and title, create `new_workbook()` to store scrapped 
+    information about the data. Then, obtain `metadata()` of the survey. 
+    Next, extract `dictionary()` of each survey files and write them to the workbook.
     `dictionary()` function extracts variable names and their descriptions 
-    from the web. Then, use `to_workbook()` to write the new table to an existing 
-    excel work book. Finally, the `import_csv()` function reads local data and 
-    applies data attributes from the excel workbook.
+    from the web. Use `to_workbook()` to write the new table to an existing 
+    excel workbook. Finally, the `import_csv()` function reads local data and 
+    applies data attributes from the excel workbook. For more, see help of each function.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -21,6 +23,7 @@ Imports:
     data.table,
     dplyr,
     openxlsx,
+    purrr,
     readxl,
     rvest,
     stringr

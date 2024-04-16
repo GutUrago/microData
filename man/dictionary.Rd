@@ -7,7 +7,7 @@
 dictionary(catalog, filename, org = "wb", namecol = TRUE, format = TRUE)
 }
 \arguments{
-\item{catalog}{integer in the web link after catalog without "/"}
+\item{catalog}{integer in the web link after catalog without "/". You can also get it using \code{surveys()}.}
 
 \item{filename}{string in the web link after data-dictionary without "/". It
 usually starts with capital letter followed by integer. But it is better to

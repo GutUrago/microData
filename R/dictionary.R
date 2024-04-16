@@ -7,7 +7,7 @@
 #' catalog number and file name.
 #'
 #'
-#' @param catalog integer in the web link after catalog without "/"
+#' @param catalog integer in the web link after catalog without "/". You can also get it using `surveys()`.
 #' @param filename string in the web link after data-dictionary without "/". It
 #' usually starts with capital letter followed by integer. But it is better to
 #' include full string after the capital letter, especially when extracting dictionary of
