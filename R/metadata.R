@@ -4,7 +4,7 @@
 
 #' Metadata of the datasets
 #' @description
-#' Extracts names of available datasets along with their description and dimensions
+#' Extracts names of available data files along with their description and dimensions
 #'
 #'
 #' @param catalog An integer number located in the link after `catalog/` that
