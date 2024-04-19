@@ -1,5 +1,16 @@
 
 
+#' List of all country codes
+#'
+#' @param org is a string of "wb", "fao" or "unhcr" organization.
+#'
+#' @return A data frame
+#' @export
+#'
+#' @examples
+#' mdt_country_codes()
+
+
 mdt_country_codes <- function(org = "wb"){
         if(org == "wb"){
                 server_url <- "https://microdata.worldbank.org/index.php/api/catalog/country_codes"
@@ -10,13 +21,10 @@ mdt_country_codes <- function(org = "wb"){
         } else if(org == "ihsn") {
                 server_url <- "https://datacatalog.ihsn.org/index.php/api/catalog/country_codes"
         } else {stop("org should be 'wb', 'fao' or 'unhcr'")}
-        server_req <- httr2::request(server_url)
-        api_resp <- httr2::req_perform(server_req)
-        api_char <- rawToChar(api_resp$body)
-        collection <- jsonlite::fromJSON(api_char, flatten = T)
-        df <- collection$country_codes
-        return(df)
-}
+        response <- request_api(server_url)
+        country_codes <- response$country_codes
+        return(country_codes)
+        }
 
 
 

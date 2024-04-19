@@ -16,7 +16,7 @@ identifies the catalog. You can also get it using \code{surveys()}.}
 A data table
 }
 \description{
-Extracts names of available datasets along with their description and dimensions
+Extracts names of available data files along with their description and dimensions
 }
 \examples{
 metadata(1970)

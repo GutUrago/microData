@@ -4,18 +4,33 @@
 # microData
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/GutUrago/microData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/GutUrago/microData/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of microData is to assist the process of obtaining complex
-metadata of datasets provided by different organizations. At the moment,
-it supports four organizations, namely, World bank, FAO, UNHCR and IHSN.
-It can extract the names of available surveys along with their necessary
-metadata. Moreover, it has an ability to assist obtaining the names of
-variables from specific survey along with their labels. It enables you
-to select only variables that you are interested in and rename them
-while assigning variable descriptions as their label attributes. For
-this process to happen, you must have an excel installed on your local
-machine.
+## <span style="color:red">Update</span>
+
+<span style="color:red">This package is still under development. This
+readme explains only the workflow for obtaining results from web
+scraping functions. However, now the package is able to communicate with
+the API on its own. This brings many improvements, such as the
+reliability of the obtained results and a reduction in waiting time. It
+has the ability to search and filter the results by years, country,
+collection, access types, repositories, and many others. The package
+will go beyond what is expounded here after finalization very
+soon!</span>
+
+## Abstract
+
+The goal of microData is to assist in the process of obtaining complex
+metadata from datasets provided by different organizations, making life
+easier. At the moment, it supports four organizations, namely the World
+Bank, FAO, UNHCR, and IHSN. It can extract the names of available
+surveys, as well as the necessary metadata. Moreover, it has the ability
+to assist in obtaining the names of variables from a specific survey
+along with their labels. It allows you to select only variables that you
+are interested in and rename them, while assigning variable descriptions
+as label attributes.
 
 ## Installation
 
@@ -29,13 +44,13 @@ devtools::install_github("GutUrago/microData")
 
 ## Surveys
 
-This package helps you to see all available surveys published by
-specific organization. In addition it returns a data table with four
-columns. The first column is a country where the survey is collected,
-second column is the year, third column is the catalog number of the
-survey and last column is the title of the survey. Out of these details
-catalog number is used as a unique identifier of the survey throughout
-the data extraction process.
+This package helps you see all available surveys published by a specific
+organization. In addition, it returns a data table with four columns.
+The first column is the country where the survey was collected; the
+second column is the year; the third column is the catalog number of the
+survey; and the last column is the title of the survey. Out of these
+details, the catalog number is used as a unique identifier for the
+survey throughout the data extraction process.
 
 ``` r
 library(microData)
@@ -54,12 +69,13 @@ sv |> head() |> kableExtra::kable()
 
 ## Metadata
 
-You can extract all details of provided files by an organization.
-Sometimes these surveys are from external organizations. In that case
-microData cannot extract its metadata. But it still gives a hint what to
-do. For instance, lets try extract the metadata of “Humanitarian
-Situation Monitoring Round 1, 2022” survey collected from Afghanistan in
-2022 and published by UNHCR with unique catalog number ‘1000’.
+You can extract all the details of the files provided by an
+organization. Sometimes these surveys are from external organizations.
+In that case, microData cannot extract its metadata. But it still gives
+a hint as to what to do. For instance, let’s try to extract the metadata
+of the “Humanitarian Situation Monitoring Round 1, 2022” survey
+collected from Afghanistan in 2022 and published by UNHCR with the
+unique catalog number ‘1000’.
 
 ``` r
 metadata(catalog = 1000, org = "unhcr")
@@ -68,16 +84,17 @@ metadata(catalog = 1000, org = "unhcr")
 > 
 ```
 
-As you can see it couldn’t extract. If you read the returned error
-carefully, it suggests possible solutions. In this case, if you we go
-and visit the link we see that the data is actually from external
+As you can see, it couldn’t be extracted. If you read the returned error
+carefully, it suggests possible solutions. In this case, if we go and
+visit the link, we see that the data is actually from an external
 repository. ![The website](man/figures/README-get-data.png)
 
-Lets extract the metadata of “COVID-19 National Panel Phone Survey 2020,
-Wave 1” survey collected from Djibouti in 2020 and published by UNHCR
-with unique catalog number ‘397’. It returns five key information about
-each data files such as description and number of variables. The third
-column, which is File name, is very important for next step.
+Let’s extract the metadata of the “COVID-19 National Panel Phone Survey
+2020, Wave 1” survey collected from Djibouti in 2020 and published by
+UNHCR with the unique catalog number ‘397’. It returns five key pieces
+of information about each data file, such as the description and number
+of variables. The third column, which is the file name, is very
+important for the next step.
 
 ``` r
 md <- metadata(catalog = 397, org = "unhcr")
@@ -94,11 +111,11 @@ kableExtra::kable(md)
 ## Dictionary
 
 The function `dictionary()` helps to extract provided variables along
-with their descriptions using catalog and file name. The filename
-argument accepts both “File name” value or “‘File name’?file_name=‘Data
-file’”. If you are working with many data files, I recommend using the
-structure that includes ‘Data file’ since it helps you later identify
-them while importing.
+with their descriptions using the catalog and file name. The filename
+argument accepts both the “file name” value and “‘File
+name’?file_name=‘Data file’”. If you are working with a large number of
+data files, I recommend using the structure that includes ‘Data file’
+because it helps you later identify them while importing.
 
 ``` r
 dct <- dictionary(catalog = 397, filename = "F1", 
@@ -122,9 +139,9 @@ kableExtra::kable(dct)
 
 # Creating Workbook
 
-For excel table manipulations, this package depends on `openxlsx`
-package. So, I recommend to use that package to organize workbook
-instead of this function if you are familiar with its the usage.
+For Excel table manipulations, this package depends on the `openxlsx`
+package. So, I recommend using that package to organize workbooks
+instead of this function if you are familiar with its usage.
 
 ``` r
 wb <- new_workbook()    # Run this code only once
@@ -132,9 +149,10 @@ wb <- new_workbook()    # Run this code only once
 
 # Dictionary to Workbook
 
-Multiple dictionary files can be written to the same workbook but
-different sheets as follows. Give descriptive sheet names and don’t set
-`namecol` argument to `FALSE`. See documentation of the function.
+Multiple dictionary files can be written to the same workbook but on
+different sheets, as follows: Give descriptive sheet names and don’t set
+the `namecol` argument to `FALSE`. See the documentation for the
+function.
 
 ``` r
 dictionary(catalog = 397, filename = "F1", 
@@ -145,7 +163,7 @@ dictionary(catalog = 397, filename = "F1",
         to_workbook(wb, "employment")
 ```
 
-Then, save your workbook to local machine.
+Then, save your workbook to a local machine.
 
 ``` r
 openxlsx::saveWorkbook(wb, "My workbook.xlsx")
@@ -153,13 +171,15 @@ openxlsx::saveWorkbook(wb, "My workbook.xlsx")
 
 # Importing Data
 
-Before importing the data, you have to open your excel and set the names
-of variable of interest under the name column. This function only
+Before importing the data, you have to open Excel and set the names of
+the variables of interest under the name column. This function only
 selects variables with the name provided under this column and sets
-attributes including new name and descriptions.
+attributes, including new names and descriptions.
 
 ``` r
 my_data <- import_csv(data = "ecv_breadwinners_wave1.dta", 
                       excel = "My workbook.xlsx", 
                       sheet = "breadwinners")
 ```
+
+# The End!

@@ -1,5 +1,19 @@
 
 
+#' Latest catalog entries
+#'
+#' @description
+#' Gets all country codes
+#'
+#'
+#' @param org is a string of "wb", "fao" or "unhcr" organization.
+#'
+#' @return A data frame
+#' @export
+#'
+#' @examples
+#' mdt_latest()
+
 mdt_latest <- function(org = "wb"){
         if(org == "wb"){
                 server_url <- "https://microdata.worldbank.org/index.php/api/catalog/latest"
@@ -10,12 +24,9 @@ mdt_latest <- function(org = "wb"){
         } else if(org == "ihsn") {
                 server_url <- "https://datacatalog.ihsn.org/index.php/api/catalog/latest"
         } else {stop("org should be 'wb', 'fao' or 'unhcr'")}
-        server_req <- httr2::request(server_url)
-        api_resp <- httr2::req_perform(server_req)
-        api_char <- rawToChar(api_resp$body)
-        collection <- jsonlite::fromJSON(api_char, flatten = T)
-        df <- collection$result
-        return(df)
+        response <- request_api(server_url)
+        latest <- response$result
+        return(latest)
         }
 
 

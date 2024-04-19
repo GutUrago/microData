@@ -22,6 +22,8 @@ Imports:
     collapse,
     data.table,
     dplyr,
+    httr2,
+    jsonlite,
     openxlsx,
     purrr,
     readxl,

@@ -1,6 +1,23 @@
 
 
 
+#' Get a collection
+#'
+#' @description
+#' Gets and prints an information about single collection.
+#'
+#'
+#' @param repo_id is an integer repository id.
+#' See object returned by `mdt_collections()`.
+#' @param org is a string of "wb", "fao" or "unhcr" organization.
+#'
+#' @return Prints to console
+#' @export
+#'
+#' @examples
+#' mdt_collection(26)
+
+
 mdt_collection <- function(repo_id,
                            org = "wb"){
         if(org == "wb"){
@@ -12,10 +29,7 @@ mdt_collection <- function(repo_id,
         } else if(org == "ihsn") {
                 stop("At the moment, IHSN has no specific collections. Use `search_catalog()`")
         } else {stop("org should be 'wb', 'fao' or 'unhcr'")}
-        server_req <- httr2::request(server_url)
-        api_resp <- httr2::req_perform(server_req)
-        api_char <- rawToChar(api_resp$body)
-        collection <- jsonlite::fromJSON(api_char, flatten = TRUE)
+        collection <- request_api(server_url)
         collection <- collection$collections
         collection <- collection[collection$id == repo_id,]
         cat(paste(paste0("ID: ", collection$id),
