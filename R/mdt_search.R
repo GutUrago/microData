@@ -2,41 +2,39 @@
 
 
 
-#' Search micro data catalog
+#' Search microdata catalog
 #'
 #' @description
-#' A short description...
+#' Search microdata catalog
 #'
-#' @param keyword A keyword used to search
-#' @param org is a string of "wb", "fao" or "unhcr" organization.
-#' @param from is an integer start year for the data collection.
-#' @param to is an integer end year for the data collection.
-#' @param country is a string. Provide country name or ISO 3 code.
+#' @param keyword A string keyword used to search
+#' @param org A string that represents the name of an organization.
+#' At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.
+#' @param from An integer indicating start year for the data collection.
+#' @param to An integer indicating end year for the data collection.
+#' @param country A string. Provide country name or ISO 3 code.
 #' For country names and codes, see `mdt_country_codes()`.
-#' For searching multiple countries, provide names separated by pipe(|).
-#' Example Afghanistan|Indonesia or afg|ind or afghanistan|ind
-#' @param inc_iso boolean. Set the parameter value to true to
-#' include the ISO3 country codes for the results
-#' @param collection Filter results by one or more collections.
-#' For filtering multiples, use format collection1, collection2
-#' @param created string Filter results by date of creation.
-#' Use the date format YYYY-MM-DD.
-#' Examples, 2020/04/01 returns records created on and after
+#' For searching multiple countries, you can mix country name and ISO 3 code.
+#' Example `c("Afghanistan", "Indonesia")` or `c("afg", "ind")` or `c("afghanistan", "ind")`
+#' @param inc_iso A logical. Set the parameter value to `TRUE` to
+#' include the ISO3 country codes in the results. `Default = FALSE`
+#' @param collection A string. Filter results by one or more collections.
+#' @param created A string. Filter results by date of creation.
+#' Use the date format YYYY-MM-DD. Examples, 2020/04/01 returns records created on and after
 #' that date. To specify a date range, use the format 2020/04/01-2020/04/20
-#' @param dtype a string. Data access types and takes values of
-#' "open""direct""public""licensed""enclave""remote""other"
-#' Filter by data access types. For multiple values,
-#' use comma e.g. open, direct, remote
-#' @param sort_by a string value used to sort the result and takes values of
-#' "rank""title""nation""year" Sort search results.
-#' Valid options are rank,title,year,nation
-#' @param sort_order a string indicated how to sort the result and takes values of
-#' "asc" "desc" Set results sort order. Ascending = asc, Descending= desc
-#' @param results an integer or a string "all", Number of results per page.
-#' Default is 15 records per page.
-#' @param page an integer. Page to return for the search result
-#' @param detailed a logical. if `TRUE` returns a list with all
-#' search results, otherwise returns a data frame. Default `detailed = FALSE`
+#' @param dtype A string. Filter results by one or more data access types and takes values of
+#' "open", "direct", "public", "licensed", "enclave", "remote" and "other".
+#' For example, `c("open", "direct")`. See `mdt_access_types()`
+#' @param sort_by A string value used to sort the result and takes values of
+#' "rank", "title", "country" and "year" Sort search results.
+#' @param sort_order A string indicating how to sort the result and takes values of
+#' "asc" or "desc". Ascending = asc, Descending = desc
+#' @param results An integer indicating number of records per page.
+#' set `results = "all"` to get all found results. Default is 15 records per page.
+#' @param page An integer. Page to return for the search result
+#' @param detailed A logical. if `TRUE` returns a list with all details of
+#' search results, otherwise returns a data frame with only key information.
+#' Default `detailed = FALSE`
 #'
 #' @return A list or data frame based on the `detailed` argument.
 #' @export
@@ -71,11 +69,11 @@ mdt_search <- function(keyword = NULL,
                 result <- as.list(response$result)
                 names(result$rows)[names(result$rows) == "nation"] <- "country"
                 result$rows <- result$rows[,!names(result$rows) %in% c("data_class_id", "thumbnail")]
-        } else {
+        } else if (inc_iso){
                 result <- response$result$rows
-                result <- result[,c("id", "idno", "title",
+                result <- result[,c("id", "idno", "title", "iso3",
                                     "nation", "year_end", "form_model")]
-                names(result) <- c("id", "idno", "title", "country", "year", "form_model")
+                names(result) <- c("id", "idno", "title", "iso", "country", "year", "form_model")
         }
         return(result)
         }

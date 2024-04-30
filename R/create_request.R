@@ -11,17 +11,17 @@
 
 
 create_request <- function(org){
-        if(org == "wb"){
+        if(tolower(org) == "wb"){
                 req <- request("https://microdata.worldbank.org/index.php/api/catalog")
-        } else if(org == "fao"){
+        } else if(tolower(org) == "fao"){
                 req <- request("https://microdata.fao.org/index.php/api/catalog")
-        } else if(org == "unhcr"){
+        } else if(tolower(org) == "unhcr"){
                 req <- request("https://microdata.unhcr.org/index.php/api/catalog")
-        } else if(org == "ihsn") {
+        } else if(tolower(org) == "ihsn") {
                 req <- request("https://datacatalog.ihsn.org/index.php/api/catalog")
-        } else if(org == "ilo") {
+        } else if(tolower(org) == "ilo") {
                 req <- request("https://www.ilo.org/surveyLib/index.php/api/catalog")
-        } else {stop("org should be one of 'wb', 'fao', 'unhcr', 'ihsn' or 'ilo'")}
+        } else {stop("\nOrganization should be one of WB, FAO, UNHCR, IHSN or ILO")}
         return(req)
 }
 

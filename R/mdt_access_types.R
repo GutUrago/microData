@@ -6,9 +6,10 @@
 #' Gets all data access types
 #'
 #'
-#' @param org is a string of "wb", "fao" or "unhcr" organization.
+#' @param org A string that represents the name of an organization.
+#' At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.
 #'
-#' @return A dara frame
+#' @return A data frame
 #' @export
 #'
 #' @examples
@@ -17,16 +18,9 @@
 
 
 mdt_access_types <- function(org = "wb"){
-        if(org == "wb"){
-                server_url <- "https://microdata.worldbank.org/index.php/api/catalog/data_access_codes"
-        } else if(org == "fao"){
-                server_url <- "https://microdata.fao.org/index.php/api/catalog/data_access_codes"
-        } else if(org == "unhcr"){
-                server_url <- "https://microdata.unhcr.org/index.php/api/catalog/data_access_codes"
-        } else if(org == "ihsn") {
-                server_url <- "https://datacatalog.ihsn.org/index.php/api/catalog/data_access_codes"
-        } else {stop("org should be 'wb', 'fao' or 'unhcr'")}
-        response <- request_api(server_url)
+        request <- create_request(org)
+        request <- req_url_path_append(request, "data_access_codes")
+        response <- get_response(request)
         codes <- response$codes
         return(codes)
 }

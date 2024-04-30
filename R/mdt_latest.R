@@ -3,29 +3,29 @@
 #' Latest catalog entries
 #'
 #' @description
-#' Gets all country codes
+#' Get latest catalog entries
 #'
 #'
-#' @param org is a string of "wb", "fao" or "unhcr" organization.
+#' @param org A string that represents the name of an organization.
+#' At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.
+#'
+#' @param limit An integer. Number of latest catalog entries to return.
+#' `Default = 15`
 #'
 #' @return A data frame
 #' @export
 #'
 #' @examples
-#' mdt_latest()
+#' mdt_latest("fao", 25)
 
-mdt_latest <- function(org = "wb"){
-        if(org == "wb"){
-                server_url <- "https://microdata.worldbank.org/index.php/api/catalog/latest"
-        } else if(org == "fao"){
-                server_url <- "https://microdata.fao.org/index.php/api/catalog/latest"
-        } else if(org == "unhcr"){
-                server_url <- "https://microdata.unhcr.org/index.php/api/catalog/latest"
-        } else if(org == "ihsn") {
-                server_url <- "https://datacatalog.ihsn.org/index.php/api/catalog/latest"
-        } else {stop("org should be 'wb', 'fao' or 'unhcr'")}
-        response <- request_api(server_url)
+mdt_latest <- function(org = "wb", limit = NULL){
+        request <- create_request(org)
+        request <- req_url_path_append(request, "latest")
+        if(!is.null(limit)) request <- req_url_query(request, limit = limit)
+        response <- get_response(request)
         latest <- response$result
+        latest <- latest[,c("id", "idno", "title", "nation", "created", "changed")]
+        names(latest) <- c("id", "idno", "title", "country", "created", "created")
         return(latest)
         }
 

@@ -14,7 +14,6 @@
 
 
 
-
 get_response <- function(req){
         api_resp <- req_perform(req)
         response <- resp_body_json(api_resp,

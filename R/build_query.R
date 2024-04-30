@@ -44,17 +44,21 @@ build_query <- function(req,
         if(!is.null(collection)) req <- req_url_query(req, collection = collection, .multi = "comma")
         if(!is.null(dtype)) req <- req_url_query(req, dtype = dtype, .multi = "comma")
         if(!is.null(sort_by)) {
-                sort_order <- gsub(pattern = "country", replacement = "nation", x = sort_order)
+                sort_by <- gsub(pattern = "country", replacement = "nation", x = sort_by)
                 req <- req_url_query(req, sort_by = sort_by)}
         if(!is.null(sort_order)) req <- req_url_query(req, sort_order = sort_order)
-        if(!is.null(results) && results == "all") {
+        if(!is.null(results) && tolower(results) == "all") {
                 tmp_result <- get_response(req)
                 found <- tmp_result$result$found
                 req <- req_url_query(req, ps = found)
-        } else if(!is.null(results) && is.numeric(results)) {
-                req <- req_url_query(req, ps = results)}
-        if(!is.null(page)) req <- req_url_query(req, page = page)
-        query <- req_url_query(req, format = "json")
+                query <- req_url_query(req, format = "json")
+        } else if(!is.null(results) && is.numeric(results) && !is.null(page)) {
+                req <- req_url_query(req, ps = results)
+                req <- req_url_query(req, page = page)
+                query <- req_url_query(req, format = "json")
+        } else if(!is.null(page)) {
+                req <- req_url_query(req, page = page)
+                query <- req_url_query(req, format = "json")}
         return(query)
         }
 

@@ -1,9 +1,30 @@
 
 
-mdt_data_files <- function(){
-        #base_url <- "https://microdata.worldbank.org/index.php/api/catalog/{IDNo}/data_files"
-        server_url <- "https://microdata.worldbank.org/index.php/api/catalog/TUR_2023_WBCS_v01_M/data_files"
-        response <- request_api(server_url)
-        datafiles <- response$datafiles
-        return(datafiles)
+
+#' Get study data file lists
+#'
+#' @param idnoA A string that identifies the study. See object returned by `mdt_seach()` or `mdt_latest()`
+#' @param org A string that represents the name of an organization.
+#' At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.
+#'
+#' @return a data frame
+#' @export
+#'
+#' @examples
+#' mdt_data_files("ALB_2012_LSMS_v01_M_v01_A_PUF", "wb")
+
+
+mdt_data_files <- function(idno, org = "wb"){
+        request <- create_request(org)
+        if(!missing(idno)) {
+                request <- req_url_path_append(request, idno)
+                request <- req_url_path_append(request, "data_files")
+        } else stop("\nStudy idno should be provided.")
+        response <- get_response(request)
+        response <- response$datafiles
+        if(class(response) != "data.frame"){
+                response <- lapply(response, function(x) as.data.frame(t(x)))
+                response <- do.call(rbind, response)}
+        response <- response[,1:7]
+        return(response)
         }
