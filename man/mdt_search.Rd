@@ -5,20 +5,25 @@
 \title{Search micro data catalog}
 \usage{
 mdt_search(
+  keyword = NULL,
   org = "wb",
   from = NULL,
   to = NULL,
   country = NULL,
+  inc_iso = FALSE,
   collection = NULL,
+  created = NULL,
   dtype = NULL,
   sort_by = NULL,
   sort_order = NULL,
-  ps = NULL,
+  results = NULL,
   page = NULL,
   detailed = FALSE
 )
 }
 \arguments{
+\item{keyword}{A keyword used to search}
+
 \item{org}{is a string of "wb", "fao" or "unhcr" organization.}
 
 \item{from}{is an integer start year for the data collection.}
@@ -45,8 +50,8 @@ Valid options are rank,title,year,nation}
 \item{sort_order}{a string indicated how to sort the result and takes values of
 "asc" "desc" Set results sort order. Ascending = asc, Descending= desc}
 
-\item{ps}{an integer, Number of results per page.
-Default is 15 records per page}
+\item{results}{an integer or a string "all", Number of results per page.
+Default is 15 records per page.}
 
 \item{page}{an integer. Page to return for the search result}
 

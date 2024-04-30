@@ -4,19 +4,19 @@
 \alias{mdt_collection}
 \title{Get a collection}
 \usage{
-mdt_collection(repo_id, org = "wb")
+mdt_collection(id, org = "wb")
 }
 \arguments{
-\item{repo_id}{is an integer repository id.
+\item{id}{is an integer repository id.
 See object returned by \code{mdt_collections()}.}
 
-\item{org}{is a string of "wb", "fao" or "unhcr" organization.}
+\item{org}{is a string of "wb", "fao", "unhcr" or "ilo" organization.}
 }
 \value{
 Prints to console
 }
 \description{
-Gets and prints an information about single collection.
+Gets and prints a description about single collection.
 }
 \examples{
 mdt_collection(26)

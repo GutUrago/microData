@@ -3,34 +3,31 @@
 
 #' List all collections
 #' @description
-#' Returns a list of all collections
+#' Returns a list of all available collections
 #'
 #'
-#' @param org is a string of "wb", "fao" or "unhcr" organization.
+#' @param org is a string of "wb", "fao", "unhcr" or "ilo" organization.
 #'
 #' @return A data frame that includes all available collections
 #' @export
+#' @importFrom httr2 req_url_path_append
 #'
 #' @examples
 #' mdt_collections("fao")
 
+
 mdt_collections <- function(org = "wb"){
-        if(org == "wb"){
-                server_url <- "https://microdata.worldbank.org/index.php/api/catalog/collections"
-        } else if(org == "fao"){
-                server_url <- "https://microdata.fao.org/index.php/api/catalog/collections"
-        } else if(org == "unhcr"){
-                server_url <- "https://microdata.unhcr.org/index.php/api/catalog/collections"
-        } else if(org == "ihsn") {
-                stop("At the moment, IHSN has no specific collections. Use `search_catalog()`")
-        } else {stop("org should be 'wb', 'fao' or 'unhcr'")}
-        collection <- request_api(server_url)
+        if(org == "ihsn") {
+                stop("\nAt the moment, IHSN doesn't have any collection")
+                }
+        req <- create_request(org)
+        req <- req_url_path_append(req, "collections")
+        collection <- get_response(req)
         collection <- collection$collections
         collection <- collection[,1:3]
-        colnames(collection) <- c("repo_id", "name", "title")
+        colnames(collection) <- c("id", "repo_id", "title")
         return(collection)
         }
-
 
 
 
