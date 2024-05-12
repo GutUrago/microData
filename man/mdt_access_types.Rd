@@ -7,10 +7,11 @@
 mdt_access_types(org = "wb")
 }
 \arguments{
-\item{org}{is a string of "wb", "fao" or "unhcr" organization.}
+\item{org}{A string that represents the name of an organization.
+At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.}
 }
 \value{
-A dara frame
+A data frame
 }
 \description{
 Gets all data access types

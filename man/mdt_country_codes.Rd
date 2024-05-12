@@ -2,18 +2,19 @@
 % Please edit documentation in R/mdt_country_codes.R
 \name{mdt_country_codes}
 \alias{mdt_country_codes}
-\title{List of all country codes}
+\title{Get a list of all country codes}
 \usage{
 mdt_country_codes(org = "wb")
 }
 \arguments{
-\item{org}{is a string of "wb", "fao" or "unhcr" organization.}
+\item{org}{A string that represents the name of an organization.
+At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.}
 }
 \value{
-A data frame
+A data frame with all country codes
 }
 \description{
-List of all country codes
+Get a list of all country codes
 }
 \examples{
 mdt_country_codes()

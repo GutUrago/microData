@@ -56,8 +56,13 @@ build_query <- function(req,
                 req <- req_url_query(req, ps = results)
                 req <- req_url_query(req, page = page)
                 query <- req_url_query(req, format = "json")
-        } else if(!is.null(page)) {
+        } else if(!is.null(results) && is.numeric(results) && is.null(page)) {
+                req <- req_url_query(req, ps = results)
+                query <- req_url_query(req, format = "json")
+        } else if(is.null(results) && !is.null(page)) {
                 req <- req_url_query(req, page = page)
+                query <- req_url_query(req, format = "json")
+        } else if(is.null(results) && is.null(page)) {
                 query <- req_url_query(req, format = "json")}
         return(query)
         }

@@ -7,7 +7,8 @@
 mdt_collections(org = "wb")
 }
 \arguments{
-\item{org}{is a string of "wb", "fao", "unhcr" or "ilo" organization.}
+\item{org}{A string that represents the name of an organization.
+At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.}
 }
 \value{
 A data frame that includes all available collections

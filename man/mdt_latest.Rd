@@ -4,17 +4,21 @@
 \alias{mdt_latest}
 \title{Latest catalog entries}
 \usage{
-mdt_latest(org = "wb")
+mdt_latest(org = "wb", limit = NULL)
 }
 \arguments{
-\item{org}{is a string of "wb", "fao" or "unhcr" organization.}
+\item{org}{A string that represents the name of an organization.
+At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.}
+
+\item{limit}{An integer. Number of latest catalog entries to return.
+\code{Default = 15}}
 }
 \value{
 A data frame
 }
 \description{
-Gets all country codes
+Get latest catalog entries
 }
 \examples{
-mdt_latest()
+mdt_latest("fao", 25)
 }

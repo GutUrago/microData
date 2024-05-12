@@ -6,7 +6,8 @@
 #' Returns a list of all available collections
 #'
 #'
-#' @param org is a string of "wb", "fao", "unhcr" or "ilo" organization.
+#' @param org A string that represents the name of an organization.
+#' At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.
 #'
 #' @return A data frame that includes all available collections
 #' @export

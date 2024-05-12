@@ -4,20 +4,24 @@
 \alias{mdt_collection}
 \title{Get a collection}
 \usage{
-mdt_collection(id, org = "wb")
+mdt_collection(repo_id, org = "wb", display = TRUE, html = FALSE)
 }
 \arguments{
-\item{id}{is an integer repository id.
+\item{repo_id}{A repository id.
 See object returned by \code{mdt_collections()}.}
 
 \item{org}{is a string of "wb", "fao", "unhcr" or "ilo" organization.}
+
+\item{display}{A logical. If \code{TRUE} prints html. \code{Default = TRUE}}
+
+\item{html}{A logical, If \code{TRUE} returns html file. \code{Default = FALSE}}
 }
 \value{
 Prints to console
 }
 \description{
-Gets and prints a description about single collection.
+Gets and prints a description about a specific collection.
 }
 \examples{
-mdt_collection(26)
+mdt_collection("fao")
 }

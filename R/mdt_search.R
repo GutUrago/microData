@@ -41,7 +41,7 @@
 #' @importFrom httr2 req_url_path_append
 #'
 #' @examples
-#' mdt_search()
+#' mdt_search("lsms")
 
 
 mdt_search <- function(keyword = NULL,
@@ -60,22 +60,27 @@ mdt_search <- function(keyword = NULL,
                        detailed = FALSE){
         request <- create_request(org)
         request <- req_url_path_append(request, "search")
-        server_req <- build_query(req = request, keyword = keyword,from = from,to = to,
-                      country = country,inc_iso = inc_iso,collection = collection,
+        server_req <- build_query(req = request, keyword = keyword, from = from, to = to,
+                      country = country, inc_iso = inc_iso, collection = collection,
                       created = created, dtype = dtype, sort_by = sort_by,
-                      sort_order = sort_order, results = results,page = page)
+                      sort_order = sort_order, results = results, page = page)
         response <- get_response(server_req)
         if(detailed){
                 result <- as.list(response$result)
                 names(result$rows)[names(result$rows) == "nation"] <- "country"
                 result$rows <- result$rows[,!names(result$rows) %in% c("data_class_id", "thumbnail")]
-        } else if (inc_iso){
+        } else if(inc_iso){
                 result <- response$result$rows
                 result <- result[,c("id", "idno", "title", "iso3",
                                     "nation", "year_end", "form_model")]
                 names(result) <- c("id", "idno", "title", "iso", "country", "year", "form_model")
-        }
+        } else {result <- response$result$rows
+                result <- result[,c("id", "idno", "title",
+                                    "nation", "year_end", "form_model")]
+                names(result) <- c("id", "idno", "title",  "country", "year", "form_model")
+                }
         return(result)
         }
+
 
 

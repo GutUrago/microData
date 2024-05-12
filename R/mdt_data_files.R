@@ -3,7 +3,7 @@
 
 #' Get study data file lists
 #'
-#' @param idnoA A string that identifies the study. See object returned by `mdt_seach()` or `mdt_latest()`
+#' @param idno A string that identifies the study. See object returned by `mdt_seach()` or `mdt_latest()`
 #' @param org A string that represents the name of an organization.
 #' At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.
 #'
@@ -22,7 +22,7 @@ mdt_data_files <- function(idno, org = "wb"){
         } else stop("\nStudy idno should be provided.")
         response <- get_response(request)
         response <- response$datafiles
-        if(class(response) != "data.frame"){
+        if(!is.data.frame(response)){
                 response <- lapply(response, function(x) as.data.frame(t(x)))
                 response <- do.call(rbind, response)}
         response <- response[,1:7]

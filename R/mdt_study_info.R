@@ -3,7 +3,7 @@
 
 #' Get study info
 #'
-#' @param idnoA A string that identifies the study. See object returned by `mdt_seach()` or `mdt_latest()`
+#' @param idno A string that identifies the study. See object returned by `mdt_seach()` or `mdt_latest()`
 #' @param org A string that represents the name of an organization.
 #' At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.
 #'

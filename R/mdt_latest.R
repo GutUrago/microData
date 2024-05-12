@@ -25,7 +25,7 @@ mdt_latest <- function(org = "wb", limit = NULL){
         response <- get_response(request)
         latest <- response$result
         latest <- latest[,c("id", "idno", "title", "nation", "created", "changed")]
-        names(latest) <- c("id", "idno", "title", "country", "created", "created")
+        names(latest) <- c("id", "idno", "title", "country", "created", "changed")
         return(latest)
         }
 
