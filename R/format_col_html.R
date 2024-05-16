@@ -4,6 +4,7 @@
 #' @param collection A collection raw data frame
 #' @param org Organization
 #'
+#' @import htmltools
 #'
 #' @return Formatted html
 #' @noRd
@@ -26,26 +27,59 @@ format_col_html <- function(collection, org){
   } else {stop("\nOrganization should be one of WB, FAO, UNHCR, IHSN or ILO")}
 
         # Define the CSS for all h2 headings and p paragraphs
-        css_styles <- htmltools::tags$style(htmltools::HTML("
+        css_styles <- tags$style(HTML("
   h2 {
-    font-family: 'Arial', sans-serif; /* Uniform font family for h2 */
-    font-size: 24px; /* Font size for h2 */
-    color: #000000; /* Color for h2 */
-    background-color: #FFFFFF; /* Background color for h2 */
-    padding: 2px; /* Padding around h2 */
-    text-align: center; /* Center alignment for h2 */
-    border-radius: 3px; /* Rounded corners for h2 */
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    color: #000000;
+    background-color: #FFFFFF;/
+    padding: 2px;
+    text-align: center;
+    border-radius: 3px;
   }
   p {
-    font-family: 'Arial', sans-serif; /* Uniform font family for p */
-    font-size: 16px; /* Font size for p */
-    color: #333333; /* Text color for p */
-    background-color: #FFFFFF; /* Background color for p */
-    padding: 10px; /* Padding around p */
-    line-height: 1.6; /* Line height for p */
-    text-align: justify; /* Justified text for p */
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #333333;
+    background-color: #FFFFFF;
+    padding: 10px;
+    line-height: 1.6;
+    text-align: justify;
   }
 "))
+
+# Sample starts here
+#         test <- "Here is my yexy"
+#
+#         div(style = tags$style(HTML("
+#   h2 {
+#     font-family: 'Arial', sans-serif;
+#     font-size: 24px;
+#     color: #000000;
+#     background-color: #FFFFFF;/
+#     padding: 2px;
+#     text-align: center;
+#     border-radius: 3px;
+#   }
+#   p {
+#     font-family: 'Arial', sans-serif;
+#     font-size: 16px;
+#     color: #333333;
+#     background-color: #FFFFFF;
+#     padding: 10px;
+#     line-height: 1.6;
+#     text-align: justify;
+#   }
+# ")),
+#             h1(
+#               if(exists("test")) {test}
+#             )
+#         ) |>
+#           browsable()
+
+        #Ends here
+
+
 
 
         id_html <- htmltools::HTML(paste('<h2>', 'ID:', collection$id, '</h2>'))
@@ -107,6 +141,22 @@ format_col_html <- function(collection, org){
         return(final_html_content)
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
