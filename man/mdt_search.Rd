@@ -2,7 +2,7 @@
 % Please edit documentation in R/mdt_search.R
 \name{mdt_search}
 \alias{mdt_search}
-\title{Search microdata catalog}
+\title{Search Microdata Catalog}
 \usage{
 mdt_search(
   keyword = NULL,
@@ -17,55 +17,49 @@ mdt_search(
   sort_by = NULL,
   sort_order = NULL,
   results = NULL,
-  page = NULL,
-  detailed = FALSE
+  page = NULL
 )
 }
 \arguments{
-\item{keyword}{A string keyword used to search}
+\item{keyword}{a string keyword used to search}
 
-\item{org}{A string that represents the name of an organization.
-At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.}
+\item{org}{a string that represents the name of an organization.}
 
-\item{from}{An integer indicating start year for the data collection.}
+\item{from}{an integer indicating start year for the data collection.}
 
-\item{to}{An integer indicating end year for the data collection.}
+\item{to}{an integer indicating end year for the data collection.}
 
-\item{country}{A string. Provide country name or ISO 3 code.
-For country names and codes, see \code{mdt_country_codes()}.
+\item{country}{a string. Provide country name or ISO 3 code.
+For country names and codes, see \code{country_codes()}.
 For searching multiple countries, you can mix country name and ISO 3 code.
 Example \code{c("Afghanistan", "Indonesia")} or \code{c("afg", "ind")} or \code{c("afghanistan", "ind")}}
 
-\item{inc_iso}{A logical. Set the parameter value to \code{TRUE} to
+\item{inc_iso}{a logical. Set the parameter value to \code{TRUE} to
 include the ISO3 country codes in the results. \code{Default = FALSE}}
 
-\item{collection}{A string. Filter results by one or more collections.}
+\item{collection}{a string. Filter results by one or more collections.}
 
-\item{created}{A string. Filter results by date of creation.
+\item{created}{a string. Filter results by date of creation.
 Use the date format YYYY-MM-DD. Examples, 2020/04/01 returns records created on and after
 that date. To specify a date range, use the format 2020/04/01-2020/04/20}
 
-\item{dtype}{A string. Filter results by one or more data access types and takes values of
+\item{dtype}{a string. Filter results by one or more data access types and takes values of
 "open", "direct", "public", "licensed", "enclave", "remote" and "other".
-For example, \code{c("open", "direct")}. See \code{mdt_access_types()}}
+For example, \code{c("open", "direct")}. See \code{access_types()}}
 
-\item{sort_by}{A string value used to sort the result and takes values of
+\item{sort_by}{a string value used to sort the result and takes values of
 "rank", "title", "country" and "year" Sort search results.}
 
-\item{sort_order}{A string indicating how to sort the result and takes values of
+\item{sort_order}{a string indicating how to sort the result and takes values of
 "asc" or "desc". Ascending = asc, Descending = desc}
 
-\item{results}{An integer indicating number of records per page.
+\item{results}{an integer indicating number of records per page.
 set \code{results = "all"} to get all found results. Default is 15 records per page.}
 
-\item{page}{An integer. Page to return for the search result}
-
-\item{detailed}{A logical. if \code{TRUE} returns a list with all details of
-search results, otherwise returns a data frame with only key information.
-Default \code{detailed = FALSE}}
+\item{page}{an integer. Page to return for the search result}
 }
 \value{
-A list or data frame based on the \code{detailed} argument.
+Returns a data frame
 }
 \description{
 Search microdata catalog

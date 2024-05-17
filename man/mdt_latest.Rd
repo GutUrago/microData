@@ -2,15 +2,14 @@
 % Please edit documentation in R/mdt_latest.R
 \name{mdt_latest}
 \alias{mdt_latest}
-\title{Latest catalog entries}
+\title{Latest Catalog Entries}
 \usage{
 mdt_latest(org = "wb", limit = NULL)
 }
 \arguments{
-\item{org}{A string that represents the name of an organization.
-At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.}
+\item{org}{a string that represents the name of an organization.}
 
-\item{limit}{An integer. Number of latest catalog entries to return.
+\item{limit}{an integer. Number of latest catalog entries to return.
 \code{Default = 15}}
 }
 \value{

@@ -2,19 +2,20 @@
 % Please edit documentation in R/mdt_collections.R
 \name{mdt_collections}
 \alias{mdt_collections}
-\title{List all collections}
+\title{Get Collections}
 \usage{
 mdt_collections(org = "wb")
 }
 \arguments{
-\item{org}{A string that represents the name of an organization.
+\item{org}{a character string specifying the name of an organization
+that will return the listed collections.
 At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.}
 }
 \value{
 A data frame that includes all available collections
 }
 \description{
-Returns a list of all available collections
+Get a list of all available collections
 }
 \examples{
 mdt_collections("fao")

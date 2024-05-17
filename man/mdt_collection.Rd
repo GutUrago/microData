@@ -2,25 +2,22 @@
 % Please edit documentation in R/mdt_collection.R
 \name{mdt_collection}
 \alias{mdt_collection}
-\title{Get a collection}
+\title{Get A Collection}
 \usage{
-mdt_collection(repo_id, org = "wb", display = TRUE, html = FALSE)
+mdt_collection(repo_id, org = "wb")
 }
 \arguments{
-\item{repo_id}{A repository id.
+\item{repo_id}{a repository id.
 See object returned by \code{mdt_collections()}.}
 
-\item{org}{is a string of "wb", "fao", "unhcr" or "ilo" organization.}
-
-\item{display}{A logical. If \code{TRUE} prints html. \code{Default = TRUE}}
-
-\item{html}{A logical, If \code{TRUE} returns html file. \code{Default = FALSE}}
+\item{org}{a character string specifying the name of an organization
+that will return the request.}
 }
 \value{
-Prints to console
+Prints to html viewer
 }
 \description{
-Gets and prints a description about a specific collection.
+Get description about a specific collection.
 }
 \examples{
 mdt_collection("fao")

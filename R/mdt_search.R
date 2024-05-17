@@ -2,43 +2,38 @@
 
 
 
-#' Search microdata catalog
+#' Search Microdata Catalog
 #'
 #' @description
 #' Search microdata catalog
 #'
-#' @param keyword A string keyword used to search
-#' @param org A string that represents the name of an organization.
-#' At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.
-#' @param from An integer indicating start year for the data collection.
-#' @param to An integer indicating end year for the data collection.
-#' @param country A string. Provide country name or ISO 3 code.
-#' For country names and codes, see `mdt_country_codes()`.
+#' @param keyword a string keyword used to search
+#' @param org a string that represents the name of an organization.
+#' @param from an integer indicating start year for the data collection.
+#' @param to an integer indicating end year for the data collection.
+#' @param country a string. Provide country name or ISO 3 code.
+#' For country names and codes, see `country_codes()`.
 #' For searching multiple countries, you can mix country name and ISO 3 code.
 #' Example `c("Afghanistan", "Indonesia")` or `c("afg", "ind")` or `c("afghanistan", "ind")`
-#' @param inc_iso A logical. Set the parameter value to `TRUE` to
+#' @param inc_iso a logical. Set the parameter value to `TRUE` to
 #' include the ISO3 country codes in the results. `Default = FALSE`
-#' @param collection A string. Filter results by one or more collections.
-#' @param created A string. Filter results by date of creation.
+#' @param collection a string. Filter results by one or more collections.
+#' @param created a string. Filter results by date of creation.
 #' Use the date format YYYY-MM-DD. Examples, 2020/04/01 returns records created on and after
 #' that date. To specify a date range, use the format 2020/04/01-2020/04/20
-#' @param dtype A string. Filter results by one or more data access types and takes values of
+#' @param dtype a string. Filter results by one or more data access types and takes values of
 #' "open", "direct", "public", "licensed", "enclave", "remote" and "other".
-#' For example, `c("open", "direct")`. See `mdt_access_types()`
-#' @param sort_by A string value used to sort the result and takes values of
+#' For example, `c("open", "direct")`. See `access_types()`
+#' @param sort_by a string value used to sort the result and takes values of
 #' "rank", "title", "country" and "year" Sort search results.
-#' @param sort_order A string indicating how to sort the result and takes values of
+#' @param sort_order a string indicating how to sort the result and takes values of
 #' "asc" or "desc". Ascending = asc, Descending = desc
-#' @param results An integer indicating number of records per page.
+#' @param results an integer indicating number of records per page.
 #' set `results = "all"` to get all found results. Default is 15 records per page.
-#' @param page An integer. Page to return for the search result
-#' @param detailed A logical. if `TRUE` returns a list with all details of
-#' search results, otherwise returns a data frame with only key information.
-#' Default `detailed = FALSE`
+#' @param page an integer. Page to return for the search result
 #'
-#' @return A list or data frame based on the `detailed` argument.
+#' @return Returns a data frame
 #' @export
-#' @importFrom httr2 req_url_path_append
 #'
 #' @examples
 #' mdt_search("lsms")
@@ -56,30 +51,32 @@ mdt_search <- function(keyword = NULL,
                        sort_by = NULL,
                        sort_order = NULL,
                        results = NULL,
-                       page = NULL,
-                       detailed = FALSE){
+                       page = NULL){
+
         request <- create_request(org)
-        request <- req_url_path_append(request, "search")
-        server_req <- build_query(req = request, keyword = keyword, from = from, to = to,
+
+        request <- httr2::req_url_path_append(request, "search")
+
+        api_req <- build_query(req = request, keyword = keyword, from = from, to = to,
                       country = country, inc_iso = inc_iso, collection = collection,
                       created = created, dtype = dtype, sort_by = sort_by,
                       sort_order = sort_order, results = results, page = page)
-        response <- get_response(server_req)
-        if(detailed){
-                result <- as.list(response$result)
-                names(result$rows)[names(result$rows) == "nation"] <- "country"
-                result$rows <- result$rows[,!names(result$rows) %in% c("data_class_id", "thumbnail")]
-        } else if(inc_iso){
-                result <- response$result$rows
-                result <- result[,c("id", "idno", "title", "iso3",
-                                    "nation", "year_end", "form_model")]
-                names(result) <- c("id", "idno", "title", "iso", "country", "year", "form_model")
-        } else {result <- response$result$rows
-                result <- result[,c("id", "idno", "title",
-                                    "nation", "year_end", "form_model")]
-                names(result) <- c("id", "idno", "title",  "country", "year", "form_model")
-                }
-        return(result)
+
+        api_resp <- get_response(api_req)
+
+        results <- api_resp$result$rows
+
+        if(!is.data.frame(results)){
+                stop("\nYour search did not match any studies held in the catalog.")
+        }
+
+        results$data_class_id <- NULL
+        results$thumbnail <- NULL
+
+        results <- collapse::frename(.x = results,
+                                     "country" = "nation")
+
+        return(results)
         }
 
 
