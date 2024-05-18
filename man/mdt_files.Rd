@@ -22,3 +22,6 @@ Get list of all study data files
 \examples{
 mdt_files("ALB_2012_LSMS_v01_M_v01_A_PUF", "wb")
 }
+\author{
+Gutama Girja Urago
+}

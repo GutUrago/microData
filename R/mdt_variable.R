@@ -11,6 +11,8 @@
 #' @return A list
 #' @export
 #'
+#' @author Gutama Girja Urago
+#'
 #' @examples
 #' mdt_variable(6161, "v10")
 

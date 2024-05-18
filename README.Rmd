@@ -13,14 +13,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-# microData
+
+# microData <img src="man/figures/logo.png" align="right" height="138" alt="" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/GutUrago/microData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/GutUrago/microData/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/GutUrago/microData/branch/master/graph/badge.svg)](https://app.codecov.io/gh/GutUrago/microData?branch=master)
 <!-- badges: end -->
 
-##  <span style="color:red">Update</span>
-<span style="color:red">This package is still under development. This readme explains only the workflow for obtaining results from web scraping functions. However, now the package is able to communicate with the API on its own. This brings many improvements, such as the reliability of the obtained results and a reduction in waiting time. It has the ability to search and filter the results by years, country, collection, access types, repositories, and many others. The package will go beyond what is expounded here after finalization very soon!</span>
+
+##  <span style="color:blue">Update</span>
+<span style="color:blue">This package is still under development. This readme explains only the workflow for obtaining results from web scraping functions. However, now the package is able to communicate with the API on its own. This brings many improvements, such as the reliability of the obtained results and a reduction in waiting time. It has the ability to search and filter the results by years, country, collection, access types, repositories, and many others. The package will go beyond what is expounded here after finalization very soon!</span>
 
 ## Abstract
 

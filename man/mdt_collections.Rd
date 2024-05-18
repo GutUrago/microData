@@ -20,3 +20,6 @@ Get a list of all available collections
 \examples{
 mdt_collections("fao")
 }
+\author{
+Gutama Girja Urago
+}

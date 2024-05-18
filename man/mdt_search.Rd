@@ -67,3 +67,6 @@ Search microdata catalog
 \examples{
 mdt_search("lsms")
 }
+\author{
+Gutama Girja Urago
+}

@@ -11,6 +11,7 @@
 #'
 #' @return a data frame with all country codes
 #' @export
+#' @author Gutama Girja Urago
 #'
 #' @examples
 #' country_codes()

@@ -18,3 +18,6 @@ Get a list of all country codes
 \examples{
 country_codes()
 }
+\author{
+Gutama Girja Urago
+}

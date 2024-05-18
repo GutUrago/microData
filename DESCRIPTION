@@ -4,16 +4,13 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Gutama Girja", "Urago", , "girjagutama@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5588-2301"))
-Description: This package assists the process of obtaining and manipulating 
-    microdata published by Worldbank, FAO, UNHCR and IHSN. The workflow starts 
-    with getting available surveys using `surveys()` function. After finding the 
-    survey catalog number and title, create `new_workbook()` to store scrapped 
-    information about the data. Then, obtain `metadata()` of the survey. 
-    Next, extract `dictionary()` of each survey files and write them to the workbook.
-    `dictionary()` function extracts variable names and their descriptions 
-    from the web. Use `to_workbook()` to write the new table to an existing 
-    excel workbook. Finally, the `import_csv()` function reads local data and 
-    applies data attributes from the excel workbook. For more, see help of each function.
+Description: An API wrapper package that helps to search, browse, and download metadata
+    for microdata published by international organizations. At the moment, the 
+    package supports microdata available on the World Bank, United Nations Food
+    and Agricultural Organization, United Nations High Commissioner for Refugees,
+    International Labor Organization, and International Household Survey Network.
+    These organizations use the NADA API to publish collected surveys with different
+    types of access.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -21,7 +18,10 @@ RoxygenNote: 7.3.1
 Imports: 
     collapse,
     htmltools,
-    httr2,
-    jsonlite
+    httr2
+Suggests:
+    jsonlite,
+    testthat (>= 3.0.0)
 URL: https://github.com/GutUrago/microData
 BugReports: https://github.com/GutUrago/microData/issues
+Config/testthat/edition: 3

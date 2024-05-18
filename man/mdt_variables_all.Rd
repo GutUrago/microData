@@ -21,3 +21,6 @@ Get all lists of variables in a study
 \examples{
 mdt_variables_all(6161)
 }
+\author{
+Gutama Girja Urago
+}

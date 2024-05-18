@@ -1,16 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# microData
+# microData <img src="man/figures/logo.png" align="right" height="138" alt="" />
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/GutUrago/microData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/GutUrago/microData/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-## <span style="color:red">Update</span>
+## <span style="color:blue">Update</span>
 
-<span style="color:red">This package is still under development. This
+<span style="color:blue">This package is still under development. This
 readme explains only the workflow for obtaining results from web
 scraping functions. However, now the package is able to communicate with
 the API on its own. This brings many improvements, such as the

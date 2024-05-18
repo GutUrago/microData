@@ -13,6 +13,8 @@
 #' @return A data frame that includes all available collections
 #' @export
 #'
+#' @author Gutama Girja Urago
+#'
 #' @examples
 #' mdt_collections("fao")
 

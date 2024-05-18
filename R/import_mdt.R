@@ -23,6 +23,8 @@
 #' @return A data frame with attributes
 #' @export
 #'
+#' @author Gutama Girja Urago
+#'
 #' @examples
 #' if(FALSE){
 #' import_mdt(mdt = microdata,

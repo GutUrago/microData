@@ -22,3 +22,6 @@ Get study info
 \examples{
 mdt_abstract(6211, "wb")
 }
+\author{
+Gutama Girja Urago
+}

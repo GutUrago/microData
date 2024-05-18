@@ -16,6 +16,8 @@
 #' @return Prints to html viewer
 #' @export
 #'
+#' @author Gutama Girja Urago
+#'
 #' @examples
 #' mdt_collection("fao")
 

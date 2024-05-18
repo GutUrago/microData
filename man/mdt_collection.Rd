@@ -22,3 +22,6 @@ Get description about a specific collection.
 \examples{
 mdt_collection("fao")
 }
+\author{
+Gutama Girja Urago
+}

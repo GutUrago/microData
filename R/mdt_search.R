@@ -35,6 +35,8 @@
 #' @return Returns a data frame
 #' @export
 #'
+#' @author Gutama Girja Urago
+#'
 #' @examples
 #' mdt_search("lsms")
 

@@ -14,6 +14,8 @@
 #' @return A data frame
 #' @export
 #'
+#' @author Gutama Girja Urago
+#'
 #' @examples
 #' mdt_variables(6161, "F1")
 

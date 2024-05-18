@@ -11,6 +11,8 @@
 #' @return a list
 #' @export
 #'
+#' @author Gutama Girja Urago
+#'
 #' @examples
 #' mdt_abstract(6211, "wb")
 

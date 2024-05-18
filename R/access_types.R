@@ -11,6 +11,8 @@
 #' @return A data frame
 #' @export
 #'
+#' @author Gutama Girja Urago
+#'
 #' @examples
 #' access_types()
 #'

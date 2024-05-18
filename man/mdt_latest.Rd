@@ -21,3 +21,6 @@ Get latest catalog entries
 \examples{
 mdt_latest("fao", 25)
 }
+\author{
+Gutama Girja Urago
+}

@@ -23,3 +23,6 @@ Variable Metadata
 \examples{
 mdt_variable(6161, "v10")
 }
+\author{
+Gutama Girja Urago
+}
