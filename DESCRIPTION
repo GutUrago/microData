@@ -1,5 +1,5 @@
 Package: microData
-Title: microData Assistant
+Title: Search, Browse, and Export Metadata for Microdata
 Version: 0.0.0.9000
 Authors@R: 
     person("Gutama Girja", "Urago", , "girjagutama@gmail.com", role = c("aut", "cre"),
