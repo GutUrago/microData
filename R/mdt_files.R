@@ -37,9 +37,11 @@ mdt_files <- function(id, org = "wb"){
 
         data_files  <- api_resp$datafiles
 
-        if(!is.data.frame(data_files)){
+        if(is.list(data_files)){
                 data_files <- lapply(data_files, function(x) as.data.frame(t(x)))
                 data_files <- do.call(rbind, data_files)
+        } else if(!is.data.frame(data_files)){
+                stop("\nOops! It seems that there are no files provided for this study.")
         }
 
 
@@ -47,8 +49,6 @@ mdt_files <- function(id, org = "wb"){
 
         return(data_files)
         }
-
-
 
 
 
