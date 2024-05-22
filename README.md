@@ -84,11 +84,37 @@ mdt_collections(org = "wb") |>
 Once you have reviewed all available collections, you may find one that
 piques your interest and would like further details. Then,
 `mdt_collection` function is there for you. In your HTML viewer, it
-prints the repository description.
+prints the repository description. Below, a sample HTML response is
+embedded.
+
+<div style="text-align: center; background-color: rgba(30, 120, 130, 0.1); border-radius: 25px">
 
 ``` r
-mdt_collection(repo_id = "fao", org = "wb", raw_html = T)
+mdt_collection(repo_id = "lsms", org = "wb", raw_html = T)
 ```
+
+<h2> ID: 3 </h2>
+<h2> Repository ID: lsms </h2>
+<h2> Title: Living Standards Measurement Study (LSMS) </h2>
+<img src="https://microdata.worldbank.org/files/icon-lsms.png"/>
+<h2>Short Description</h2>
+<p>The LSMS is a research project that was initiated in 1980. It is a response to a perceived need for policy relevant data that would allow policy makers to move beyond simply measuring rates of unemployment, poverty and health care use, for example, to understanding the determinants of these observed social sector outcomes.</p>
+<h2>Brief Description</h2>
+<div>
+<img src="https://microdata.worldbank.org/files/lsms-fp-01.gif">
+<h2>Generating relevant data for policy makers and the research community</h2>
+&#10;
+<p>The <a href="https://www.worldbank.org/en/programs/lsms">Living Standards Measurement Study (LSMS)</a> is a research project  that was initiated in 1980. It is a response to a perceived need for  policy relevant data that would allow policy makers to move beyond simply  measuring rates of unemployment, poverty and health care use, for example, to  understanding the determinants&nbsp;of these observed social sector  outcomes.&nbsp;</p>
+<p> The  program is designed to assist policy makers in their efforts to identify how  policies could be designed and improved to positively affect outcomes in health,  education, economic activities, housing and utilities, etc.</p>
+<p>The LSMS objectives  are to: </p>
+&#10;  improve the quality of  household survey data
+  increase the capacity  of statistical institutes to perform household surveys
+  improve the ability of  statistical institutes to analyze household survey data for policy needs
+  provide policy makers  with data that can be used to understand the determinants of observed social  and economic outcomes
+&#10;<p>A more recent initiative funded by the <a href="http://www.gatesfoundation.org/Pages/home.aspx">Bill &amp; Melinda  Gates Foundation (BMGF)</a>, the Living Standards Measurement Study-Integrated Surveys on Agriculture  (LSMS-ISA) project, was launched in 2009. The project supports governments  in Sub-Saharan African countries to generate nationally representative,  household panel data with a strong focus on agriculture and rural development.  The objective of this program is to improve the understanding of development in  Africa, particularly agriculture and linkages between farm and non-farm  activities.</p>
+&#10;</div>
+
+</div>
 
 ## Searching
 
@@ -109,7 +135,7 @@ mdt_search(keyword = "migration",
 |-----:|:----------------------------|:-------|:----------------------------------------------------------------|:--------|:--------------------------------------------|:-----------|-----------:|---------:|:-------------|:-----------|:--------------------------|:--------------------------|------------:|----------------:|---------:|-----:|----------:|:---------------------------------------------------------|:-----|
 | 5906 | WLD_2023_SYNTH-SVY-EN_v01_M | survey | Synthetic Data for an Imaginary Country, Sample, 2023           | World   | Development Data Group, Data Analytics Unit | open       |       2023 |     2023 |              | NA         | 2023-07-07T12:40:30-04:00 | 2023-07-07T12:40:31-04:00 |        3994 |             272 |       76 |  619 |         1 | <https://microdata.worldbank.org/index.php/catalog/5906> | WLD  |
 | 5907 | WLD_2023_SYNTH-SVY-FR_v01_M | survey | Données Synthétiques pour un Pays Imaginaire, Echantillon, 2023 | Monde   | Development Data Group, Data Analytics Unit | open       |       2023 |     2023 |              | NA         | 2023-07-07T12:43:17-04:00 | 2023-07-07T12:43:18-04:00 |        2186 |             176 |       76 |  557 |         1 | <https://microdata.worldbank.org/index.php/catalog/5907> | NA   |
-| 5908 | WLD_2023_SYNTH-CEN-EN_v01_M | survey | Synthetic Data for an Imaginary Country, Full Population, 2023  | World   | Development Data Group, Data Analytics Unit | open       |       2023 |     2023 |              | NA         | 2023-07-03T23:52:33-04:00 | 2023-07-03T23:52:34-04:00 |        3265 |             223 |       73 |  619 |         1 | <https://microdata.worldbank.org/index.php/catalog/5908> | WLD  |
+| 5908 | WLD_2023_SYNTH-CEN-EN_v01_M | survey | Synthetic Data for an Imaginary Country, Full Population, 2023  | World   | Development Data Group, Data Analytics Unit | open       |       2023 |     2023 |              | NA         | 2023-07-03T23:52:33-04:00 | 2023-07-03T23:52:34-04:00 |        3267 |             223 |       73 |  619 |         1 | <https://microdata.worldbank.org/index.php/catalog/5908> | WLD  |
 
 There is also handy function to check latest publications of these
 datasets.
@@ -124,6 +150,47 @@ mdt_latest(org = "ihsn", limit = 3) |>
 | 12189 | SLV_2015_GYTS_v01_M | Global Youth Tobacco Survey 2015               | El Salvador | May-08-2024 | May-08-2024 | <https://datacatalog.ihsn.org//catalog/12189> |
 | 12188 | SLV_2013_GSHS_v01_M | Global School-Based Student Health Survey 2013 | El Salvador | May-08-2024 | May-08-2024 | <https://datacatalog.ihsn.org//catalog/12188> |
 | 12187 | SLV_2009_GYTS_v01_M | Global Youth Tobacco Survey 2009               | El Salvador | May-08-2024 | May-08-2024 | <https://datacatalog.ihsn.org//catalog/12187> |
+
+## Study Information
+
+After going through available datasets, you may be interested to know
+more about that specific study. Just use `mdt_abstract` to read abstract
+directly in your Rstudio.
+
+<div style="text-align: center; background-color: rgba(30, 120, 130, 0.1); border-radius: 25px">
+
+``` r
+mdt_abstract(id = 2939, raw_html = T)
+```
+
+<ul>
+Study id: 
+2939
+</ul>
+<ul>
+Study idno: 
+MWI_2010-2016_IHPS_v03_M
+</ul>
+<ul>
+Study title: 
+Integrated Household Panel Survey 2010-2013-2016 (Long-Term Panel, 102 EAs)
+</ul>
+<ul>
+Study year: 
+2016
+</ul>
+<ul>
+Study country: 
+Malawi
+</ul>
+<ul>
+Authoring entity: 
+National Statistical Office
+</ul>
+<h2>Abstract</h2>
+<p>The 2016 Integrated Household Panel Survey (IHPS) was launched in April 2016 as part of the Malawi Fourth Integrated Household Survey fieldwork operation. The IHPS 2016 targeted 1,989 households that were interviewed in the IHPS 2013 and that could be traced back to half of the 204 enumeration areas that were originally sampled as part of the Third Integrated Household Survey (IHS3) 2010/11. The panel sample expanded each wave through the tracking of split-off individuals and the new households that they formed. Available as part of this project is the IHPS 2016 data as well as the rereleased IHPS 2010 &amp; 2013 data including only the subsample of 102 EAs with updated panel weights. Additionally, the IHPS 2016 was the first survey that received complementary financial and technical support from the Living Standards Measurement Study – Plus (LSMS+) initiative, which has been established with grants from the Umbrella Facility for Gender Equality Trust Fund, the World Bank Trust Fund for Statistical Capacity Building, and the International Fund for Agricultural Development, and is implemented by the World Bank Living Standards Measurement Study (LSMS) team, in collaboration with the World Bank Gender Group and partner national statistical offices. The LSMS+ aims to improve the availability and quality of individual-disaggregated household survey data, and is, at start, a direct response to the World Bank IDA18 commitment to support 6 IDA countries in collecting intra-household, sex-disaggregated household survey data on 1) ownership of and rights to selected physical and financial assets, 2) work and employment, and 3) entrepreneurship – following international best practices in questionnaire design and minimizing the use of proxy respondents while collecting personal information. This dataset is included here.</p>
+
+</div>
 
 You can use `mdt_files` to see the data files included in the study.
 
@@ -207,4 +274,4 @@ attr(cleaned$gender, "label")
 
 More coming soon!
 
-## The End!
+## <span style="color:blue; text-align: center;">The End!</span>

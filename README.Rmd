@@ -57,11 +57,16 @@ mdt_collections(org = "wb") |>
 
 
 
-Once you have reviewed all available collections, you may find one that piques your interest and would like further details. Then, `mdt_collection` function is there for you. In your HTML viewer, it prints the repository description.
+Once you have reviewed all available collections, you may find one that piques your interest and would like further details. Then, `mdt_collection` function is there for you. In your HTML viewer, it prints the repository description. Below, a sample HTML response is embedded.
+
+
+
+<div style="text-align: center; background-color: rgba(30, 120, 130, 0.1); border-radius: 25px">
 
 ```{r}
-mdt_collection(repo_id = "datafirst", org = "wb", raw_html = T)
+mdt_collection(repo_id = "lsms", org = "wb", raw_html = T)
 ```
+</div>
 
 
 ## Searching
@@ -85,6 +90,19 @@ There is also handy function to check latest publications of these datasets.
 mdt_latest(org = "ihsn", limit = 3) |> 
   kableExtra::kable()
 ```
+
+
+## Study Information
+
+After going through available datasets, you may be interested to know more about that specific study. Just use `mdt_abstract` to read abstract directly in your Rstudio.
+
+<div style="text-align: center; background-color: rgba(30, 120, 130, 0.1); border-radius: 25px">
+
+```{r}
+mdt_abstract(id = 2939, raw_html = T)
+```
+
+</div>
 
 
 You can use `mdt_files` to see the data files included in the study.
@@ -152,6 +170,6 @@ attr(cleaned$gender, "label")
 More coming soon!
 
 
-## The End!
+##  <span style="color:blue; text-align: center;">The End!</span>
 
 
