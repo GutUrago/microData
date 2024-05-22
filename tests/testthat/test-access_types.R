@@ -4,10 +4,9 @@
 
 # WB ----
 
-test_that("multiplication works", {
+test_that("Returns data frame", {
   expect_true(is.data.frame(access_types(org = "wb")))
 })
-
 
 
 # FAO ----

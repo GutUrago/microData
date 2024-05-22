@@ -4,7 +4,7 @@
 \alias{mdt_collection}
 \title{Get A Collection}
 \usage{
-mdt_collection(repo_id, org = "wb")
+mdt_collection(repo_id, org = "wb", raw_html = FALSE)
 }
 \arguments{
 \item{repo_id}{a repository id.
@@ -12,6 +12,8 @@ See object returned by \code{mdt_collections()}.}
 
 \item{org}{a character string specifying the name of an organization
 that will return the request.}
+
+\item{raw_html}{a logical value, if \code{TRUE} returns raw formatted html}
 }
 \value{
 Prints to html viewer

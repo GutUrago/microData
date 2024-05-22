@@ -6,9 +6,12 @@
 #' @param id a study id number. Accepts any of `id` (integer) and
 #' `idno` (string) values to fetch study information.
 #' See object returned by `mdt_seach()` or `mdt_latest()`
+#'
 #' @param org a string that represents the name of an organization.
 #'
-#' @return a list
+#' @param raw_html a logical value, if `TRUE` returns raw formatted html
+#'
+#' @return Prints to html viewer by default
 #' @export
 #'
 #' @author Gutama Girja Urago
@@ -17,7 +20,9 @@
 #' mdt_abstract(6211, "wb")
 
 
-mdt_abstract <- function(id, org = "wb"){
+mdt_abstract <- function(id,
+                         org = "wb",
+                         raw_html = FALSE){
 
         api_req <- create_request(org)
 
@@ -30,7 +35,8 @@ mdt_abstract <- function(id, org = "wb"){
 
         abstract <- format_abs_html(api_resp)
 
-        htmltools::html_print(abstract)
+        if(raw_html) {return(abstract)
+        } else {htmltools::html_print(abstract)}
 }
 
 

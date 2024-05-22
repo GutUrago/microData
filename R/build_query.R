@@ -55,6 +55,17 @@ build_query <- function(req,
                 req <- httr2::req_url_query(req, ps = results)
                 req <- httr2::req_url_query(req, page = page)
                 query <- httr2::req_url_query(req, format = "json")
+        } else if(!is.null(results) && !is.numeric(results) && !is.null(page)) {
+                tryCatch({
+                        results <- as.numeric(results)
+                        req <- httr2::req_url_query(req, ps = results)
+                        req <- httr2::req_url_query(req, page = page)
+                        query <- httr2::req_url_query(req, format = "json")
+                },
+                warning = function(w){
+                        stop(paste0("\nresults argument takes only interger not a ",
+                            class(results)))
+                })
         } else if(!is.null(results) && is.numeric(results) && is.null(page)) {
                 req <- httr2::req_url_query(req, ps = results)
                 query <- httr2::req_url_query(req, format = "json")

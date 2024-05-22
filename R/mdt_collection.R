@@ -13,6 +13,8 @@
 #' @param org a character string specifying the name of an organization
 #' that will return the request.
 #'
+#' @param raw_html a logical value, if `TRUE` returns raw formatted html
+#'
 #' @return Prints to html viewer
 #' @export
 #'
@@ -22,7 +24,8 @@
 #' mdt_collection("fao")
 
 mdt_collection <- function(repo_id,
-                           org = "wb"){
+                           org = "wb",
+                           raw_html = FALSE){
 
         api_req <- create_request(org)
 
@@ -32,7 +35,8 @@ mdt_collection <- function(repo_id,
 
         final_html <- format_col_html(api_resp, org)
 
-        htmltools::html_print(final_html)
+        if(raw_html) {return(final_html)
+                } else {htmltools::html_print(final_html)}
 
         }
 
