@@ -6,6 +6,7 @@
 #' Format abstract
 #'
 #' @param api_resp api response
+#' @param raw_html raw or edite? logical
 #'
 #' @return html
 #' @noRd
@@ -13,7 +14,7 @@
 
 
 
-format_abs_html <- function(api_resp){
+format_abs_html <- function(api_resp, raw_html){
 
 
 css_styles <- htmltools::tags$style(htmltools::HTML("
@@ -62,8 +63,9 @@ css_styles <- htmltools::tags$style(htmltools::HTML("
         abstract <- study_info$metadata$study_desc$study_info$abstract
         abstract <- htmltools::p(abstract)
 
+        if(raw_html){
+
         final_html_content <- htmltools::tagList(
-                css_styles,
                 study_id,
                 study_idno,
                 study_title,
@@ -74,6 +76,20 @@ css_styles <- htmltools::tags$style(htmltools::HTML("
                 abs_title,
                 abstract
         )
+        } else {
+          final_html_content <- htmltools::tagList(
+            css_styles,
+            study_id,
+            study_idno,
+            study_title,
+            study_year,
+            study_country,
+            study_auth,
+            #study_link,
+            abs_title,
+            abstract
+          )
+        }
 
 
         return(final_html_content)

@@ -22,7 +22,6 @@ Imports:
 Suggests:
     jsonlite,
     knitr,
-    lifecycle,
     rmarkdown,
     testthat (>= 3.0.0)
 URL: https://github.com/GutUrago/microData

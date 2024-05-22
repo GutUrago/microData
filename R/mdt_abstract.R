@@ -33,7 +33,7 @@ mdt_abstract <- function(id,
 
         api_resp <- get_response(api_req)
 
-        abstract <- format_abs_html(api_resp)
+        abstract <- format_abs_html(api_resp, raw_html)
 
         if(raw_html) {return(abstract)
         } else {htmltools::html_print(abstract)}

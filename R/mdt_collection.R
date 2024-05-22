@@ -33,7 +33,7 @@ mdt_collection <- function(repo_id,
 
         api_resp <- get_response(api_req)
 
-        final_html <- format_col_html(api_resp, org)
+        final_html <- format_col_html(api_resp, org, raw_html)
 
         if(raw_html) {return(final_html)
                 } else {htmltools::html_print(final_html)}

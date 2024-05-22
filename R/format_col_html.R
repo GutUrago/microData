@@ -4,13 +4,15 @@
 #' @param api_resp A api_resp raw data frame
 #' @param org Organization
 #'
+#' @param raw_html raw or edited? logical
+#'
 #'
 #' @return Formatted html
 #' @noRd
 #'
 
 
-format_col_html <- function(api_resp, org){
+format_col_html <- function(api_resp, org, raw_html){
 
   # Retrieve missing parts of file url
   if(tolower(org) == "wb"){
@@ -98,9 +100,8 @@ format_col_html <- function(api_resp, org){
 
         long_html <- htmltools::HTML(long_text)
 
-
+        if(raw_html){
         final_html_content <- htmltools::tagList(
-            css_styles,
             id_html,
             repo_id_html,
             title_html,
@@ -110,6 +111,20 @@ format_col_html <- function(api_resp, org){
             long_desc_title_html,
             long_html
         )
+        } else {
+          final_html_content <- htmltools::tagList(
+            css_styles,
+            id_html,
+            repo_id_html,
+            title_html,
+            thumbnial_img,
+            short_desc_title_html,
+            short_html,
+            long_desc_title_html,
+            long_html
+          )
+        }
+
 
         return(final_html_content)
 
