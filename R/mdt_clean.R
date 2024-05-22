@@ -2,14 +2,14 @@
 
 
 
-#' Import Microdata
+#' Cleans Microdata
 #'
 #' @description
-#' Import microdata file, set names and labels.
+#' Cleans microdata file by setting names and labels.
 #'
 #'
-#' @param mdt a data frame which is microdata
-#' @param metadata a data frame that contains old names, new names and
+#' @param mdt a dataframe
+#' @param metadata a dataframe that contains old names, new names and
 #' labels of each variables
 #' @param old_name a column name in the `metadata` data frame that contains
 #' old names in the microdata. If there is any `NA` values these variables are omitted.
@@ -20,15 +20,15 @@
 #' @param all_vars a logical. If `FALSE (default)` variables with `NA` values
 #' in the `new_name` column will be omitted, and if `TRUE` all variables will be returned.
 #'
-#' @return A data frame with attributes
+#' @return A dataframe with attributes
 #' @export
 #'
 #' @author Gutama Girja Urago
 #'
 #' @examples
 #' if(FALSE){
-#' import_mdt(mdt = microdata,
-#'            metadata = metadata.xlsx,
+#' mdt_clean(mdt = microdata,
+#'            metadata = metadata,
 #'            old_name = "Names",
 #'            new_name = "New Names",
 #'            label = "Labels")
@@ -36,12 +36,12 @@
 
 
 
-import_mdt <- function(mdt,
-                       metadata,
-                       old_name = "old_name",
-                       new_name = "new_name",
-                       label = "label",
-                       all_vars = FALSE){
+mdt_clean <- function(mdt,
+                      metadata,
+                      old_name = "old_name",
+                      new_name = "new_name",
+                      label = "label",
+                      all_vars = FALSE){
 
         pre_names <- c("old_name", "new_name", "label")
 
