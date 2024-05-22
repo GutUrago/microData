@@ -59,8 +59,8 @@ mdt_collections(org = "wb") |>
 
 Once you have reviewed all available collections, you may find one that piques your interest and would like further details. Then, `mdt_collection` function is there for you. In your HTML viewer, it prints the repository description.
 
-```{r eval = FALSE}
-mdt_collection(repo_id = "fao", org = "wb", raw_html = T)
+```{r}
+mdt_collection(repo_id = "datafirst", org = "wb", raw_html = T)
 ```
 
 

@@ -94,11 +94,15 @@ format_col_html <- function(api_resp, org, raw_html){
         }
 
 
-        if (!grepl("^<.*>$", long_text)) {
-          long_text <- htmltools::p(long_text)
-        }
+        # if (!grepl("^<.*>$", long_text)) {
+        #   long_text <- htmltools::p(long_text)
+        # }
 
-        long_html <- htmltools::HTML(long_text)
+        if(is.character(long_text)){
+          long_html <- htmltools::HTML(long_text)
+        } else long_html <- long_text
+
+
 
         if(raw_html){
         final_html_content <- htmltools::tagList(
