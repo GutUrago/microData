@@ -65,21 +65,16 @@ means gathering multiple related studies or data sets. To see all
 available collections, you can use `mdt_collections` function.
 
 ``` r
+library(kableExtra)
 library(microData)
 
-mdt_collections(org = "wb") |> 
-  head() |> 
-  kableExtra::kable()
-```
+# conflicted::conflict_prefer_all("kableExtra")
 
-|  id | repo_id            | title                                             |
-|----:|:-------------------|:--------------------------------------------------|
-|  26 | afrobarometer      | Afrobarometer                                     |
-|   2 | datafirst          | DataFirst , University of Cape Town, South Africa |
-|  22 | dime               | Development Impact Evaluation (DIME)              |
-|   1 | microdata_rg       | Development Research Microdata                    |
-|   4 | enterprise_surveys | Enterprise Surveys                                |
-|  30 | fao                | FAO - Food and Agriculture Microdata Catalog      |
+# mdt_collections(org = "wb") |> 
+#   head() %>%
+#   kable() |> 
+#   kable_classic()
+```
 
 Once you have reviewed all available collections, you may find one that
 piques your interest and would like further details. Then,
@@ -131,11 +126,11 @@ mdt_search(keyword = "migration",
   kableExtra::kable()
 ```
 
-|   id | idno                        | type   | title                                                           | country | authoring_entity                            | form_model | year_start | year_end | repositoryid | repo_title | created                   | changed                   | total_views | total_downloads | varcount | rank | var_found | url                                                      | iso3 |
-|-----:|:----------------------------|:-------|:----------------------------------------------------------------|:--------|:--------------------------------------------|:-----------|-----------:|---------:|:-------------|:-----------|:--------------------------|:--------------------------|------------:|----------------:|---------:|-----:|----------:|:---------------------------------------------------------|:-----|
-| 5906 | WLD_2023_SYNTH-SVY-EN_v01_M | survey | Synthetic Data for an Imaginary Country, Sample, 2023           | World   | Development Data Group, Data Analytics Unit | open       |       2023 |     2023 |              | NA         | 2023-07-07T12:40:30-04:00 | 2023-07-07T12:40:31-04:00 |        3994 |             272 |       76 |  619 |         1 | <https://microdata.worldbank.org/index.php/catalog/5906> | WLD  |
-| 5907 | WLD_2023_SYNTH-SVY-FR_v01_M | survey | Données Synthétiques pour un Pays Imaginaire, Echantillon, 2023 | Monde   | Development Data Group, Data Analytics Unit | open       |       2023 |     2023 |              | NA         | 2023-07-07T12:43:17-04:00 | 2023-07-07T12:43:18-04:00 |        2186 |             176 |       76 |  557 |         1 | <https://microdata.worldbank.org/index.php/catalog/5907> | NA   |
-| 5908 | WLD_2023_SYNTH-CEN-EN_v01_M | survey | Synthetic Data for an Imaginary Country, Full Population, 2023  | World   | Development Data Group, Data Analytics Unit | open       |       2023 |     2023 |              | NA         | 2023-07-03T23:52:33-04:00 | 2023-07-03T23:52:34-04:00 |        3267 |             223 |       73 |  619 |         1 | <https://microdata.worldbank.org/index.php/catalog/5908> | WLD  |
+|   id | idno                        | type   | title                                                           | country | authoring_entity                            | form_model | year_start | year_end | repositoryid | repo_title                                                | created                   | changed                   | total_views | total_downloads | varcount | rank | var_found | url                                                      | iso3 |
+|-----:|:----------------------------|:-------|:----------------------------------------------------------------|:--------|:--------------------------------------------|:-----------|-----------:|---------:|:-------------|:----------------------------------------------------------|:--------------------------|:--------------------------|------------:|----------------:|---------:|-----:|----------:|:---------------------------------------------------------|:-----|
+| 6259 | LSO_2024_WBCS_v01_M         | survey | World Bank Group Country Survey 2024                            | Lesotho | Public Opinion Research Group               | direct     |       2024 |     2024 | cos          | The World Bank Group Country Opinion Survey Program (COS) | 2024-06-13T17:11:06-04:00 | 2024-06-13T17:11:06-04:00 |        1145 |              49 |      171 |  477 |         1 | <https://microdata.worldbank.org/index.php/catalog/6259> | LSO  |
+| 5906 | WLD_2023_SYNTH-SVY-EN_v01_M | survey | Synthetic Data for an Imaginary Country, Sample, 2023           | World   | Development Data Group, Data Analytics Unit | open       |       2023 |     2023 |              | NA                                                        | 2023-07-07T12:40:30-04:00 | 2023-07-07T12:40:31-04:00 |        4445 |             287 |       76 |  619 |         1 | <https://microdata.worldbank.org/index.php/catalog/5906> | WLD  |
+| 5907 | WLD_2023_SYNTH-SVY-FR_v01_M | survey | Données Synthétiques pour un Pays Imaginaire, Echantillon, 2023 | Monde   | Development Data Group, Data Analytics Unit | open       |       2023 |     2023 |              | NA                                                        | 2023-07-07T12:43:17-04:00 | 2023-07-07T12:43:18-04:00 |        2451 |             190 |       76 |  556 |         1 | <https://microdata.worldbank.org/index.php/catalog/5907> | NA   |
 
 There is also handy function to check latest publications of these
 datasets.
@@ -145,11 +140,11 @@ mdt_latest(org = "ihsn", limit = 3) |>
   kableExtra::kable()
 ```
 
-| id    | idno                | title                                          | country     | created     | changed     | url                                           |
-|:------|:--------------------|:-----------------------------------------------|:------------|:------------|:------------|:----------------------------------------------|
-| 12189 | SLV_2015_GYTS_v01_M | Global Youth Tobacco Survey 2015               | El Salvador | May-08-2024 | May-08-2024 | <https://datacatalog.ihsn.org//catalog/12189> |
-| 12188 | SLV_2013_GSHS_v01_M | Global School-Based Student Health Survey 2013 | El Salvador | May-08-2024 | May-08-2024 | <https://datacatalog.ihsn.org//catalog/12188> |
-| 12187 | SLV_2009_GYTS_v01_M | Global Youth Tobacco Survey 2009               | El Salvador | May-08-2024 | May-08-2024 | <https://datacatalog.ihsn.org//catalog/12187> |
+| id    | idno                       | title                                                                                       | country      | created     | changed     | url                                           |
+|:------|:---------------------------|:--------------------------------------------------------------------------------------------|:-------------|:------------|:------------|:----------------------------------------------|
+| 12193 | MOZ_2021_PROMACIE-ML_v01_M | Promotion of Climate Smart Agriculture II Impact Evaluation 2021                            | Mozambique   | Jun-06-2024 | Jun-06-2024 | <https://datacatalog.ihsn.org//catalog/12193> |
+| 12192 | BFA_2018_SWEDDIE-BL_v01_M  | Sahel Women Empowerment and Demographic Dividend Initiative 2018                            | Burkina Faso | Jun-06-2024 | Jun-06-2024 | <https://datacatalog.ihsn.org//catalog/12192> |
+| 12191 | NPL_2023_WLFP_v01_M        | Women’s Labor Force Participation in Nepal 2023: An Exploration of The Role of Social Norms | Nepal        | Jun-06-2024 | Jun-06-2024 | <https://datacatalog.ihsn.org//catalog/12191> |
 
 ## Study Information
 

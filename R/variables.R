@@ -1,15 +1,14 @@
 
 
-
-
-#' Variables in the Study
+#' Variables in the File
 #'
 #' @description
-#' Get all lists of variables in a study
+#' Get list of all variables included in a single file
 #'
 #'
 #' @param id a study id number. Accepts any of `id` (integer) and
 #' `idno` (string) values to fetch study information.
+#' @param file_id a string specifying file id
 #' @param org a string specifying organization
 #'
 #' @return A data frame
@@ -18,10 +17,11 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
-#' mdt_variables_all(6161)
+#' variables(6161, "F1")
 
 
-mdt_variables_all <- function(id, org = "wb"){
+
+variables <- function(id, file_id, org = "wb"){
 
         api_req <- create_request(org)
 
@@ -30,13 +30,14 @@ mdt_variables_all <- function(id, org = "wb"){
                 api_req <- httr2::req_url_query(api_req, id_format = "id")
         } else {api_req <- httr2::req_url_path_append(api_req, id)}
 
-        api_req <- httr2::req_url_path_append(api_req,  "variables")
+        api_req <- httr2::req_url_path_append(api_req, "data_files", file_id, "variables")
 
         api_resp <- get_response(api_req)
 
         variables <- api_resp$variables
 
         return(variables)
-}
+        }
+
 
 

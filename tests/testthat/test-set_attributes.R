@@ -12,7 +12,7 @@ test_that("Cleans data name and labels", {
                          name = c("age", "gender", "country"),
                          labs = c("Age", "Gender", "Country"))
 
-  cleaned <- mdt_clean(mdt, metadata,
+  cleaned <- set_attributes(mdt, metadata,
                        old_name = "vars",
                        new_name = "name",
                        label = "labs")
@@ -37,7 +37,7 @@ test_that("Drops NA automatically", {
                                name = c(NA, "gender", "country"),
                                labs = c("Age", "Gender", "Country"))
 
-        cleaned <- mdt_clean(mdt, metadata,
+        cleaned <- set_attributes(mdt, metadata,
                              old_name = "vars",
                              new_name = "name",
                              label = "labs")
@@ -63,11 +63,11 @@ test_that("NA can also be skipped", {
                                name = c(NA, "gender", "country"),
                                labs = c("Age", NA, "Country"))
 
-        cleaned <- mdt_clean(mdt, metadata,
+        cleaned <- set_attributes(mdt, metadata,
                              old_name = "vars",
                              new_name = "name",
                              label = "labs",
-                             all_vars = TRUE)
+                             slt_cols = FALSE)
 
         expect_equal(names(cleaned)[[1]], "v1")
 

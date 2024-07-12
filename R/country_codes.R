@@ -9,7 +9,7 @@
 #'
 #' @param org a string that represents the name of an organization.
 #'
-#' @return a data frame with all country codes
+#' @return A data frame with all country codes
 #' @export
 #' @author Gutama Girja Urago
 #'

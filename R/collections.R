@@ -3,23 +3,22 @@
 
 #' Get Collections
 #' @description
-#' Get a list of all available collections
+#' Get a list of all the collections the organization offers.
 #'
 #'
-#' @param org a character string specifying the name of an organization
-#' that will return the listed collections.
+#' @param org a character string (default = "wb") specifying the name of an organization.
 #' At the moment, it supports "wb", "fao", "unhcr", "ihsn" and "ilo" organizations.
 #'
-#' @return A data frame that includes all available collections
+#' @return A data frame that contains all available collections
 #' @export
 #'
 #' @author Gutama Girja Urago
 #'
 #' @examples
-#' mdt_collections("fao")
+#' collections("fao")
 
 
-mdt_collections <- function(org = "wb"){
+collections <- function(org = "wb"){
 
         api_req <- create_request(org)
 
@@ -27,10 +26,10 @@ mdt_collections <- function(org = "wb"){
 
         api_resp <- get_response(api_req)
 
-        collections <- api_resp$collections
+        collections <- api_resp[["collections"]]
 
-        if(!is.data.frame(collections)){
-                stop("\nAt the moment, ", toupper(org), " doesn't have any collections.")
+        if (!is.data.frame(collections)){
+                stop("At the moment, ", toupper(org), " doesn't provide any collection lists.")
                 }
 
         collections <- collapse::fselect(.x = collections,

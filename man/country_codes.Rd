@@ -10,7 +10,7 @@ country_codes(org = "wb")
 \item{org}{a string that represents the name of an organization.}
 }
 \value{
-a data frame with all country codes
+A data frame with all country codes
 }
 \description{
 Get a list of all country codes

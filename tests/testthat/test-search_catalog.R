@@ -2,19 +2,19 @@
 # General tests ----
 
 test_that("Throws an error when wrong organization is supplied",{
-        expect_error(mdt_search(org = "repos"))
+        expect_error(search_catalog(org = "repos"))
 })
 
 # WB ----
 
 
 test_that("By default, it returns the first 15 studies", {
-  expect_equal(nrow(mdt_search(org = "wb")), 15)
+  expect_equal(nrow(search_catalog(org = "wb")), 15)
 })
 
 
 test_that("Throws an error when search is not found",{
-        expect_error(mdt_search(keyword = "ethi", org = "wb"))
+        expect_error(search_catalog(keyword = "ethi", org = "wb"))
 })
 
 
@@ -22,12 +22,12 @@ test_that("Throws an error when search is not found",{
 # FAO ----
 
 test_that("By default, it returns the first 15 studies", {
-        expect_equal(nrow(mdt_search(org = "fao")), 15)
+        expect_equal(nrow(search_catalog(org = "fao")), 15)
 })
 
 
 test_that("Throws an error when search is not found",{
-        expect_error(mdt_search(keyword = "ethi", org = "fao"))
+        expect_error(search_catalog(keyword = "ethi", org = "fao"))
 })
 
 
@@ -36,12 +36,12 @@ test_that("Throws an error when search is not found",{
 # UNHCR ----
 
 test_that("By default, it returns the first 15 studies", {
-        expect_equal(nrow(mdt_search(org = "unhcr")), 15)
+        expect_equal(nrow(search_catalog(org = "unhcr")), 15)
 })
 
 
 test_that("Throws an error when search is not found",{
-        expect_error(mdt_search(keyword = "ethi", org = "unhcr"))
+        expect_error(search_catalog(keyword = "ethi", org = "unhcr"))
 })
 
 
@@ -49,12 +49,12 @@ test_that("Throws an error when search is not found",{
 
 
 test_that("By default, it returns the first 15 studies", {
-        expect_equal(nrow(mdt_search(org = "ihsn")), 15)
+        expect_equal(nrow(search_catalog(org = "ihsn")), 15)
 })
 
 
 test_that("Throws an error when search is not found",{
-        expect_error(mdt_search(keyword = "ethi", org = "ihsn"))
+        expect_error(search_catalog(keyword = "ethi", org = "ihsn"))
 })
 
 
@@ -62,11 +62,11 @@ test_that("Throws an error when search is not found",{
 
 
 test_that("By default, it returns the first 15 studies", {
-        expect_equal(nrow(mdt_search(org = "ilo")), 15)
+        expect_equal(nrow(search_catalog(org = "ilo")), 15)
 })
 
 test_that("Throws an error when search is not found",{
-        expect_error(mdt_search(keyword = "ethi", org = "ilo"))
+        expect_error(search_catalog(keyword = "ethi", org = "ilo"))
 })
 
 

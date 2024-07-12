@@ -17,15 +17,15 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
-#' mdt_latest("fao", 25)
+#' latest_entries("fao", 25)
 
-mdt_latest <- function(org = "wb", limit = NULL){
+latest_entries <- function(org = "wb", limit = NULL){
 
         request <- create_request(org)
 
         request <- httr2::req_url_path_append(request, "latest")
 
-        if(!is.null(limit)) {
+        if (!is.null(limit)) {
                 request <- httr2::req_url_query(request, limit = limit)
                 }
 

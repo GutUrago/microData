@@ -5,7 +5,7 @@
 #' Search Microdata Catalog
 #'
 #' @description
-#' Search microdata catalog
+#' Use all the search parameters available on the website.
 #'
 #' @param keyword a string keyword used to search
 #' @param org a string that represents the name of an organization.
@@ -13,7 +13,7 @@
 #' @param to an integer indicating end year for the data collection.
 #' @param country a string. Provide country name or ISO 3 code.
 #' For country names and codes, see `country_codes()`.
-#' For searching multiple countries, you can mix country name and ISO 3 code.
+#' For searching multiple countries, you can even mix country name and ISO 3 code.
 #' Example `c("Afghanistan", "Indonesia")` or `c("afg", "ind")` or `c("afghanistan", "ind")`
 #' @param inc_iso a logical. Set the parameter value to `TRUE` to
 #' include the ISO3 country codes in the results. `Default = FALSE`
@@ -25,12 +25,12 @@
 #' "open", "direct", "public", "licensed", "enclave", "remote" and "other".
 #' For example, `c("open", "direct")`. See `access_types()`
 #' @param sort_by a string value used to sort the result and takes values of
-#' "rank", "title", "country" and "year" Sort search results.
+#' "rank", "title", "country" and "year" to sort search results.
 #' @param sort_order a string indicating how to sort the result and takes values of
 #' "asc" or "desc". Ascending = asc, Descending = desc
 #' @param results an integer indicating number of records per page.
 #' set `results = "all"` to get all found results. Default is 15 records per page.
-#' @param page an integer. Page to return for the search result
+#' @param page an integer. Page number to return for the search result
 #'
 #' @return Returns a data frame
 #' @export
@@ -38,22 +38,22 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
-#' mdt_search("lsms")
+#' search_catalog("lsms")
 
 
-mdt_search <- function(keyword = NULL,
-                       org = "wb",
-                       from = NULL,
-                       to = NULL,
-                       country = NULL,
-                       inc_iso = FALSE,
-                       collection = NULL,
-                       created = NULL,
-                       dtype = NULL,
-                       sort_by = NULL,
-                       sort_order = NULL,
-                       results = NULL,
-                       page = NULL){
+search_catalog <- function(keyword = NULL,
+                           org = "wb",
+                           from = NULL,
+                           to = NULL,
+                           country = NULL,
+                           inc_iso = FALSE,
+                           collection = NULL,
+                           created = NULL,
+                           dtype = NULL,
+                           sort_by = NULL,
+                           sort_order = NULL,
+                           results = NULL,
+                           page = NULL){
 
         request <- create_request(org)
 
@@ -68,15 +68,14 @@ mdt_search <- function(keyword = NULL,
 
         results <- api_resp$result$rows
 
-        if(!is.data.frame(results)){
-                stop("\nYour search did not match any studies held in the catalog.")
+        if (!is.data.frame(results)){
+                stop("\nYour search did not match any studies provided in the catalog.")
         }
 
         results$data_class_id <- NULL
         results$thumbnail <- NULL
 
-        results <- collapse::frename(.x = results,
-                                     "country" = "nation")
+        results <- collapse::frename(.x = results, "country" = "nation")
 
         return(results)
         }

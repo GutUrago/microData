@@ -46,12 +46,17 @@ devtools::install_github("GutUrago/microData")
 
 All organizations supported by this package use the NADA API to publish micro-data, which makes use of similar terminologies. Collection simply means gathering multiple related studies or data sets. To see all available collections, you can use `mdt_collections` function.
 
-```{r}
+```{r warning=FALSE, message=FALSE}
+library(kableExtra)
 library(microData)
 
-mdt_collections(org = "wb") |> 
-  head() |> 
-  kableExtra::kable()
+# conflicted::conflict_prefer_all("kableExtra")
+
+# mdt_collections(org = "wb") |> 
+#   head() %>%
+#   kable() |> 
+#   kable_classic()
+
 
 ```
 
