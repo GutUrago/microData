@@ -28,7 +28,7 @@
 #' @examples
 #' if(FALSE){
 #' set_attributes(.data = read.csv("microdata.csv"),
-#'               metadata = readxl::read_excel("metadata.xlsx"),
+#'               metadata = 'readxl::read_excel("metadata.xlsx")',
 #'               old_name = "Names",
 #'               new_name = "New Names",
 #'               label = "Labels")
