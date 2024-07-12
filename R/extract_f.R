@@ -3,7 +3,7 @@
 
 
 
-#' Title
+#' Extract f stat from anova tests
 #'
 #' @param models a named list of anova models
 #' @param .round an integer to F stat
