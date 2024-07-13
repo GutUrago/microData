@@ -7,7 +7,7 @@
 extract_f(models, .round = 2, .stars = c(0.01, 0.05, 0.1))
 }
 \arguments{
-\item{models}{a named list of anova models}
+\item{models}{a named list of linear models (lm)}
 
 \item{.round}{an integer to F stat}
 
@@ -22,7 +22,7 @@ Extract f stat from anova tests
 \examples{
 if (FALSE){
 extract_f(models = list(
-Age = aov(age ~ sex, data = my_data)))
+Age = stats::lm(age ~ sex, weights = pw, data = my_data)))
 }
 }
 \author{

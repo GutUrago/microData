@@ -20,6 +20,7 @@ Imports:
     httr2
 Suggests:
     jsonlite,
+    stats,
     testthat (>= 3.0.0)
 URL: https://github.com/GutUrago/microData
 BugReports: https://github.com/GutUrago/microData/issues

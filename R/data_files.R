@@ -18,7 +18,9 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
+#' if (FALSE){
 #' data_files("ALB_2012_LSMS_v01_M_v01_A_PUF", "wb")
+#' }
 
 
 data_files <- function(id, org = "wb"){

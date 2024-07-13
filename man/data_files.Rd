@@ -20,7 +20,9 @@ A data frame
 Get list of all data files included in the study
 }
 \examples{
+if (FALSE){
 data_files("ALB_2012_LSMS_v01_M_v01_A_PUF", "wb")
+}
 }
 \author{
 Gutama Girja Urago
