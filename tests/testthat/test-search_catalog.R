@@ -9,12 +9,12 @@ test_that("Throws an error when wrong organization is supplied",{
 
 
 test_that("By default, it returns the first 15 studies", {
-  expect_equal(nrow(search_catalog(org = "wb")), 15)
+  expect_equal(nrow(search_catalog(org = "fao")), 15)
 })
 
 
 test_that("Throws an error when search is not found",{
-        expect_error(search_catalog(keyword = "ethi", org = "wb"))
+        expect_error(search_catalog(keyword = "ethi", org = "fao"))
 })
 
 

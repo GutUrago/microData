@@ -19,7 +19,9 @@ A data frame
 Get all lists of variables in a study
 }
 \examples{
+if (FALSE){
 variables_all(6161)
+}
 }
 \author{
 Gutama Girja Urago

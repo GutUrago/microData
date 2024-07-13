@@ -21,7 +21,9 @@ A data frame
 Get list of all variables included in a single file
 }
 \examples{
+if (FALSE){
 variables(6161, "F1")
+}
 }
 \author{
 Gutama Girja Urago

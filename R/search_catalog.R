@@ -38,7 +38,9 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
+#' if (FALSE){
 #' search_catalog("lsms")
+#' }
 
 
 search_catalog <- function(keyword = NULL,

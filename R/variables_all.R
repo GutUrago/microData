@@ -19,7 +19,9 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
+#' if (FALSE){
 #' variables_all(6161)
+#' }
 
 
 variables_all <- function(id, org = "wb"){

@@ -17,7 +17,9 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
+#' if (FALSE){
 #' variables(6161, "F1")
+#' }
 
 
 

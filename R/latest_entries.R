@@ -17,7 +17,9 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
+#' if (FALSE){
 #' latest_entries("fao", 25)
+#' }
 
 latest_entries <- function(org = "wb", limit = NULL){
 

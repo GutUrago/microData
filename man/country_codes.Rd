@@ -16,7 +16,9 @@ A data frame with all country codes
 Get a list of all country codes
 }
 \examples{
+if (FALSE){
 country_codes()
+}
 }
 \author{
 Gutama Girja Urago

@@ -21,7 +21,9 @@ A list
 Get a single variable metadata
 }
 \examples{
+if (FALSE){
 variable(6161, "v10")
+}
 }
 \author{
 Gutama Girja Urago

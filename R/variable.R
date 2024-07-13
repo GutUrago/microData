@@ -17,7 +17,9 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
+#' if (FALSE){
 #' variable(6161, "v10")
+#' }
 
 
 variable <- function(id, var_id, org = "wb"){

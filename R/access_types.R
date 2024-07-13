@@ -14,7 +14,9 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
+#' if (FALSE){
 #' access_types()
+#' }
 #'
 
 

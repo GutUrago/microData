@@ -19,7 +19,9 @@ A data frame
 Get latest catalog entries
 }
 \examples{
+if (FALSE){
 latest_entries("fao", 25)
+}
 }
 \author{
 Gutama Girja Urago

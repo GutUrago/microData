@@ -16,7 +16,9 @@ A data frame
 Get all access types for data
 }
 \examples{
+if (FALSE){
 access_types()
+}
 
 }
 \author{

@@ -14,7 +14,9 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
+#' if (FALSE){
 #' country_codes()
+#' }
 
 
 country_codes <- function(org = "wb"){

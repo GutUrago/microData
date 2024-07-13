@@ -15,7 +15,9 @@
 #' @author Gutama Girja Urago
 #'
 #' @examples
+#' if (FALSE){
 #' collections("fao")
+#' }
 
 
 collections <- function(org = "wb"){

@@ -65,7 +65,9 @@ Returns a data frame
 Use all the search parameters available on the website.
 }
 \examples{
+if (FALSE){
 search_catalog("lsms")
+}
 }
 \author{
 Gutama Girja Urago

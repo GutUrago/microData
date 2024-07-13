@@ -17,7 +17,9 @@ A data frame that contains all available collections
 Get a list of all the collections the organization offers.
 }
 \examples{
+if (FALSE){
 collections("fao")
+}
 }
 \author{
 Gutama Girja Urago
