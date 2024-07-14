@@ -1,9 +1,11 @@
 test_that("Returns named vector", {
 
-        Fstat <- extract_f(models = list(
-                "Sepal length" = lm(Sepal.Length ~ Species, data = iris)))
 
-        expect_equal(Fstat, c("Sepal length" = "119.26***"))
+
+        Fstat <- extract_f(x = c("Sepal length" = "Sepal.Length"),
+                           by = "Species", data = iris, .round = 3)
+
+        expect_equal(Fstat, c("Sepal length" = "119.265***"))
 })
 
 
@@ -14,8 +16,7 @@ test_that("Stars are based on p value", {
                 cat = c(1, 1, 2, 2)
         )
 
-        Fstat <- extract_f(models = list(
-                "x" = lm(x ~ cat, data = my_data)))
+        Fstat <- extract_f(x = "x", by = "cat", data = my_data)
 
         expect_equal(Fstat, c("x" = "0"))
 })

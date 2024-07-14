@@ -2,27 +2,34 @@
 % Please edit documentation in R/extract_f.R
 \name{extract_f}
 \alias{extract_f}
-\title{Extract f stat from anova tests}
+\title{Extract F stat from lm}
 \usage{
-extract_f(models, .round = 2, .stars = c(0.01, 0.05, 0.1))
+extract_f(x, by, data, .round = 2, .stars = c(0.01, 0.05, 0.1), ...)
 }
 \arguments{
-\item{models}{a named list of linear models (lm)}
+\item{x}{a vector of continuous variable}
 
-\item{.round}{an integer to F stat}
+\item{by}{a character name of categorical variable}
 
-\item{.stars}{a vector of p value cutoffs for significance stars}
+\item{data}{a data frame}
+
+\item{.round}{an integer value and digits after decimal}
+
+\item{.stars}{a vector of significance p values}
+
+\item{...}{other arguments to pass to \code{stats::lm} model}
 }
 \value{
-A named vector to be inserted in summary tables
+A named vector of F values with significance stars
 }
 \description{
-Extract f stat from anova tests
+For each continuous variable supplied, it extracts F stat (ANOVA) and
+returns named vector.
 }
 \examples{
-if (FALSE){
-extract_f(models = list(
-Age = stats::lm(age ~ sex, weights = pw, data = my_data)))
+if(FALSE) {
+extract_f(x = c("Sepal length" = "Sepal.Length"),
+by = "Species", data = iris, .round = 3)
 }
 }
 \author{
