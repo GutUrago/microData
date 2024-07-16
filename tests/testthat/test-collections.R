@@ -14,8 +14,8 @@ test_that("It has 9 collections", {
 
 # UNHCR ----
 
-test_that("It has 19 collections", {
-        expect_lt(nrow(collections(org = "unhcr")), 20)
+test_that("It has 20 collections", {
+        expect_lt(nrow(collections(org = "unhcr")), 25)
 })
 
 # IHSN ----

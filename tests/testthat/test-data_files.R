@@ -2,9 +2,9 @@
 
 # WB ----
 
-# test_that("This study has 125 data files", {
-#         expect_equal(nrow(data_files(1049, "wb")), 125)
-# })
+test_that("This study has 125 data files", {
+        expect_equal(nrow(data_files("IDN_2009_PNPM_v01_M_v01_A_PUF", "wb")), 125)
+})
 
 
 # FAO ----

@@ -3,7 +3,8 @@ test_that("Returns named vector", {
 
 
         Fstat <- extract_f(x = c("Sepal length" = "Sepal.Length"),
-                           by = "Species", data = iris, .round = 3)
+                           by = "Species", data = iris,
+                           .round = 3)
 
         expect_equal(Fstat, c("Sepal length" = "119.265***"))
 })
