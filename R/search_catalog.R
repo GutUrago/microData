@@ -17,7 +17,8 @@
 #' Example `c("Afghanistan", "Indonesia")` or `c("afg", "ind")` or `c("afghanistan", "ind")`
 #' @param inc_iso a logical. Set the parameter value to `TRUE` to
 #' include the ISO3 country codes in the results. `Default = FALSE`
-#' @param collection a string. Filter results by one or more collections.
+#' @param collection a string. It is value returned as `repo_id` column
+#' after calling `collections()`.
 #' @param created a string. Filter results by date of creation.
 #' Use the date format YYYY-MM-DD. Examples, 2020/04/01 returns records created on and after
 #' that date. To specify a date range, use the format 2020/04/01-2020/04/20

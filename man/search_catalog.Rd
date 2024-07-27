@@ -37,7 +37,8 @@ Example \code{c("Afghanistan", "Indonesia")} or \code{c("afg", "ind")} or \code{
 \item{inc_iso}{a logical. Set the parameter value to \code{TRUE} to
 include the ISO3 country codes in the results. \code{Default = FALSE}}
 
-\item{collection}{a string. Filter results by one or more collections.}
+\item{collection}{a string. It is value returned as \code{repo_id} column
+after calling \code{collections()}.}
 
 \item{created}{a string. Filter results by date of creation.
 Use the date format YYYY-MM-DD. Examples, 2020/04/01 returns records created on and after

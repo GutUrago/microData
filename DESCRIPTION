@@ -1,16 +1,16 @@
 Package: microData
-Title: Search, Browse, and Export Metadata for Microdata
+Title: Search, Browse, and Import Metadata for Microdata
 Version: 0.0.0.9000
 Authors@R: 
     person("Gutama Girja", "Urago", , "girjagutama@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-5588-2301"))
-Description: An API wrapper package that helps to search, browse, and download metadata
+Description: An API wrapper package that helps to search, browse, and import metadata
     for microdata published by international organizations. At the moment, the 
     package supports microdata available on the World Bank, United Nations Food
     and Agricultural Organization, United Nations High Commissioner for Refugees,
     International Labor Organization, and International Household Survey Network.
     These organizations use the NADA API to publish collected surveys with different
-    types of access.
+    types of access. In addition, the package includes some miscellaneous functions.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -21,7 +21,8 @@ Imports:
 Suggests:
     jsonlite,
     stats,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    weights
 URL: https://github.com/GutUrago/microData
 BugReports: https://github.com/GutUrago/microData/issues
 Config/testthat/edition: 3

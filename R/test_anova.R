@@ -1,17 +1,19 @@
 
 
-#' Extract F stat from lm
+#' Extract F-stat from ANOVA Test
 #' @description
 #' For each continuous variable supplied, it extracts F stat (ANOVA) and
 #' returns named vector.
 #'
 #'
-#' @param x a vector of continuous variable
-#' @param by a character name of categorical variable
-#' @param data a data frame
+#' @param data a data frame containing all variables passed to arguments
+#' @param vars a string or (named) vector of continuous variables
+#' @param by a string name of categorical variable
+#' @param w a string of weights variable name
+
 #' @param .round an integer value and digits after decimal
 #' @param .stars a vector of significance p values
-#' @param ... other arguments to pass to `stats::lm` model
+#' @param ... other arguments to pass to `stats::lm()` model
 #'
 #' @return A named vector of F values with significance stars
 #' @author Gutama Girja Urago
@@ -19,25 +21,32 @@
 #'
 #' @examples
 #' if(FALSE) {
-#' extract_f(x = c("Sepal length" = "Sepal.Length"),
-#' by = "Species", data = iris, .round = 3)
+#' test_anova(data = iris,
+#' vars = c("Sepal length" = "Sepal.Length",
+#' "Sepal Width" = "Sepal.Width"),
+#' by = "Species", .round = 3)
 #' }
-extract_f <- function(x, by, data, .round = 2,
-                      .stars = c(0.01, 0.05, 0.1), ...) {
+test_anova <- function(data,
+                       vars,
+                       by,
+                       w = NULL,
+                       .round = 2,
+                       .stars = c(0.01, 0.05, 0.1),
+                       ...) {
 
 
-        if (!is.null(names(x))) {
-                x_names <- names(x)
+        if (!is.null(names(vars))) {
+                x_names <- names(vars)
         } else {
-                        x_names <- x
+                        x_names <- vars
         }
 
         models <- list()
 
-        for(i in 1:length(x)) {
+        for(i in 1:length(vars)) {
                 models[[x_names[i]]] <- stats::lm(
-                        formula = stats::as.formula(paste(x[i], "~", by)),
-                        data = data, ...
+                        formula = stats::as.formula(paste(vars[i], "~", by)),
+                        data = data, weights = w, ...
                 )
         }
 

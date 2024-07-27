@@ -2,8 +2,9 @@ test_that("Returns named vector", {
 
 
 
-        Fstat <- extract_f(x = c("Sepal length" = "Sepal.Length"),
-                           by = "Species", data = iris,
+        Fstat <- test_anova(data = iris,
+                            vars = c("Sepal length" = "Sepal.Length"),
+                            by = "Species",
                            .round = 3)
 
         expect_equal(Fstat, c("Sepal length" = "119.265***"))
@@ -17,7 +18,9 @@ test_that("Stars are based on p value", {
                 cat = c(1, 1, 2, 2)
         )
 
-        Fstat <- extract_f(x = "x", by = "cat", data = my_data)
+        Fstat <- test_anova(data = my_data,
+                            vars = "x",
+                            by = "cat")
 
         expect_equal(Fstat, c("x" = "0"))
 })
