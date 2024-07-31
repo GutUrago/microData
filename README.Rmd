@@ -25,11 +25,11 @@ knitr::opts_chunk$set(
 
 ## What?
 
-I am developing the `microData` R package to search, browse, and extract metadata from microdata provided by the World Bank (WB), Food and Agriculture Organization (FAO), International Household Survey (IHSN), United Nations High Commissioner for Refugees (UNHCR), and International Labor Organization (ILO) via the NADA API. If you've used microdata from these organizations for your research, you know the pain and time it takes to understand what all these data and variables mean. If you are also willing or planning to use micradata, then this is the life-saving package for you.
+I am developing the `microData` package to search, browse, and extract metadata from microdata provided by the World Bank (WB), Food and Agriculture Organization (FAO), International Household Survey (IHSN), United Nations High Commissioner for Refugees (UNHCR), and International Labor Organization (ILO) via the NADA API. Any researcher who has used microdata from these organizations knows how difficult and time-consuming it is to understand and import these data and variables into R. If you are a user or plan to use micradata, then this is the life-saving R package for you.
 
 ## Abstract
 
-The purpose of `microData` is to simplify the process of extracting complex metadata from data provided by various organizations, thereby improving data preparation efficiency. At the moment, it supports five international organizations, namely the World Bank, FAO, UNHCR, IHSN, and ILO. It has the ability to search, filter, extract, and perform other tasks that you can do on the web, but it cannot download the data file itself. This is because, to my knowledge, there is currently no available documentation for use with the API. Furthermore, this package has the ability to assist in obtaining the names of variables from a specific survey, as well as their labels. It also allows you to select only variables that you are interested in and rename them, while assigning variable descriptions as label attributes. You can set custom names and labels for the dataset. Labels play a crucial role when exporting tables and graphs, as they save you from setting long names in manuscripts manually. Therefore, this package is available to alleviate all these difficulties.
+The purpose of `microData` is to simplify the process of extracting complex metadata from data provided by various organizations, thereby improving data preparation efficiency. At the moment, it supports five international organizations, namely the World Bank, FAO, UNHCR, IHSN, and ILO. It has the ability to search, filter, extract, and perform other tasks that you can do on the web, but it cannot download the data file itself. This is because, to my knowledge, there is currently no available documentation for use with the API. I think it is due to data license issue because there are few accessible datasets through the API. Furthermore, this package has the ability to assist in obtaining the names of variables from a specific survey, as well as their labels. It also allows you to select only variables that you are interested in and rename them, while assigning variable descriptions as label attributes. You can set custom names and labels for the dataset. Labels play a crucial role when exporting tables and graphs, as they save you from setting long names in manuscripts manually. Therefore, this package is available to alleviate all these difficulties.
 
  <span style="color:orange">**Warning:** Since this package is still under development, I don't recommend you use it in reproducible code, as any changes can happen in the future.</span>
 
@@ -44,47 +44,33 @@ devtools::install_github("GutUrago/microData")
 
 ## Collection
 
-All organizations supported by this package use the NADA API to publish micro-data, which makes use of similar terminologies. Collection simply means gathering multiple related studies or data sets. To see all available collections, you can use `mdt_collections` function.
-
-```{r warning=FALSE, message=FALSE}
-library(kableExtra)
-library(microData)
-
-# conflicted::conflict_prefer_all("kableExtra")
-
-# mdt_collections(org = "wb") |> 
-#   head() %>%
-#   kable() |> 
-#   kable_classic()
-
-
-```
-
-
-
-Once you have reviewed all available collections, you may find one that piques your interest and would like further details. Then, `mdt_collection` function is there for you. In your HTML viewer, it prints the repository description. Below, a sample HTML response is embedded.
-
-
-
-<div style="text-align: center; background-color: rgba(30, 120, 130, 0.1); border-radius: 25px">
+All organizations supported by this package use the NADA API to publish micro-data, which makes use of similar terminologies. Collection simply means gathering multiple related studies or data sets. To see all available collections, you can use `collections()` function.
 
 ```{r}
-mdt_collection(repo_id = "lsms", org = "wb", raw_html = T)
+library(microData)
+
+collections(org = "wb") |> 
+  head() |> 
+  kableExtra::kable()
+
 ```
-</div>
+
 
 
 ## Searching
 
-This package gives all flexibility of searching on the web. For more see the documentation for `mdt_search`.
+This package gives all flexibility of searching on the web. For more see the documentation for `search_catalog()`.
 
 ```{r}
-mdt_search(keyword = "migration",
-           from = 2015,
-           to = 2024,
-           sort_by = "year",
-           sort_order = "desc", 
-           results = 3) |> 
+search_catalog(
+  keyword = "food",
+  org = "unhcr",
+  from = 2015,
+  to = 2024,
+  country ="Ethiopia",
+  sort_by = "year",
+  sort_order = "desc", 
+  results = 3) |> 
   kableExtra::kable()
 ```
 
@@ -92,29 +78,16 @@ mdt_search(keyword = "migration",
 There is also handy function to check latest publications of these datasets.
 
 ```{r}
-mdt_latest(org = "ihsn", limit = 3) |> 
+latest_entries(org = "wb", limit = 3) |> 
   kableExtra::kable()
 ```
 
 
-## Study Information
 
-After going through available datasets, you may be interested to know more about that specific study. Just use `mdt_abstract` to read abstract directly in your Rstudio.
-
-<div style="text-align: center; background-color: rgba(30, 120, 130, 0.1); border-radius: 25px">
+You can use `data_files` to see the data files included in the study. Let's see one of the popular survey on the WB. We can also use id number of the study, which is 3110 instead of the name (See next code chunk).
 
 ```{r}
-mdt_abstract(id = 2939, raw_html = T)
-```
-
-</div>
-
-
-You can use `mdt_files` to see the data files included in the study.
-
-```{r}
-mdt_files(id = 2939) |> 
-  head(3) |> 
+data_files(id = "IND_2015_DHS_v01_M_v02_A_IPUMS", org = "wb") |> 
   kableExtra::kable()
 ```
 
@@ -122,26 +95,26 @@ How about variables included in the data file? Of course you can check them as w
 
 
 ```{r}
-mdt_variables(id = 2939, file_id = "F4") |> 
-  _[9:15,] |> 
+variables(id = 3110, file_id = "W") |> 
+  head() |> 
   kableExtra::kable()
 ```
 
 
-## Cleaning
+## Setting Attributes
 
 Variables in microdata are often named something that has nothing to do with the variable except question order like this.
 
 ```{r echo=FALSE}
 mdt <- data.frame(v1 = c(22:25),
-                    v2 = rep(c("male", "female"), 2),
-                    v3 = rep(c("BE", "DE"), 2))
+                  v2 = rep(c("male", "female"), 2),
+                  v3 = rep(c("BE", "DE"), 2))
 
 kableExtra::kable(mdt)
 ```
 
 
-Then you can prepare another data that contains metadata like this. I will be explained in detail in vignettes later.
+Then you can prepare another data that contains metadata like this. It will be explained in detail in vignettes later.
 
 
 ```{r echo=FALSE}
@@ -152,29 +125,27 @@ kableExtra::kable(metadata)
 ```
 
 
-You can use `mdt_clean` function to rename and set labels to these variables.
+You can use `set_attributes` function to rename and set labels to these variables.
 
 
 ```{r}
-cleaned <- mdt_clean(mdt, 
-                     metadata,
-                     old_name = "vars",
-                     new_name = "name",
-                     label = "labs")
-kableExtra::kable(cleaned)
+my_data <- set_attributes(
+  mdt, 
+  metadata,
+  old_name = "vars",
+  new_name = "name",
+  label = "labs")
+kableExtra::kable(my_data)
 ```
 
 
 labels are also assigned.
 ```{r}
-attr(cleaned$gender, "label")
+str(my_data)
 ```
 
 
 
 More coming soon!
-
-
-##  <span style="color:blue; text-align: center;">The End!</span>
 
 
