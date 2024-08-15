@@ -2,27 +2,33 @@
 % Please edit documentation in R/dummify.R
 \name{dummify}
 \alias{dummify}
-\title{Dummify variables}
+\title{Convert a Variables into Dummy}
 \usage{
-dummify(.data, vars, refs = NULL)
+dummify(data, vars, refs = NULL, keep = FALSE)
 }
 \arguments{
-\item{.data}{a data frame}
+\item{data}{is a data frame containing variables.}
 
-\item{vars}{a vector of variables to be used to create dummmies}
+\item{vars}{is a vector of variables to be coded into dummy.}
 
-\item{refs}{a reference level for variables}
+\item{refs}{is a (named) vector used as reference for dummy coding.}
+
+\item{keep}{is a logical indicating if the original variable is also returned.}
 }
 \value{
-A data frame with newly added dummy variables
+A data frame with newly added dummy variables with labels attribute.
 }
 \description{
-Dummifies variables in a data set and add new dummies to a data frame
+It converts categorical or factor variable into binary variable coded as 0 and 1.
+}
+\details{
+It computes a dummy variable for each unique value of the supplied variable
+except for reference, if provided.
 }
 \examples{
-if (FALSE){
-dummify(df, c("sex", "race"), c("m", "b"))
-}
+
+dummify(data = iris, vars = Species, refs = c(Species = "setosa"))
+
 }
 \author{
 Gutama Girja Urago

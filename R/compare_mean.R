@@ -2,7 +2,7 @@
 
 
 
-#' Summarize Group (Weighted) Mean
+#' Compare Group (Weighted) Mean
 #' @description
 #' Create a summary table for the (weighted) mean by group and performs an ANOVA test.
 #'  If the grouping variable is binary, t-statistics is reported instead of f-statistic.
@@ -42,12 +42,12 @@
 #' @examples
 #'
 #' if (FALSE) {
-#' summarize_mean(iris, vars = c(Sepal.Length, Sepal.Width,
+#' compare_mean(iris, vars = c(Sepal.Length, Sepal.Width,
 #' Petal.Length, Petal.Width),
 #' by = Species)
 #' }
 #'
-summarize_mean <- function(data, vars, by, w = NULL,
+compare_mean <- function(data, vars, by, w = NULL,
                            digits = 2, use_labels = TRUE,
                            stars_on = "stat",
                            sign_levels = c("***" = 0.01, "**" = 0.05, "*" = 0.1)) {
@@ -185,10 +185,6 @@ summarize_mean <- function(data, vars, by, w = NULL,
 
 }
 
-
-#' @rdname summarize_mean
-#' @export
-summarise_mean <- summarize_mean
 
 
 
