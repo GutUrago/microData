@@ -6,10 +6,8 @@ Authors@R:
            comment = c(ORCID = "0000-0001-5588-2301"))
 Description: An API wrapper package that helps to search, browse, and import metadata
     for microdata published by international organizations. At the moment, the 
-    package supports microdata available on the repository of the World Bank, United Nations Food
-    and Agricultural Organization, United Nations High Commissioner for Refugees,
-    International Labor Organization, and International Household Survey Network.
-    These organizations use the NADA API to publish collected surveys with different
+    package supports microdata available on the repository of the WB, FAO, ILO, and IHSN.
+    These organizations use the NADA REST API to publish collected surveys with different
     types of access. In addition, the package includes some miscellaneous but important functions.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -19,10 +17,13 @@ Imports:
     collapse,
     httr2
 Suggests:
+    data.table,
     jsonlite,
     stats,
     testthat (>= 3.0.0)
 URL: https://github.com/GutUrago/microData
 BugReports: https://github.com/GutUrago/microData/issues
 Config/testthat/edition: 3
-
+Depends: 
+    R (>= 2.10)
+LazyData: true

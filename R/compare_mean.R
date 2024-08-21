@@ -125,21 +125,23 @@ compare_mean <- function(data, vars, by, w = NULL,
 
         test_df$stat <- round(test_df$stat, digits)
 
+        sign_levels <- sort(sign_levels)
         .stars <- names(sign_levels)
 
         if (tolower(stars_on) == "stat" || tolower(stars_on) == "diffs") {
-                test_df[["p_value"]] <- if (p_value < sign_levels[1]) {
-                        .stars[1]
-                }
-                else if (p_value < sign_levels[2]) {
-                        .stars[1]
-                }
-                else if (p_value < sign_levels[3]) {
-                        .stars[1]
-                }
-                else {
-                        ""
-                }
+
+                for (i in 1:nrow(test_df)) {
+                        p_value <- test_df[["p_value"]][i]
+                        star <- ""
+                        for (j in 1:length(sign_levels)) {
+                                if (p_value < sign_levels[j]) {
+                                        star <- .stars[j]
+                                        break
+                                        }
+                                }
+                        test_df[["p_value"]][i] <- star
+                        }
+
         }
 
         if (tolower(stars_on) == "stat") {

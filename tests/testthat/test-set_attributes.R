@@ -64,9 +64,9 @@ test_that("NA can also be skipped", {
                                labs = c("Age", NA, "Country"))
 
         cleaned <- set_attributes(mdt, metadata,
-                             old_name = "vars",
-                             new_name = "name",
-                             label = "labs",
+                             old_name = vars,
+                             new_name = name,
+                             label = labs,
                              slt_cols = FALSE)
 
         expect_equal(names(cleaned)[[1]], "v1")

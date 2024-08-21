@@ -8,15 +8,15 @@
 #' Set names and label attributes to the data frame
 #'
 #'
-#' @param .data a data frame
+#' @param data a data frame
 #' @param metadata a data frame that contains old names, new names and
 #' labels of each variables
 #' @param old_name a column name in the `metadata` that contains
-#' old names that exist in the `.data`.
+#' old names that exist in the `data`.
 #' @param new_name a column name in the `metadata` that contains
-#' new names to be set to the variables in the `.data`.
+#' new names to be set to the variables in the `data`.
 #' @param label a column name in the `metadata` that contains
-#' labels to be set to the variables in the `.data`
+#' labels to be set to the variables in the `data`
 #' @param slt_cols a logical. If `TRUE (default)` only variables that have new names
 #' will be returned, and if `FALSE` all variables will be returned.
 #'
@@ -27,7 +27,7 @@
 #'
 #' @examples
 #' if(FALSE){
-#' set_attributes(.data = read.csv("microdata.csv"),
+#' set_attributes(data = read.csv("microdata.csv"),
 #'               metadata = 'readxl::read_excel("metadata.xlsx")',
 #'               old_name = "Names",
 #'               new_name = "New Names",
@@ -36,12 +36,21 @@
 
 
 
-set_attributes <- function(.data,
+set_attributes <- function(data,
                            metadata,
                            old_name,
                            new_name,
                            label = NULL,
                            slt_cols = TRUE){
+
+        old_name <- substitute(old_name)
+        old_name <- as.character(old_name)
+
+        new_name <- substitute(new_name)
+        new_name <- as.character(new_name)
+
+        label <- substitute(label)
+        label <- as.character(label)
 
         metadata <- collapse::na_omit(X = metadata,
                                       cols = old_name)
@@ -50,7 +59,7 @@ set_attributes <- function(.data,
                 metadata <- collapse::na_omit(X = metadata,
                                               cols = new_name)
 
-                .data <- collapse::get_vars(x = .data,
+                data <- collapse::get_vars(x = data,
                                           vars = metadata[[old_name]])
         }
 
@@ -60,15 +69,15 @@ set_attributes <- function(.data,
         new_names <- metadata[[new_name]]
         names(new_names) <- metadata[[old_name]]
 
-        .data <- collapse::frename(.data, new_names, .nse = FALSE)
+        data <- collapse::frename(data, new_names, .nse = FALSE)
 
         if (!is.null(label)) {
                 new_labels <- metadata[[label]]
                 names(new_labels) <- metadata[[new_name]]
 
-                .data <- collapse::relabel(.data, new_labels, .nse = FALSE)
+                data <- collapse::relabel(data, new_labels, .nse = FALSE)
         }
 
-        return(.data)
+        return(data)
 }
 

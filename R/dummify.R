@@ -57,10 +57,7 @@ dummify <- function(data, vars, refs = NULL, keep = FALSE) {
                         ifelse(data[[var]] == x, 1, 0)
                 })
 
-                if (length(dummies) > 1L) {
-                        colnames(dummy_df) <- paste(var, dummies, sep = "_")
-                        } else colnames(dummy_df) <- var
-
+                colnames(dummy_df) <- paste(var, dummies, sep = "_")
 
                 dummy_df <- as.data.frame(dummy_df)
 

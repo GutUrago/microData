@@ -5,7 +5,7 @@
 \title{Cleans Microdata}
 \usage{
 set_attributes(
-  .data,
+  data,
   metadata,
   old_name,
   new_name,
@@ -14,19 +14,19 @@ set_attributes(
 )
 }
 \arguments{
-\item{.data}{a data frame}
+\item{data}{a data frame}
 
 \item{metadata}{a data frame that contains old names, new names and
 labels of each variables}
 
 \item{old_name}{a column name in the \code{metadata} that contains
-old names that exist in the \code{.data}.}
+old names that exist in the \code{data}.}
 
 \item{new_name}{a column name in the \code{metadata} that contains
-new names to be set to the variables in the \code{.data}.}
+new names to be set to the variables in the \code{data}.}
 
 \item{label}{a column name in the \code{metadata} that contains
-labels to be set to the variables in the \code{.data}}
+labels to be set to the variables in the \code{data}}
 
 \item{slt_cols}{a logical. If \code{TRUE (default)} only variables that have new names
 will be returned, and if \code{FALSE} all variables will be returned.}
@@ -39,7 +39,7 @@ Set names and label attributes to the data frame
 }
 \examples{
 if(FALSE){
-set_attributes(.data = read.csv("microdata.csv"),
+set_attributes(data = read.csv("microdata.csv"),
               metadata = 'readxl::read_excel("metadata.xlsx")',
               old_name = "Names",
               new_name = "New Names",
