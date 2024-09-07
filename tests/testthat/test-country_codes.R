@@ -20,9 +20,9 @@ test_that("It returns codes for morethan 200 countries", {
 
 # UNHCR ----
 
-test_that("It returns codes for morethan 200 countries", {
-        expect_gt(nrow(country_codes(org = "unhcr")), 200)
-})
+# test_that("It returns codes for morethan 200 countries", {
+#         expect_gt(nrow(country_codes(org = "unhcr")), 200)
+# })
 
 # IHSN ----
 

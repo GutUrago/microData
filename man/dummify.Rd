@@ -4,14 +4,15 @@
 \alias{dummify}
 \title{Convert a Variables into Dummy}
 \usage{
-dummify(data, vars, refs = NULL, keep = FALSE)
+dummify(data, ..., var_lev = TRUE, keep = TRUE)
 }
 \arguments{
-\item{data}{is a data frame containing variables.}
+\item{data}{is a matrix or data frame containing variables.}
 
-\item{vars}{is a vector of variables to be coded into dummy.}
+\item{...}{a names of variables to be coded into dummy.}
 
-\item{refs}{is a (named) vector used as reference for dummy coding.}
+\item{var_lev}{is a logical indicating if new variables are named as
+'variable_level' style or just only levels.}
 
 \item{keep}{is a logical indicating if the original variable is also returned.}
 }
@@ -27,8 +28,8 @@ except for reference, if provided.
 }
 \examples{
 
-dummify(data = iris, vars = Species, refs = c(Species = "setosa"))
-
+dummify(data = iris, Species)
+# Work on how to include vectors without quotation
 }
 \author{
 Gutama Girja Urago

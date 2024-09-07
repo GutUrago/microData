@@ -28,11 +28,11 @@ variables <- function(id, file_id, org = "wb"){
         api_req <- create_request(org)
 
         if(!grepl("[A-Za-z]", id)){
-                api_req <- httr2::req_url_path_append(api_req, id)
-                api_req <- httr2::req_url_query(api_req, id_format = "id")
-        } else {api_req <- httr2::req_url_path_append(api_req, id)}
+                api_req <- req_url_path_append(api_req, id)
+                api_req <- req_url_query(api_req, id_format = "id")
+        } else {api_req <- req_url_path_append(api_req, id)}
 
-        api_req <- httr2::req_url_path_append(api_req, "data_files", file_id, "variables")
+        api_req <- req_url_path_append(api_req, "data_files", file_id, "variables")
 
         api_resp <- get_response(api_req)
 

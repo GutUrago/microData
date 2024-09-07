@@ -8,10 +8,11 @@
 #' It converts categorical or factor variable into binary variable coded as 0 and 1.
 #'
 #'
-#' @param data is a data frame containing variables.
-#' @param vars is a vector of variables to be coded into dummy.
-#' @param refs is a (named) vector used as reference for dummy coding.
+#' @param data is a matrix or data frame containing variables.
+#' @param var_lev is a logical indicating if new variables are named as
+#' 'variable_level' style or just only levels.
 #' @param keep is a logical indicating if the original variable is also returned.
+#' @param ... a names of variables to be coded into dummy.
 #'
 #' @details
 #' It computes a dummy variable for each unique value of the supplied variable
@@ -25,54 +26,42 @@
 #'
 #' @examples
 #'
-#' dummify(data = iris, vars = Species, refs = c(Species = "setosa"))
-#'
-dummify <- function(data, vars, refs = NULL, keep = FALSE) {
+#' dummify(data = iris, Species)
+#' # Work on how to include vectors without quotation
+dummify <- function(data, ..., var_lev = TRUE, keep = TRUE) {
+        if (is.matrix(eval(data, parent.frame())))
+                data <- as.data.frame(data)
 
-        vars <- substitute(vars)
-
-        if (is.call(vars) && vars[[1]] == "c") {
-                vars <- as.character(vars[-1])
-        } else {
-                vars <- as.character(vars)
-        }
+        vars <- exprs(...)
+        vars <- lapply(vars, \(x) if (is.character(x)) sym(x) else enquo(x))
 
         for (var in vars) {
-                if (!var %in% names(data)) {
-                        stop(paste("\nThe specified column", var, "does not exist in the data frame."))
+                var_name <- as_name(var)
+                x <- eval_tidy(var, data)
+
+                if (!is.factor(x)) x <- as.factor(x)
+                levels(x) <- c(levels(x), "NA")
+                x[is.na(x)] <- "NA"
+
+                dummies <- stats::model.matrix(~x - 1)
+                colnames(dummies) <- levels(x)
+                attributes(dummies)$assign <- NULL
+                attributes(dummies)$contrasts <- NULL
+                dummies <- as.data.frame(dummies)
+
+                if (var_lev) {
+                        colnames(dummies) <- paste(var_name, colnames(dummies), sep = "_")
                 }
 
-                dummies <- unique(data[[var]])
-
-                if (!is.null(names(refs))) {
-                        dummies <- setdiff(dummies, refs[var])
-                } else dummies <- setdiff(dummies, refs)
-
-                if (length(dummies) == 0) {
-                        warning(paste("\nNo levels to dummify for column", var, "after excluding reference levels."))
-                        next
-                }
-
-                dummy_df <- sapply(dummies, function(x) {
-                        ifelse(data[[var]] == x, 1, 0)
-                })
-
-                colnames(dummy_df) <- paste(var, dummies, sep = "_")
-
-                dummy_df <- as.data.frame(dummy_df)
-
-                col_names <- colnames(dummy_df)
-
-                for (i in 1:length(dummies)) {
-                        collapse::vlabels(dummy_df[[col_names[i]]], attrn = "label") <- paste0(var, ' [', dummies[i], ']')
-                }
-
-                data <- cbind(data, as.data.frame(dummy_df))
+                data <- cbind(data, dummies)
 
                 if (!keep) {
-                        data[[var]] <- NULL
+                        data[[var_name]] <- NULL
                 }
         }
 
         return(data)
 }
+
+
+

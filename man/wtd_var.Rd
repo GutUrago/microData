@@ -5,25 +5,28 @@
 \alias{wtd_sd}
 \title{Weighted Variance}
 \usage{
-wtd_var(x, w, na.rm = TRUE)
+wtd_var(data, x, w = NULL, na.rm = TRUE)
 
-wtd_sd(x, w, na.rm = TRUE)
+wtd_sd(data, x, w = NULL, na.rm = TRUE)
 }
 \arguments{
-\item{x}{a numeric vector.}
+\item{data}{an optional matrix or data frame placed as first argument for the
+function to be pipe-friendly.}
 
-\item{w}{an optional numeric vector of weights}
+\item{x}{a name of numeric variable in the data frame or numeric vector in the environment.}
 
-\item{na.rm}{logical. Should missing values be removed?}
+\item{w}{aan optional (weights) name of numeric variable in the data frame or in the environment.}
+
+\item{na.rm}{a logical. Should missing values be removed?}
 }
 \value{
 A numeric vector of length 1.
 }
 \description{
-Calculates weighted variance and standard deviation.
+Calculates weighted variance and standard deviation in a pipe-friendly way.
 }
 \examples{
 x <- rnorm(100)
 w <- rep(c(1,2), 50)
-wtd_var(x, w)
+wtd_var(x = x, w = w)
 }

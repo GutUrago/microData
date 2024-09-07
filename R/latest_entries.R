@@ -25,17 +25,21 @@ latest_entries <- function(org = "wb", limit = NULL){
 
         request <- create_request(org)
 
-        request <- httr2::req_url_path_append(request, "latest")
+        request <- req_url_path_append(request, "latest")
+
+        if (!is.null(limit) && !is.numeric(limit)) {
+                stop("'limit' must an integer number")
+        }
 
         if (!is.null(limit)) {
-                request <- httr2::req_url_query(request, limit = limit)
+                request <- req_url_query(request, limit = limit)
                 }
 
         response <- get_response(request)
 
         latest <- response$result
 
-        latest <- collapse::frename(.x = latest, "country" = "nation")
+        latest <- frename(.x = latest, "country" = "nation")
 
         return(latest)
         }

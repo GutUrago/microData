@@ -31,7 +31,7 @@ import_data <- function(path = ".", pattern = NULL, fun = data.table::fread,
                         rm_ext = TRUE, ...) {
         file_list <- list.files(path = path, pattern = pattern)
         if (length(file_list) == 0L) {
-                stop(paste("\nNo such files found in the", path, "directory"))
+                stop(paste("\nNo such files found in the", path, "directory."))
         }
         if (rm_ext) {file_names <- gsub("(\\.[^.]*$)", "", file_list)
         } else file_names <- file_list

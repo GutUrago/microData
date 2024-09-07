@@ -75,7 +75,7 @@ compare_mean <- function(data, vars, by, w = NULL,
 
         data[[by]] <- droplevels(data[[by]])
 
-        g <- collapse::GRP(data, by = by)
+        g <- GRP(data, by = by)
 
         n_groups <- g[["N.groups"]]
 
@@ -83,7 +83,7 @@ compare_mean <- function(data, vars, by, w = NULL,
 
         for (i in seq_along(var_names)) {
                 var_name <- var_names[i]
-                mean_list[[var_name]] <- collapse::fmean(data[[var_name]],
+                mean_list[[var_name]] <- fmean(data[[var_name]],
                                                           g = g, w = w)
         }
 
@@ -164,11 +164,11 @@ compare_mean <- function(data, vars, by, w = NULL,
         }
 
 
-        out_df <- collapse::join(mean_df, test_df,
+        out_df <- join(mean_df, test_df,
                                  on = "Variable", verbose = FALSE)
 
         if (use_labels) {
-                var_labels <- collapse::vlabels(data, attrn = "label", use.names = TRUE)
+                var_labels <- vlabels(data, attrn = "label", use.names = TRUE)
 
                 var_labels <- var_labels[var_names]
 

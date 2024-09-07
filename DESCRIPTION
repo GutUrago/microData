@@ -12,10 +12,11 @@ Description: An API wrapper package that helps to search, browse, and import met
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Imports: 
     collapse,
-    httr2
+    httr2,
+    rlang
 Suggests:
     data.table,
     jsonlite,

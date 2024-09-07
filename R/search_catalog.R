@@ -60,7 +60,7 @@ search_catalog <- function(keyword = NULL,
 
         request <- create_request(org)
 
-        request <- httr2::req_url_path_append(request, "search")
+        request <- req_url_path_append(request, "search")
 
         api_req <- build_query(req = request, keyword = keyword, from = from, to = to,
                       country = country, inc_iso = inc_iso, collection = collection,
@@ -78,7 +78,7 @@ search_catalog <- function(keyword = NULL,
         results$data_class_id <- NULL
         results$thumbnail <- NULL
 
-        results <- collapse::frename(.x = results, "country" = "nation")
+        results <- frename(.x = results, "country" = "nation")
 
         return(results)
         }

@@ -21,6 +21,12 @@
 #'
 #' @return a query ready to be sent to API
 #'
+#'
+#' @importFrom httr2 req_url_query request req_headers req_retry req_perform resp_body_json req_url_path_append
+#' @importFrom collapse na_omit get_vars replace_na frename relabel vlabels join GRP fmean fselect
+#' @importFrom stats model.matrix qt pt xtabs as.formula lm anova complete.cases var
+#' @importFrom rlang sym enquo eval_tidy exprs as_name arg_match0
+#'
 #' @noRd
 
 
@@ -38,45 +44,45 @@ build_query <- function(req,
                         sort_order = NULL,
                         results = NULL,
                         page = NULL){
-        if(!is.null(keyword)) req <- httr2::req_url_query(req, sk = keyword)
-        if(!is.null(from)) req <- httr2::req_url_query(req, from = from)
-        if(!is.null(to)) req <- httr2::req_url_query(req, to = to)
-        if(!is.null(country)) req <- httr2::req_url_query(req, country = country, .multi = "pipe")
-        if(!is.null(inc_iso)) req <- httr2::req_url_query(req, inc_iso = inc_iso)
-        if(!is.null(collection)) req <- httr2::req_url_query(req, collection = collection, .multi = "comma")
-        if(!is.null(dtype)) req <- httr2::req_url_query(req, dtype = dtype, .multi = "comma")
+        if(!is.null(keyword)) req <- req_url_query(req, sk = keyword)
+        if(!is.null(from)) req <- req_url_query(req, from = from)
+        if(!is.null(to)) req <- req_url_query(req, to = to)
+        if(!is.null(country)) req <- req_url_query(req, country = country, .multi = "pipe")
+        if(!is.null(inc_iso)) req <- req_url_query(req, inc_iso = inc_iso)
+        if(!is.null(collection)) req <- req_url_query(req, collection = collection, .multi = "comma")
+        if(!is.null(dtype)) req <- req_url_query(req, dtype = dtype, .multi = "comma")
         if(!is.null(sort_by)) {
                 sort_by <- gsub(pattern = "country", replacement = "nation", x = sort_by)
-                req <- httr2::req_url_query(req, sort_by = sort_by)}
-        if(!is.null(sort_order)) req <- httr2::req_url_query(req, sort_order = sort_order)
+                req <- req_url_query(req, sort_by = sort_by)}
+        if(!is.null(sort_order)) req <- req_url_query(req, sort_order = sort_order)
         if(!is.null(results) && tolower(results) == "all") {
                 tmp_result <- get_response(req)
                 found <- tmp_result$result$found
-                req <- httr2::req_url_query(req, ps = found)
-                query <- httr2::req_url_query(req, format = "json")
+                req <- req_url_query(req, ps = found)
+                query <- req_url_query(req, format = "json")
         } else if(!is.null(results) && is.numeric(results) && !is.null(page)) {
-                req <- httr2::req_url_query(req, ps = results)
-                req <- httr2::req_url_query(req, page = page)
-                query <- httr2::req_url_query(req, format = "json")
+                req <- req_url_query(req, ps = results)
+                req <- req_url_query(req, page = page)
+                query <- req_url_query(req, format = "json")
         } else if(!is.null(results) && !is.numeric(results) && !is.null(page)) {
                 tryCatch({
                         results <- as.numeric(results)
-                        req <- httr2::req_url_query(req, ps = results)
-                        req <- httr2::req_url_query(req, page = page)
-                        query <- httr2::req_url_query(req, format = "json")
+                        req <- req_url_query(req, ps = results)
+                        req <- req_url_query(req, page = page)
+                        query <- req_url_query(req, format = "json")
                 },
                 warning = function(w){
                         stop(paste0("\nresults argument takes only interger not a ",
                                     class(results)))
                 })
         } else if(!is.null(results) && is.numeric(results) && is.null(page)) {
-                req <- httr2::req_url_query(req, ps = results)
-                query <- httr2::req_url_query(req, format = "json")
+                req <- req_url_query(req, ps = results)
+                query <- req_url_query(req, format = "json")
         } else if(is.null(results) && !is.null(page)) {
-                req <- httr2::req_url_query(req, page = page)
-                query <- httr2::req_url_query(req, format = "json")
+                req <- req_url_query(req, page = page)
+                query <- req_url_query(req, format = "json")
         } else if(is.null(results) && is.null(page)) {
-                query <- httr2::req_url_query(req, format = "json")}
+                query <- req_url_query(req, format = "json")}
         return(query)
 }
 
@@ -97,18 +103,18 @@ build_query <- function(req,
 
 create_request <- function(org){
         if(tolower(org) == "wb"){
-                req <- httr2::request("https://microdata.worldbank.org/index.php/api/catalog")
+                req <- request("https://microdata.worldbank.org/index.php/api/catalog")
         } else if(tolower(org) == "fao"){
-                req <- httr2::request("https://microdata.fao.org/index.php/api/catalog")
+                req <- request("https://microdata.fao.org/index.php/api/catalog")
         } else if(tolower(org) == "unhcr"){
-                req <- httr2::request("https://microdata.unhcr.org/index.php/api/catalog")
+                req <- request("https://microdata.unhcr.org/index.php/api/catalog")
         } else if(tolower(org) == "ihsn") {
-                req <- httr2::request("https://datacatalog.ihsn.org/index.php/api/catalog")
+                req <- request("https://datacatalog.ihsn.org/index.php/api/catalog")
         } else if(tolower(org) == "ilo") {
-                req <- httr2::request("https://www.ilo.org/surveyLib/index.php/api/catalog")
+                req <- request("https://www.ilo.org/surveyLib/index.php/api/catalog")
         } else {stop("\nOrganization should be one of WB, FAO, UNHCR, IHSN or ILO")}
-        req <- httr2::req_retry(req, max_tries = 3)
-        req <- httr2::req_headers(req, "Accept" = "application/json")
+        req <- req_retry(req, max_tries = 3)
+        req <- req_headers(req, "Accept" = "application/json")
         return(req)
 }
 
@@ -132,7 +138,7 @@ create_request <- function(org){
 get_response <- function(req){
 
         tryCatch(
-                api_resp <- httr2::req_perform(req),
+                api_resp <- req_perform(req),
                 error = function(e){
                         stop("\nThe API didn't respond to your request; please check it!")
                 }
@@ -143,7 +149,7 @@ get_response <- function(req){
                 stop("\nAPI request failed!")
         }
 
-        response <- httr2::resp_body_json(api_resp,
+        response <- resp_body_json(api_resp,
                                           simplifyVector = TRUE,
                                           flatten = TRUE)
 

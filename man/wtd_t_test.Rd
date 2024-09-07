@@ -2,64 +2,53 @@
 % Please edit documentation in R/wtd_t_test.R
 \name{wtd_t_test}
 \alias{wtd_t_test}
-\alias{wtd_t_test.default}
-\alias{wtd_t_test.formula}
 \title{Weighted Students t-Test}
 \usage{
-wtd_t_test(x, ...)
-
-\method{wtd_t_test}{default}(
+wtd_t_test(
+  data,
   x,
   y = NULL,
   w = NULL,
   w.y = NULL,
   alternative = c("two.sided", "less", "greater"),
-  mu = 0,
   paired = FALSE,
-  var.equal = TRUE,
+  mu = 0,
   conf.level = 0.95,
-  ...
+  var.equal = TRUE,
+  na.rm = TRUE
 )
-
-\method{wtd_t_test}{formula}(formula, w = NULL, data, subset, na.action = na.pass, ...)
 }
 \arguments{
-\item{x}{a (non-empty) numeric vector of data values.}
+\item{data}{an optional matrix or data frame placed as first argument for the
+function to be pipe-friendly.}
 
-\item{...}{Additional arguments passed to or from other methods.}
+\item{x}{a name of numeric variable in the data frame or numeric vector in the environment.}
 
-\item{y}{an optional (non-empty) numeric vector of data values.}
+\item{y}{an optional name variable in the data frame or a vector in the environment.
+It can be a numeric or factor with two levels. See details.}
 
-\item{w}{an optional numeric vector of weights for \code{x}. If \code{NULL}, equal weights are assumed.}
+\item{w}{an optional (weights) name of numeric variable in the data frame or in the environment.
+See details.}
 
-\item{w.y}{an optional numeric vector of weights for \code{y}. If \code{NULL}, equal weights are assumed.}
+\item{w.y}{an optional weights argument for y.}
 
 \item{alternative}{a character string specifying the alternative hypothesis,
-must be one of "\code{two.sided}" (default), "\code{greater}" or "\code{less}". You can specify just the initial letter.}
+must be one of "\code{two.sided}" (default), "\code{greater}" or "\code{less}". You can
+specify just the initial letter.}
 
-\item{mu}{a number indicating the true value of the mean (or difference in means if you are performing a two sample test).}
+\item{paired}{a logical indicating whether you want a paired t-test.}
 
-\item{paired}{a logical indicating whether you want a paired t-test. Default is \code{FALSE}.}
+\item{mu}{a number indicating the true value of the mean (or difference in
+means if you are performing a two sample test).}
 
-\item{var.equal}{a logical variable indicating whether to treat the two variances
-as being equal. If \code{TRUE} (default) then the pooled variance is used to estimate
-the variance otherwise the Welch (or Satterthwaite) approximation to the
-degrees of freedom is used.}
+\item{conf.level}{onfidence level of the interval.}
 
-\item{conf.level}{confidence level of the interval. Default is 0.95.}
+\item{var.equal}{a logical variable indicating whether to treat the two
+variances as being equal. If TRUE then the pooled variance is used to
+estimate the variance otherwise the Welch (or Satterthwaite) approximation
+to the degrees of freedom is used.}
 
-\item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs} is a numeric variable
-giving the data values and \code{rhs} either \code{1} for a one-sample or paired test or a
-factor with two levels giving the corresponding groups. If \code{lhs} is of class \link[stats:Pair]{"Pair"}
-and \code{rhs} is \code{1}, a paired test is done, see Examples.}
-
-\item{data}{an optional matrix or data frame (or similar: see \link[stats:model.frame]{model.frame})
-containing the variables in the formula formula. By default the variables are
-taken from \code{environment(formula)}.}
-
-\item{subset}{an optional vector specifying a subset of observations to be used.}
-
-\item{na.action}{a function which indicates what should happen when the data contain \link[base:NA]{NA}s.}
+\item{na.rm}{a logical indicating wether you want to remove \code{NA} values.}
 }
 \value{
 A list with class "\code{htest}" containing the following components:
@@ -79,7 +68,7 @@ A list with class "\code{htest}" containing the following components:
 \description{
 Performs a one-sample, a two-sample and a paired weighted t-test. It is
 a slightly modified version of \code{\link[stats:t.test]{t.test}} with added functionality
-of supporting weight.
+of supporting weight and pipe.
 }
 \details{
 It shares the same default behavior with \code{\link[stats:t.test]{t.test}}, except
@@ -97,20 +86,20 @@ If the input data are effectively constant (compared to the larger of the
 two means) an error is generated.
 }
 \examples{
-# Example 1: One-sample t-test
-x <- rnorm(10)
-w <- runif(10)
-wtd_t_test(x, w = w)
-
-# Example 2: Two-sample t-test with equal variances
-x <- rnorm(10)
-y <- rnorm(10)
-wtd_t_test(x, y)
-
-# Example 3: Paired t-test
-x <- rnorm(10)
-y <- x + rnorm(10)
-wtd_t_test(x, y, paired = TRUE)
+library(datasets)
+# One sample t-test
+wtd_t_test(mtcars, disp, mu = 200)
+# Variables can be a vector outside of data frame
+wtd_t_test(mtcars, disp, w = rep(c(1, 2), 16), mu = 200)
+# Paired t-test
+wtd_t_test(mtcars, gear, carb, paired = TRUE)
+# See degrees of freedom and gues what happened? Split x into two.
+# The order is very important and this is not recommended.
+wtd_t_test(mtcars, gear, factor(rep(c(1,2), 16)), paired = TRUE)
+# Two sample t-test
+wtd_t_test(mtcars, drat, wt)
+wtd_t_test(mtcars, mpg, as.factor(vs))
+wtd_t_test(mtcars, mpg, as.factor(vs), w = qsec)
 }
 \references{
 This function if a modified version of \link[stats:t.test]{t.test}.

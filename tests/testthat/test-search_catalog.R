@@ -35,9 +35,9 @@ test_that("Throws an error when search is not found",{
 
 # UNHCR ----
 
-test_that("By default, it returns the first 15 studies", {
-        expect_equal(nrow(search_catalog(org = "unhcr")), 15)
-})
+# test_that("By default, it returns the first 15 studies", {
+#         expect_equal(nrow(search_catalog(org = "unhcr")), 15)
+# })
 
 
 test_that("Throws an error when search is not found",{

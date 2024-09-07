@@ -1,41 +1,32 @@
 
-# Not support weights for Pair() formula, will be fixed
-
 
 #' @title Weighted Students t-Test
-#'
-#' @name wtd_t_test
-#' @aliases wtd_t_test.default
-#' @aliases wtd_t_test.formula
-#'
 #' @description
 #' Performs a one-sample, a two-sample and a paired weighted t-test. It is
 #' a slightly modified version of [`t.test`][stats::t.test] with added functionality
-#' of supporting weight.
+#' of supporting weight and pipe.
 #'
-#' @param x a (non-empty) numeric vector of data values.
-#' @param y an optional (non-empty) numeric vector of data values.
-#' @param w an optional numeric vector of weights for `x`. If `NULL`, equal weights are assumed.
-#' @param w.y an optional numeric vector of weights for `y`. If `NULL`, equal weights are assumed.
+#' @param data an optional matrix or data frame placed as first argument for the
+#' function to be pipe-friendly.
+#' @param x a name of numeric variable in the data frame or numeric vector in the environment.
+#' @param y an optional name variable in the data frame or a vector in the environment.
+#' It can be a numeric or factor with two levels. See details.
+#' @param w an optional (weights) name of numeric variable in the data frame or in the environment.
+#' See details.
+#' @param w.y an optional weights argument for y.
 #' @param alternative a character string specifying the alternative hypothesis,
-#' must be one of "`two.sided`" (default), "`greater`" or "`less`". You can specify just the initial letter.
-#' @param mu a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
-#' @param paired a logical indicating whether you want a paired t-test. Default is `FALSE`.
-#' @param var.equal a logical variable indicating whether to treat the two variances
-#' as being equal. If `TRUE` (default) then the pooled variance is used to estimate
-#' the variance otherwise the Welch (or Satterthwaite) approximation to the
-#' degrees of freedom is used.
-#' @param conf.level confidence level of the interval. Default is 0.95.
-#' @param formula a formula of the form `lhs ~ rhs` where `lhs` is a numeric variable
-#' giving the data values and `rhs` either `1` for a one-sample or paired test or a
-#' factor with two levels giving the corresponding groups. If `lhs` is of class ["Pair"][stats::Pair]
-#' and `rhs` is `1`, a paired test is done, see Examples.
-#' @param data an optional matrix or data frame (or similar: see [model.frame][stats::model.frame])
-#' containing the variables in the formula formula. By default the variables are
-#' taken from `environment(formula)`.
-#' @param subset an optional vector specifying a subset of observations to be used.
-#' @param na.action a function which indicates what should happen when the data contain [NA][base::NA]s.
-#' @param ... Additional arguments passed to or from other methods.
+#' must be one of "`two.sided`" (default), "`greater`" or "`less`". You can
+#' specify just the initial letter.
+#' @param paired a logical indicating whether you want a paired t-test.
+#' @param mu a number indicating the true value of the mean (or difference in
+#' means if you are performing a two sample test).
+#' @param conf.level onfidence level of the interval.
+#' @param var.equal a logical variable indicating whether to treat the two
+#' variances as being equal. If TRUE then the pooled variance is used to
+#' estimate the variance otherwise the Welch (or Satterthwaite) approximation
+#' to the degrees of freedom is used.
+#' @param na.rm a logical indicating wether you want to remove `NA` values.
+#'
 #'
 #' @details
 #' It shares the same default behavior with [`t.test`][stats::t.test], except
@@ -70,35 +61,31 @@
 #' @author Gutama Girja Urago
 #'
 #' @references This function if a modified version of [t.test][stats::t.test].
-#'
 #' @export
+#'
 #' @examples
-#' # Example 1: One-sample t-test
-#' x <- rnorm(10)
-#' w <- runif(10)
-#' wtd_t_test(x, w = w)
-#'
-#' # Example 2: Two-sample t-test with equal variances
-#' x <- rnorm(10)
-#' y <- rnorm(10)
-#' wtd_t_test(x, y)
-#'
-#' # Example 3: Paired t-test
-#' x <- rnorm(10)
-#' y <- x + rnorm(10)
-#' wtd_t_test(x, y, paired = TRUE)
-wtd_t_test <- function(x, ...) UseMethod("wtd_t_test")
+#' library(datasets)
+#' # One sample t-test
+#' wtd_t_test(mtcars, disp, mu = 200)
+#' # Variables can be a vector outside of data frame
+#' wtd_t_test(mtcars, disp, w = rep(c(1, 2), 16), mu = 200)
+#' # Paired t-test
+#' wtd_t_test(mtcars, gear, carb, paired = TRUE)
+#' # See degrees of freedom and gues what happened? Split x into two.
+#' # The order is very important and this is not recommended.
+#' wtd_t_test(mtcars, gear, factor(rep(c(1,2), 16)), paired = TRUE)
+#' # Two sample t-test
+#' wtd_t_test(mtcars, drat, wt)
+#' wtd_t_test(mtcars, mpg, as.factor(vs))
+#' wtd_t_test(mtcars, mpg, as.factor(vs), w = qsec)
+wtd_t_test <- function(data, x, y = NULL, w = NULL, w.y = NULL,
+                       alternative = c("two.sided", "less", "greater"),
+                       paired = FALSE, mu = 0, conf.level = 0.95,
+                       var.equal = TRUE, na.rm = TRUE) {
 
-#' @rdname wtd_t_test
-#' @exportS3Method microData::wtd_t_test
-# x <- rnorm(10)
-# y <- x + rnorm(10)
-# wtd_t_test(x, y, paired = TRUE)
-wtd_t_test.default <- function(x, y = NULL, w = NULL, w.y = NULL,
-                               alternative = c("two.sided", "less", "greater"),
-                               mu = 0, paired = FALSE, var.equal = TRUE,
-                               conf.level = 0.95, ...) {
-    alternative <- match.arg(alternative)
+    alternative <- arg_match0(alternative,
+                                     values = c("two.sided", "less", "greater"))
+
     if (!missing(mu) && (length(mu) != 1 || is.na(mu)))
         stop("'mu' must be a single number")
     if (!missing(conf.level) && (length(conf.level) != 1 ||
@@ -107,213 +94,203 @@ wtd_t_test.default <- function(x, y = NULL, w = NULL, w.y = NULL,
                                  conf.level >1))
         stop("'conf.level' must be a single number between 0 and 1")
 
-    if (!is.null(w) && all(w == 1)) {
-        weighted <- FALSE
-    } else if (!is.null(w) || !is.null(w.y)) {
-        weighted <- TRUE
-    } else weighted <- FALSE
+    if (!missing(data)) {
+        if (is.matrix(eval(data, parent.frame())))
+        data <- as.data.frame(data)
+    } else data <- NULL
 
-    if (paired) {
-        if (!is.null(w) && !is.null(w.y)) {
-            warning("'ignoring 'w.y' for paired test", call. = FALSE)
-        }
-        w.y <- NULL  # Ignore w.y in paired tests
-    }
+    x.name <- deparse1(substitute(x))
+    dname <- x.name
+    y.name <- deparse1(substitute(y))
+    x <- if (is.character(substitute(x))) sym(x) else enquo(x)
+    y <- if (is.character(substitute(y))) sym(y) else enquo(y)
+    w <- if (is.character(substitute(w))) sym(w) else enquo(w)
+    w.y <- if (is.character(substitute(w.y))) sym(w.y) else enquo(w.y)
+    x <- eval_tidy(x, data)
+    y <- eval_tidy(y, data)
+    w <- eval_tidy(w, data)
+    w.y <- eval_tidy(w.y, data)
 
-    if (is.null(w)) w <- rep(1, length(x))
-    if (!paired && is.null(w.y)) w.y <- rep(1, length(y))  # Only needed for unpaired tests
+    if (is.null(y)) {
+        oneSample <- TRUE
+    } else oneSample <- FALSE
 
-    if (!is.null(y)) {
-        dname <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
+    if (na.rm) {
         if (paired) {
-            xok <- yok <- wok <- stats::complete.cases(x, y, w)
+            ok <- complete.cases(x, y, w, w.y)
+            x <- x[ok]
+            y <- y[ok]
+            w <- w[ok]
+            w.y <- w.y[ok]
         } else {
-            yok <- !is.na(y)
-            xok <- !is.na(x)
-            wok <- !is.na(w)
-            w.yok <- !is.na(w.y)
-            y <- y[yok]
-            w.y <- w.y[w.yok]
+            xok <- complete.cases(x, w)
+            x <- x[xok]
+            w <- w[xok]
+
+            if (!is.null(y)) {
+                yok <- complete.cases(y, w.y)
+                y <- y[yok]
+                w.y <- w.y[yok]
+            }
         }
-        x <- x[xok]
-        w <- w[wok]
-    } else {
-        dname <- deparse1(substitute(x))
-        if (paired)
-            stop("'y' is missing for paired test")
-        xok <- !is.na(x)
-        yok <- NULL
-        x <- x[xok]
     }
 
+    if (is.null(w)) {
+        w <- rep(1, length(x))
+    }
+    y.fct <- FALSE
+    if (!is.null(y)) {
+        dname <- paste(x.name, "and", y.name)
+        if (is.null(w.y)) {
+            w.y <- rep(1, length(y))
+        }
+
+        if (is.factor(y)) {
+            if (nlevels(y) != 2) {
+                stop("'y' must be a factor with exactly two levels")
+            }
+            y.fct <- TRUE
+            dname <- paste(x.name, "by", y.name)
+            if (length(x) != length(y)) {
+                stop("'x' and 'y' must have the same length if y is a factor.")
+            }
+            group1 <- y == levels(y)[1]
+            group2 <- y == levels(y)[2]
+
+            x1 <- x[group1]
+            x2 <- x[group2]
+
+            w1 <- w[group1]
+            w2 <- w[group2]
+
+            y <- NULL
+            x <- x1
+            w <- w1
+            y <- x2
+            w.y <- w2
+        }
+    }
+    if (!is.numeric(w) && !is.null(w))
+        stop("'w' must be a numeric variable or vector.")
+    if (!is.numeric(w.y) && !is.null(w.y))
+        stop("'w.y' must be a numeric variable or vector.")
+
     if (paired) {
-        x <- x - y
+        if (is.null(y)) {
+            stop("For a paired test, both 'x' and 'y' must be provided.")
+        }
+        dname <- paste(x.name, "and", y.name)
+        d <- x - y
+        w.d <- (w + w.y) / 2
+        x <- d
+        w <- w.d
         y <- NULL
     }
 
-    nx <- length(x)
-    mx <- stats::weighted.mean(x, w)
-    vx <- wtd_var(x, w)
+    wtd_mean <- function(x, w) sum(w * x) / sum(w)
+
+    mean_x <- wtd_mean(x, w)
+    n_x <- length(x)
+
+    if (!is.null(y)) {
+        mean_y <- wtd_mean(y, w.y)
+        n_y <- length(y)
+    }
+
+    var_x <- wtd_var(data = NULL, x, w, na.rm = na.rm)
+
+    if (!is.null(y)) {
+        var_y <- wtd_var(data = NULL, y, w.y, na.rm = na.rm)
+    }
 
     if (is.null(y)) {
-        if (nx < 2)
-            stop("not enough 'x' observations")
-        df <- nx - 1
-        stderr <- sqrt(vx/nx)
-        if (stderr < 10 * .Machine$double.eps * abs(mx))
+        stderr <- sqrt(var_x / n_x)
+        if (stderr < 10 * .Machine$double.eps * abs(mean_x))
             stop("data are essentially constant")
-        tstat <- (mx - mu)/stderr
-        method <- paste(if (weighted) "Weighted",
-                        paste(if (paired) "Paired t-test"
-                              else "One Sample t-test"))
-        estimate <- stats::setNames(mx, if (paired)
+        t_stat <- (mean_x - mu) / stderr
+        df <- n_x - 1
+        method <- if (paired) {
+            "Weighted Paired t-test"
+            } else " Weighted One Sample t-test"
+        estimate <- mean_x
+        names(estimate) <- if (paired) {
             "mean difference"
-            else "mean of x")
-    }
-    else {
-        ny <- length(y)
-        if (nx < 1 || (!var.equal && nx < 2))
+            } else "mean of x"
+    } else {
+        if (n_x < 1 || (!var.equal && n_x < 2))
             stop("not enough 'x' observations")
-        if (ny < 1 || (!var.equal && ny < 2))
+        if (n_y < 1 || (!var.equal && n_y < 2))
             stop("not enough 'y' observations")
-        if (var.equal && nx + ny < 3)
+        if (var.equal && n_x + n_y < 3)
             stop("not enough observations")
-        if (length(w.y) != ny)
-            stop("'y' and 'w.y' must have the same length")
-        my <- stats::weighted.mean(y, w.y)
-        vy <- wtd_var(y, w.y)
-        method <- paste(if (weighted) "Weighted",
-                        paste(if (!var.equal)
-                            "Welch", "Two Sample t-test"))
-        estimate <- c(mx, my)
+        method <- if (var.equal) {
+            "Weighted Two Sample t-test"
+        } else "Weighted Welch Two Sample t-test"
+        estimate <- c(mean_x, mean_y)
         names(estimate) <- c("mean of x", "mean of y")
         if (var.equal) {
-            df <- nx + ny - 2
+            df <- n_x + n_y - 2
             v <- 0
-            if (nx > 1)
-                v <- v + (nx - 1) * vx
-            if (ny > 1)
-                v <- v + (ny - 1) * vy
+            if (n_x > 1)
+                v <- v + (n_x - 1) * var_x
+            if (n_y > 1)
+                v <- v + (n_y - 1) * var_y
             v <- v/df
-            stderr <- sqrt(v * (1/nx + 1/ny))
-        }
-        else {
-            stderrx <- sqrt(vx/nx)
-            stderry <- sqrt(vy/ny)
+            stderr <- sqrt(v * (1/n_x + 1/n_y))
+
+        } else {
+            stderrx <- sqrt(var_x/n_x)
+            stderry <- sqrt(var_y/n_y)
             stderr <- sqrt(stderrx^2 + stderry^2)
-            df <- stderr^4/(stderrx^4/(nx - 1) + stderry^4/(ny - 1))
+            df <- stderr^4/(stderrx^4/(n_x - 1) + stderry^4/(n_y - 1))
         }
-        if (stderr < 10 * .Machine$double.eps * max(abs(mx),
-                                                    abs(my)))
+        if (stderr < 10 * .Machine$double.eps * max(abs(mean_x),
+                                                    abs(mean_y)))
             stop("data are essentially constant")
-        tstat <- (mx - my - mu)/stderr
+        t_stat <- (mean_x - mean_y - mu) / stderr
     }
 
-    if (alternative == "less") {
-        pval <- stats::pt(tstat, df)
-        cint <- c(-Inf, tstat + stats::qt(conf.level, df))
+    p_value <- switch(alternative,
+                      "two.sided" = 2 * pt(-abs(t_stat), df),
+                      "less" = pt(t_stat, df),
+                      "greater" = pt(t_stat, df, lower.tail = FALSE))
+
+    alpha <- 1 - conf.level
+    t_crit <- qt(1 - alpha / 2, df)
+    if (is.null(y)) {
+        margin_error <- t_crit * stderr
+        conf_interval <- c(mean_x - margin_error, mean_x + margin_error)
+    } else {
+        margin_error <- t_crit * stderr
+        conf_interval <- c((mean_x - mean_y) - margin_error,
+                           (mean_x - mean_y) + margin_error)
     }
-    else if (alternative == "greater") {
-        pval <- stats::pt(tstat, df, lower.tail = FALSE)
-        cint <- c(tstat - stats::qt(conf.level, df), Inf)
-    }
-    else {
-        pval <- 2 * stats::pt(-abs(tstat), df)
-        alpha <- 1 - conf.level
-        cint <- stats::qt(1 - alpha/2, df)
-        cint <- tstat + c(-cint, cint)
-    }
-    cint <- mu + cint * stderr
-    names(tstat) <- "t"
+
+    names(t_stat) <- "t"
     names(df) <- "df"
     names(mu) <- if (paired)
         "mean difference"
     else if (!is.null(y))
         "difference in means"
     else "mean"
-    attr(cint, "conf.level") <- conf.level
-    rval <- list(statistic = tstat, parameter = df, p.value = pval,
-                 conf.int = cint, estimate = estimate, null.value = mu,
-                 stderr = stderr, alternative = alternative, method = method,
-                 data.name = dname)
-    class(rval) <- "htest"
-    rval
+    attr(conf_interval, "conf.level") <- conf.level
+
+    result <- list(
+        statistic = t_stat,
+        parameter = df,
+        p.value = p_value,
+        conf.int = conf_interval,
+        estimate = estimate,
+        null.value = mu,
+        stderr = stderr,
+        alternative = alternative,
+        method = method,
+        data.name = dname
+    )
+
+    class(result) <- "htest"
+    return(result)
 }
-
-
-#' @rdname wtd_t_test
-#' @exportS3Method microData::wtd_t_test
-#' @importFrom stats na.pass
-wtd_t_test.formula <- function(formula, w = NULL, data, subset, na.action = na.pass, ...){
-        if (missing(formula) || (length(formula) != 3L)) {
-                stop("'formula' missing or incorrect")
-        }
-        if ("paired" %in% names(list(...))) {
-                stop("cannot use 'paired' in formula method")
-        }
-        if (missing(formula) || (length(formula) != 3L))
-                stop("'formula' missing or incorrect")
-        if ("paired" %in% ...names())
-                stop("cannot use 'paired' in formula method")
-        oneSampleOrPaired <- FALSE
-        if (length(attr(stats::terms(formula[-2L]), "term.labels")) !=
-            1L)
-                if (formula[[3L]] == 1L)
-                        oneSampleOrPaired <- TRUE
-        else stop("'formula' missing or incorrect")
-        m <- match.call(expand.dots = FALSE)
-        if (is.matrix(eval(m$data, parent.frame())))
-                m$data <- as.data.frame(data)
-        m[[1L]] <- quote(stats::model.frame)
-        m$... <- NULL
-        mf <- eval(m, parent.frame())
-        x.name <- names(mf)[1L]
-        g.name <- names(mf)[2L]
-        w.name <- names(mf)[3L]
-        DNAME <- paste(c(x.name, g.name), collapse = " by ")
-        if (!oneSampleOrPaired) {
-                x <- mf[[x.name]]
-                g <- factor(mf[[g.name]])
-                if (nlevels(g) != 2L)
-                        stop("grouping factor must have exactly 2 levels")
-                w <- mf[[w.name]]
-                if (is.null(w))
-                        w <- rep(1, length(x))
-                xs <- split(x, g)
-                ws <- split(w, g)
-                out <- wtd_t_test(x = xs[[1]], y = xs[[2]], w = ws[[1]], w.y = ws[[1]], ...)
-                if (length(out$estimate) == 2L) {
-                        names(out$estimate) <- paste("mean in group", levels(g))
-                        names(out$null.value) <- paste("difference in means between",
-                                                     paste("group", levels(g), collapse = " and "))
-                }
-        }
-        else {
-                respVar <- mf[[x.name]]
-                w <- mf[[w.name]]
-                if (is.null(w)) w <- rep(1, length(x))
-                if (inherits(respVar, "Pair")) {
-                        out <- wtd_t_test(x = respVar[, 1L],
-                                          y = respVar[, 2L],
-                                          w = w,
-                                          paired = TRUE, ...)
-                }
-                else {
-                    w <- mf[[w.name]]
-                    if (is.null(w)) w <- rep(1, length(x))
-                    out <- wtd_t_test(x = respVar, w = w, ...)
-                }
-        }
-        out$data.name <- DNAME
-        class(out) <- "htest"
-        return(out)
-}
-
-
-
-
-
-
 
 
 

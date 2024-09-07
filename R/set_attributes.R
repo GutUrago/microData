@@ -52,30 +52,30 @@ set_attributes <- function(data,
         label <- substitute(label)
         label <- as.character(label)
 
-        metadata <- collapse::na_omit(X = metadata,
+        metadata <- na_omit(X = metadata,
                                       cols = old_name)
 
         if (slt_cols) {
-                metadata <- collapse::na_omit(X = metadata,
+                metadata <- na_omit(X = metadata,
                                               cols = new_name)
 
-                data <- collapse::get_vars(x = data,
+                data <- get_vars(x = data,
                                           vars = metadata[[old_name]])
         }
 
-        metadata[[new_name]] <- collapse::replace_na(metadata[[new_name]],
+        metadata[[new_name]] <- replace_na(metadata[[new_name]],
                                                      metadata[[old_name]])
 
         new_names <- metadata[[new_name]]
         names(new_names) <- metadata[[old_name]]
 
-        data <- collapse::frename(data, new_names, .nse = FALSE)
+        data <- frename(data, new_names, .nse = FALSE)
 
         if (!is.null(label)) {
                 new_labels <- metadata[[label]]
                 names(new_labels) <- metadata[[new_name]]
 
-                data <- collapse::relabel(data, new_labels, .nse = FALSE)
+                data <- relabel(data, new_labels, .nse = FALSE)
         }
 
         return(data)
