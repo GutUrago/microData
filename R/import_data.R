@@ -1,49 +1,60 @@
 
 
-
-
 #' Import Multiple Data Files
+#'
 #' @description
-#' Imports multiple data files from single directory and returns a list.
+#' Imports multiple data files from a specified directory and returns a
+#' named list of data frames.
 #'
+#' @param path A character vector specifying the directory path.
+#' Defaults to the working directory, \code{\link[base:getwd]{getwd()}}.
+#' Missing or invalid paths will trigger an error.
+#' @param pattern An optional \code{\link[base:regex]{regular expression}}
+#' to filter file names. Only files matching the pattern will be processed.
+#' @param fun A function used to read data files,
+#' such as \code{\link[data.table:fread]{data.table::fread}} or \code{\link[utils:read.csv]{read.csv}}.
+#' @param rm_ext A logical value indicating whether file extensions should
+#' be removed from the names of the returned list elements. Defaults to \code{TRUE}.
+#' @param ... Additional arguments passed to the data reading function specified in \code{fun}.
 #'
-#' @param path a character vector of full path names; the default corresponds
-#' to the working directory, \code{\link[base:getwd]{getwd()}}.
-#' Tilde expansion (see \code{\link[base:path.expand]{path.expand()}}) is
-#' performed. Missing values will be ignored. Elements with a marked encoding
-#' will be converted to the native encoding (and if that fails, considered
-#' non-existent).
-#' @param pattern an optional \code{\link[base:regex]{regular expression}}.
-#' Only file names which match
-#' the regular expression will be returned.
-#' @param fun a function used to read data files such as \code{\link[data.table:fread]{data.table::fread}}
-#' @param rm_ext a logical indicating if the extensions are excluded from the
-#' name of list elements to be returned.
-#' @param ... an optional arguments passed to a function used to read data files.
-#'
-#' @return A list of data frames
+#' @return A named list of data frames, where names correspond to file names (optionally without extensions).
 #' @export
 #'
 #' @examples
 #' if (FALSE) {
-#' import_data(path = "data", pattern = "\\.csv$", fun = data.table::fread)}
+#' # Example with data.table::fread
+#' import_data(path = "data", pattern = "\\.csv$", fun = data.table::fread)
+#'
+#' # Example with base R read.csv
+#' import_data(path = "data", pattern = "\\.csv$", fun = read.csv, rm_ext = FALSE)
+#' }
 import_data <- function(path = ".", pattern = NULL, fun = data.table::fread,
                         rm_ext = TRUE, ...) {
-        file_list <- list.files(path = path, pattern = pattern)
-        if (length(file_list) == 0L) {
-                stop(paste("\nNo such files found in the", path, "directory."))
+        # Validate inputs
+        if (!dir.exists(path)) {
+                stop("The specified path does not exist: ", path)
         }
-        if (rm_ext) {file_names <- gsub("(\\.[^.]*$)", "", file_list)
-        } else file_names <- file_list
-        extensions <- gsub("^.*\\.", "", file_list)
-        extension <- unique(extensions)
-        file_paths <- paste0(path, "/",file_list)
-        data_list <- lapply(file_paths, fun, ...)
+        if (!is.function(fun)) {
+                stop("The 'fun' argument must be a valid function.")
+        }
+
+        # List files
+        file_list <- list.files(path = path, pattern = pattern, full.names = FALSE)
+        if (length(file_list) == 0L) {
+                stop("No files matching the specified pattern were found in the directory: ", path)
+        }
+
+        # Construct file paths and optionally modify names
+        file_paths <- file.path(path, file_list)
+        file_names <- if (rm_ext) tools::file_path_sans_ext(file_list) else file_list
+
+        # Read files
+        data_list <- tryCatch(
+                lapply(file_paths, function(file) fun(file, ...)),
+                error = function(e) stop("Error reading files: ", e$message)
+        )
+
+        # Assign names to the list
         names(data_list) <- file_names
         return(data_list)
 }
-
-
-
-
-

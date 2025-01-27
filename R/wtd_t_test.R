@@ -78,6 +78,8 @@
 #' wtd_t_test(mtcars, drat, wt)
 #' wtd_t_test(mtcars, mpg, as.factor(vs))
 #' wtd_t_test(mtcars, mpg, as.factor(vs), w = qsec)
+
+
 wtd_t_test <- function(data, x, y = NULL, w = NULL, w.y = NULL,
                        alternative = c("two.sided", "less", "greater"),
                        paired = FALSE, mu = 0, conf.level = 0.95,

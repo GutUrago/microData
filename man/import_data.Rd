@@ -13,31 +13,34 @@ import_data(
 )
 }
 \arguments{
-\item{path}{a character vector of full path names; the default corresponds
-to the working directory, \code{\link[base:getwd]{getwd()}}.
-Tilde expansion (see \code{\link[base:path.expand]{path.expand()}}) is
-performed. Missing values will be ignored. Elements with a marked encoding
-will be converted to the native encoding (and if that fails, considered
-non-existent).}
+\item{path}{A character vector specifying the directory path.
+Defaults to the working directory, \code{\link[base:getwd]{getwd()}}.
+Missing or invalid paths will trigger an error.}
 
-\item{pattern}{an optional \code{\link[base:regex]{regular expression}}.
-Only file names which match
-the regular expression will be returned.}
+\item{pattern}{An optional \code{\link[base:regex]{regular expression}}
+to filter file names. Only files matching the pattern will be processed.}
 
-\item{fun}{a function used to read data files such as \code{\link[data.table:fread]{data.table::fread}}}
+\item{fun}{A function used to read data files,
+such as \code{\link[data.table:fread]{data.table::fread}} or \code{\link[utils:read.csv]{read.csv}}.}
 
-\item{rm_ext}{a logical indicating if the extensions are excluded from the
-name of list elements to be returned.}
+\item{rm_ext}{A logical value indicating whether file extensions should
+be removed from the names of the returned list elements. Defaults to \code{TRUE}.}
 
-\item{...}{an optional arguments passed to a function used to read data files.}
+\item{...}{Additional arguments passed to the data reading function specified in \code{fun}.}
 }
 \value{
-A list of data frames
+A named list of data frames, where names correspond to file names (optionally without extensions).
 }
 \description{
-Imports multiple data files from single directory and returns a list.
+Imports multiple data files from a specified directory and returns a
+named list of data frames.
 }
 \examples{
 if (FALSE) {
-import_data(path = "data", pattern = "\\\\.csv$", fun = data.table::fread)}
+# Example with data.table::fread
+import_data(path = "data", pattern = "\\\\.csv$", fun = data.table::fread)
+
+# Example with base R read.csv
+import_data(path = "data", pattern = "\\\\.csv$", fun = read.csv, rm_ext = FALSE)
+}
 }

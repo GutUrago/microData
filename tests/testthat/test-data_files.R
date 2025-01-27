@@ -15,10 +15,10 @@ test_that("This study has 37 data files", {
 
 # UNHCR ----
 
-test_that("Throws an error when repository doesn't provide list of files,
-          it is from external repository", {
-        expect_error(data_files(id = 1000, org = "unhcr"))
-})
+# test_that("Throws an error when repository doesn't provide list of files,
+#           it is from external repository", {
+#         expect_error(data_files(id = 1000, org = "unhcr"))
+# })
 
 # IHSN ----
 

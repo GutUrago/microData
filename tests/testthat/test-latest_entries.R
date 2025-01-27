@@ -1,8 +1,8 @@
 # WB ----
 
-# test_that("Returns 15 results by default", {
-#         expect_equal(nrow(latest_entries(org = "wb")), 15)
-# })
+test_that("Returns 15 results by default", {
+        expect_equal(nrow(latest_entries(org = "wb")), 15)
+})
 
 
 

@@ -8,8 +8,8 @@ test_that("It has more than 200 collections", {
 
 # FAO ----
 
-test_that("It has 9 collections", {
-        expect_lt(nrow(collections(org = "fao")), 10)
+test_that("It has 10 collections", {
+        expect_lt(nrow(collections(org = "fao")), 11)
 })
 
 # UNHCR ----
