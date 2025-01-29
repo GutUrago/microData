@@ -71,9 +71,6 @@
 #' wtd_t_test(mtcars, disp, w = rep(c(1, 2), 16), mu = 200)
 #' # Paired t-test
 #' wtd_t_test(mtcars, gear, carb, paired = TRUE)
-#' # See degrees of freedom and gues what happened? Split x into two.
-#' # The order is very important and this is not recommended.
-#' wtd_t_test(mtcars, gear, factor(rep(c(1,2), 16)), paired = TRUE)
 #' # Two sample t-test
 #' wtd_t_test(mtcars, drat, wt)
 #' wtd_t_test(mtcars, mpg, as.factor(vs))
@@ -112,6 +109,10 @@ wtd_t_test <- function(data, x, y = NULL, w = NULL, w.y = NULL,
     y <- eval_tidy(y, data)
     w <- eval_tidy(w, data)
     w.y <- eval_tidy(w.y, data)
+
+    if (is.factor(y) && paired) {
+        stop("For paired test 'y' cannot be a factor.")
+    }
 
     if (is.null(y)) {
         oneSample <- TRUE
