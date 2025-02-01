@@ -9,6 +9,7 @@
 #'   \item{weight}{Weight in kg}
 #'   \item{score}{Test score}
 #'   \item{gender}{Factor variable with two levels}
+#'   \item{education}{Factor variable with three levels}
 #'   \item{w}{Survey weights}
 #' }
 "micro_data"

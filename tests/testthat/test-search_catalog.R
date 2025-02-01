@@ -17,6 +17,17 @@ test_that("Throws an error when search is not found",{
         expect_error(search_catalog(keyword = "ethi", org = "fao"))
 })
 
+test_that("accepts full query",{
+  response <- search_catalog(keyword = "Food security?", org = "wb",
+                         from = 2000, to = 2023,
+                         country = c("Ethiopia", "Nigeria"),
+                         inc_iso = TRUE,
+                         collection = "fao", ps = 30, info = F,
+                         dtype = "open",
+                         sort_by = "country", sort_order = "desc", page = 1)
+  expect_lt(nrow(response), 31)
+})
+
 
 
 # FAO ----

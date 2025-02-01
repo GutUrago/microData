@@ -60,43 +60,24 @@ search_catalog <- function(keyword = NULL,
                            info = FALSE){
         org <- match.arg(org)
         base_url <- base_url(org)
-        req_url <- glue("{base_url}/search?")
-        if(!is.null(keyword)) req_url <- glue("{req_url}sk={keyword}&")
-        if(!is.null(from)) req_url <- glue("{req_url}from={from}&")
-        if(!is.null(to)) req_url <- glue("{req_url}to={to}&")
-        if(!is.null(country)) {
-                if (length(country == 1L)) {
-                        req_url <- glue("{req_url}country={country}&")
-                } else {
-                        req_url <- glue("{req_url}country={paste(country, collapse='|')}&")
-                        }
-        }
-        if(is.logical(inc_iso)) req_url <- glue("{req_url}inc_iso={inc_iso}&")
-        if(!is.null(collection)) {
-                if (length(collection == 1L)) {
-                        req_url <- glue("{req_url}collection={collection}&")
-                } else {
-                        req_url <- glue("{req_url}collection={paste(collection, collapse=',')}&")
-                }
-        }
-        if(!is.null(dtype)) {
-                if (length(dtype == 1L)) {
-                        req_url <- glue("{req_url}dtype={dtype}&")
-                } else {
-                        req_url <- glue("{req_url}dtype={paste(dtype, collapse=',')}&")
-                }
-        }
+        req <- request(base_url) |>
+                httr2::req_url_path_append("search")
+        if(!is.null(keyword)) req <- req_url_query(req, sk = keyword)
+        if(!is.null(from)) req <- req_url_query(req, from = from)
+        if(!is.null(to)) req <- req_url_query(req, to = to)
+        if(!is.null(country)) req <- req_url_query(req, country = country, .multi = "pipe")
+        if(is.logical(inc_iso)) req <- req_url_query(req, inc_iso = inc_iso)
+        if(!is.null(collection)) req <- req_url_query(req, collection = collection, .multi = "comma")
+        if(!is.null(dtype)) req <- req_url_query(req, dtype = dtype, .multi = "comma")
         if(!is.null(sort_by)) {
                 if (tolower(sort_by) == "country") sort_by <- "nation"
-                req_url <- glue("{req_url}sort_by={sort_by}&")
+                req <- req_url_query(req, sort_by = sort_by)
         }
-        if(!is.null(sort_order)) req_url <- glue("{req_url}sort_order={sort_order}&")
-        if(!is.null(ps) && grepl("^\\d+$", ps)) req_url <- glue("{req_url}ps={ps}&")
-        if(!is.null(page) && grepl("^\\d+$", page)) req_url <- glue("{req_url}page={page}&")
-        req_url <- glue("{req_url}format=json")
-
-        response <- request(req_url) |>
-                req_headers("Accept" = "application/json") |>
+        if(!is.null(sort_order)) req <- req_url_query(req, sort_order = sort_order)
+        if(!is.null(ps) && grepl("^\\d+$", ps)) req <- req_url_query(req, ps = ps)
+        if(!is.null(page) && grepl("^\\d+$", page)) req <- req_url_query(req, page = page)
+        req <- req_url_query(req, format = "json")
+        response <- req |>
                 req_perform() |>
                 resp_body_json(simplifyVector = TRUE, flatten = TRUE)
 
