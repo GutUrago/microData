@@ -4,7 +4,7 @@
 \alias{wtd_var}
 \title{Weighted Variance}
 \usage{
-wtd_var(data, x, w = NULL, na.rm = TRUE)
+wtd_var(data = NULL, x, w = NULL, na.rm = TRUE)
 }
 \arguments{
 \item{data}{an optional matrix or data frame placed as first argument for the

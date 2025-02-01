@@ -12,3 +12,18 @@ test_that("Different when weighted", {
         mdt_test <- wtd_chisq_test(micro_data, gender, education, w = w)
         expect_lt(unname(base_test$statistic), mdt_test$statistic)
 })
+
+test_that("Can convert matrix too", {
+  expect_no_error(wtd_chisq_test(as.matrix(micro_data), gender, education))
+})
+
+test_that("X and Y must be provided", {
+  expect_error(wtd_chisq_test(as.matrix(micro_data), gender))
+})
+
+
+test_that("W must be numeric", {
+  expect_error(wtd_chisq_test(micro_data, gender, education, w = gender))
+})
+
+

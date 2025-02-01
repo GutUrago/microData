@@ -20,9 +20,9 @@
 #' x <- rnorm(100)
 #' w <- rep(c(1,2), 50)
 #' wtd_var(x = x, w = w)
-wtd_var <- function(data, x, w = NULL, na.rm = TRUE) {
+wtd_var <- function(data = NULL, x, w = NULL, na.rm = TRUE) {
         # Convert data to data frame if needed
-        if (!missing(data)) {
+        if (!is.null(data)) {
                 if (is.matrix(eval(data, parent.frame())))
                         data <- as.data.frame(data)
         }
