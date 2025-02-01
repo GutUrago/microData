@@ -2,12 +2,9 @@
 % Please edit documentation in R/wtd_var.R
 \name{wtd_var}
 \alias{wtd_var}
-\alias{wtd_sd}
 \title{Weighted Variance}
 \usage{
-wtd_var(data = NULL, x, w = NULL, na.rm = TRUE)
-
-wtd_sd(data = NULL, x, w = NULL, na.rm = TRUE)
+wtd_var(data, x, w = NULL, na.rm = TRUE)
 }
 \arguments{
 \item{data}{an optional matrix or data frame placed as first argument for the

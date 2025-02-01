@@ -28,6 +28,17 @@ test_that("accepts full query",{
   expect_lt(nrow(response), 31)
 })
 
+test_that("Can return in a list form",{
+  response <- search_catalog(keyword = "Food security?", org = "wb",
+                             from = 2000, to = 2023,
+                             country = c("Ethiopia", "Nigeria"),
+                             inc_iso = TRUE,
+                             collection = "fao", ps = 30, info = T,
+                             dtype = "open",
+                             sort_by = "country", sort_order = "desc", page = 1)
+  expect_equal(class(response), "list")
+})
+
 
 
 # FAO ----

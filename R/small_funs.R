@@ -34,11 +34,7 @@ access_types <- function(org = c("wb", "fao", "unhcr", "ihsn", "ilo")){
                 req_perform() |>
                 resp_body_json(simplifyVector = TRUE, flatten = TRUE)
 
-        codes <- response$codes
-        if (length(codes) == 0) {
-                        cli::cli_abort("{.strong {org}} has no collection.")
-                }
-                return(codes)
+                return(response$codes)
 
 }
 
@@ -77,13 +73,8 @@ country_codes <- function(org = c("wb", "fao", "unhcr", "ihsn", "ilo")){
                 req_perform() |>
                 resp_body_json(simplifyVector = TRUE, flatten = TRUE)
 
-        if (response$status == "success") {
-                country_codes <- response$country_codes
-                if (length(country_codes) == 0) {
-                        cli::cli_abort("{.strong {org}} has no country codes.")
-                }
-                return(country_codes)
-        }
+        return(response$country_codes)
+
 }
 
 

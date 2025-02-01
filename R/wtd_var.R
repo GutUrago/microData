@@ -7,8 +7,6 @@
 #' Calculates weighted variance and standard deviation in a pipe-friendly way.
 #'
 #'
-#' @aliases wtd_sd
-#'
 #' @param data an optional matrix or data frame placed as first argument for the
 #' function to be pipe-friendly.
 #' @param x a name of numeric variable in the data frame or numeric vector in the environment.
@@ -22,10 +20,11 @@
 #' x <- rnorm(100)
 #' w <- rep(c(1,2), 50)
 #' wtd_var(x = x, w = w)
-wtd_var <- function(data = NULL, x, w = NULL, na.rm = TRUE) {
+wtd_var <- function(data, x, w = NULL, na.rm = TRUE) {
         # Convert data to data frame if needed
-        if (!is.null(data) && is.matrix(data)) {
-                data <- as.data.frame(data)
+        if (!missing(data)) {
+                if (is.matrix(eval(data, parent.frame())))
+                        data <- as.data.frame(data)
         }
 
         # Evaluate x and w in the provided data context
@@ -78,12 +77,6 @@ wtd_var <- function(data = NULL, x, w = NULL, na.rm = TRUE) {
 
 
 
-#' @rdname wtd_var
-#' @export
-wtd_sd <- function(data = NULL, x, w = NULL, na.rm = TRUE) {
-        v <- wtd_var(data, x, w, na.rm = na.rm)
-        return(sqrt(v))
-        }
 
 
 
