@@ -4,7 +4,7 @@
 \alias{variables}
 \title{Variables in the File}
 \usage{
-variables(id, file_id, org = "wb")
+variables(id, file_id, org = c("wb", "fao", "unhcr", "ihsn", "ilo"))
 }
 \arguments{
 \item{id}{a study id number. Accepts any of \code{id} (integer) and

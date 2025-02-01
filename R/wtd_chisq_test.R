@@ -40,12 +40,12 @@ wtd_chisq_test <- function(data, x, y, w = NULL, na.rm = TRUE) {
         u.call <- match.call(expand.dots = FALSE)
         if (missing(x) || missing(y))
                 stop("'x' and 'y' arguments must be provided.")
-        x <- if (is.character(substitute(x))) sym(x) else enquo(x)
-        y <- if (is.character(substitute(y))) sym(y) else enquo(y)
-        w <- if (is.character(substitute(w))) sym(w) else enquo(w)
-        x <- eval_tidy(x, data)
-        y <- eval_tidy(y, data)
-        w <- eval_tidy(w, data)
+        x <- if (is.character(substitute(x))) rlang::sym(x) else rlang::enquo(x)
+        y <- if (is.character(substitute(y))) rlang::sym(y) else rlang::enquo(y)
+        w <- if (is.character(substitute(w))) rlang::sym(w) else rlang::enquo(w)
+        x <- rlang::eval_tidy(x, data)
+        y <- rlang::eval_tidy(y, data)
+        w <- rlang::eval_tidy(w, data)
         if (is.null(w))
                 w <- rep(1, length(x))
         if (!is.numeric(w)) {
@@ -55,12 +55,12 @@ wtd_chisq_test <- function(data, x, y, w = NULL, na.rm = TRUE) {
                 stop("Weights 'w' must be non-negative.")
         }
         if (na.rm) {
-                ok <- complete.cases(x, y, w)
+                ok <- stats::complete.cases(x, y, w)
                 x <- x[ok]
                 y <- y[ok]
                 w <- w[ok]
         }
-        out <- xtabs(w ~ x + y)
+        out <- stats::xtabs(w ~ x + y)
         out <- summary(out)
         out[["n.cases"]] <- length(x)
         out[["call"]] <- u.call

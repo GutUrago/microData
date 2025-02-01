@@ -6,7 +6,7 @@
 \usage{
 search_catalog(
   keyword = NULL,
-  org = "wb",
+  org = c("wb", "fao", "unhcr", "ihsn", "ilo"),
   from = NULL,
   to = NULL,
   country = NULL,
@@ -16,8 +16,9 @@ search_catalog(
   dtype = NULL,
   sort_by = NULL,
   sort_order = NULL,
-  results = NULL,
-  page = NULL
+  ps = NULL,
+  page = NULL,
+  info = FALSE
 )
 }
 \arguments{
@@ -54,10 +55,12 @@ For example, \code{c("open", "direct")}. See \code{access_types()}}
 \item{sort_order}{a string indicating how to sort the result and takes values of
 "asc" or "desc". Ascending = asc, Descending = desc}
 
-\item{results}{an integer indicating number of records per page.
-set \code{results = "all"} to get all found results. Default is 15 records per page.}
+\item{ps}{an integer indicating number of records per page.
+Default is 15 records per page.}
 
 \item{page}{an integer. Page number to return for the search result}
+
+\item{info}{a logical. Do you want to see search results information?}
 }
 \value{
 Returns a data frame

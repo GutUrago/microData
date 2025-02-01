@@ -1,7 +1,4 @@
 
-
-
-
 #' Weighted Variance
 #'
 #' @name wtd_var
@@ -32,8 +29,8 @@ wtd_var <- function(data = NULL, x, w = NULL, na.rm = TRUE) {
         }
 
         # Evaluate x and w in the provided data context
-        x <- eval_tidy(enquo(x), data)
-        w <- eval_tidy(enquo(w), data)
+        x <- rlang::eval_tidy(rlang::enquo(x), data)
+        w <- rlang::eval_tidy(rlang::enquo(w), data)
 
         # Validate x
         if (!is.numeric(x)) {
@@ -55,7 +52,7 @@ wtd_var <- function(data = NULL, x, w = NULL, na.rm = TRUE) {
 
         # Handle missing values
         if (na.rm) {
-                complete <- complete.cases(x, w)
+                complete <- stats::complete.cases(x, w)
                 x <- x[complete]
                 w <- w[complete]
         }
@@ -67,7 +64,7 @@ wtd_var <- function(data = NULL, x, w = NULL, na.rm = TRUE) {
 
         # If no weights, compute unweighted variance
         if (is.null(w)) {
-                return(var(x, na.rm = na.rm))
+                return(stats::var(x, na.rm = na.rm))
         }
 
         # Compute weighted variance

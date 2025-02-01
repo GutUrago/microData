@@ -21,27 +21,20 @@
 #' latest_entries("fao", 25)
 #' }
 
-latest_entries <- function(org = "wb", limit = NULL){
+latest_entries <- function(org = c("wb", "fao", "unhcr", "ihsn", "ilo"),
+                           limit = NULL){
 
-        request <- create_request(org)
+        org <- match.arg(org)
+        base_url <- base_url(org)
+        req_url <- glue("{base_url}/latest")
+        if (!is.null(limit)) req_url <- glue("{req_url}?limit={limit}")
 
-        request <- req_url_path_append(request, "latest")
+        response <- request(req_url) |>
+                req_headers("Accept" = "application/json") |>
+                req_perform() |>
+                resp_body_json(simplifyVector = TRUE, flatten = TRUE)
 
-        if (!is.null(limit) && !is.numeric(limit)) {
-                stop("'limit' must an integer number")
-        }
-
-        if (!is.null(limit)) {
-                request <- req_url_query(request, limit = limit)
-                }
-
-        response <- get_response(request)
-
-        latest <- response$result
-
-        latest <- frename(.x = latest, "country" = "nation")
-
-        return(latest)
+        return(response$result)
         }
 
 

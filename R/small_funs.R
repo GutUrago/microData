@@ -20,23 +20,26 @@
 #'
 #' @examples
 #'
-#' access_types("fao")
-#' collections("ilo")
-#' country_codes("wb")
+#' if (FALSE) access_types("fao")
+#' if (FALSE)collections("ilo")
+#' if (FALSE)country_codes("wb")
 #'
 access_types <- function(org = c("wb", "fao", "unhcr", "ihsn", "ilo")){
 
         org <- match.arg(org)
+        base_url <- base_url(org)
 
-        api_req <- create_request(org)
+        response <- request(glue("{base_url}/data_access_codes")) |>
+                req_headers("Accept" = "application/json") |>
+                req_perform() |>
+                resp_body_json(simplifyVector = TRUE, flatten = TRUE)
 
-        api_req <- req_url_path_append(api_req, "data_access_codes")
+        codes <- response$codes
+        if (length(codes) == 0) {
+                        cli::cli_abort("{.strong {org}} has no collection.")
+                }
+                return(codes)
 
-        api_resp <- get_response(api_req)
-
-        codes <- api_resp$codes
-
-        return(data.table::as.data.table(codes))
 }
 
 #' @rdname access_types
@@ -45,24 +48,20 @@ access_types <- function(org = c("wb", "fao", "unhcr", "ihsn", "ilo")){
 collections <- function(org = c("wb", "fao", "unhcr", "ihsn", "ilo")){
 
         org <- match.arg(org)
+        base_url <- base_url(org)
 
-        api_req <- create_request(org)
+        response <- request(glue("{base_url}/collections")) |>
+                req_headers("Accept" = "application/json") |>
+                req_perform() |>
+                resp_body_json(simplifyVector = TRUE, flatten = TRUE)
 
-        api_req <- req_url_path_append(api_req, "collections")
-
-        api_resp <- get_response(api_req)
-
-        collections <- api_resp[["collections"]]
-
-        if (!is.data.frame(collections)){
-                stop("At the moment, ", toupper(org), " doesn't provide any collection lists.")
+        if (response$status == "success") {
+                collections <- response$collections
+                if (length(collections) == 0) {
+                        cli::cli_abort("{.strong {org}} has no collection.")
+                        }
+                return(collections)
         }
-
-        collections <- fselect(.x = collections,
-                                         "id", "repo_id" = "repositoryid",
-                                         "title")
-
-        return(data.table::as.data.table(collections))
 }
 
 #' @rdname access_types
@@ -71,14 +70,34 @@ collections <- function(org = c("wb", "fao", "unhcr", "ihsn", "ilo")){
 country_codes <- function(org = c("wb", "fao", "unhcr", "ihsn", "ilo")){
 
         org <- match.arg(org)
+        base_url <- base_url(org)
 
-        request <- create_request(org)
+        response <- request(glue("{base_url}/country_codes")) |>
+                req_headers("Accept" = "application/json") |>
+                req_perform() |>
+                resp_body_json(simplifyVector = TRUE, flatten = TRUE)
 
-        request <- req_url_path_append(request, "country_codes")
+        if (response$status == "success") {
+                country_codes <- response$country_codes
+                if (length(country_codes) == 0) {
+                        cli::cli_abort("{.strong {org}} has no country codes.")
+                }
+                return(country_codes)
+        }
+}
 
-        response <- get_response(request)
 
-        country_codes <- response$country_codes
+# Base Link ----
+#' @noRd
 
-        return(data.table::as.data.table(country_codes))
+base_url <- function(org){
+        urls <- list(
+                wb = "https://microdata.worldbank.org/index.php/api/catalog",
+                fao = "https://microdata.fao.org/index.php/api/catalog",
+                unhcr = "https://microdata.unhcr.org/index.php/api/catalog",
+                ihsn = "https://datacatalog.ihsn.org/index.php/api/catalog",
+                ilo = "https://www.ilo.org/surveyLib/index.php/api/catalog"
+        )
+        org <- tolower(org)
+        return(urls[[org]])
 }

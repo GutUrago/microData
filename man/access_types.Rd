@@ -24,9 +24,9 @@ country codes from different organization repositories.
 }
 \examples{
 
-access_types("fao")
-collections("ilo")
-country_codes("wb")
+if (FALSE) access_types("fao")
+if (FALSE)collections("ilo")
+if (FALSE)country_codes("wb")
 
 }
 \author{

@@ -4,7 +4,7 @@
 \alias{data_files}
 \title{Study Data Files}
 \usage{
-data_files(id, org = "wb")
+data_files(id, org = c("wb", "fao", "unhcr", "ihsn", "ilo"))
 }
 \arguments{
 \item{id}{a study id number. Accepts any of \code{id} (integer) and

@@ -4,7 +4,7 @@
 \alias{variables_all}
 \title{Variables in the Study}
 \usage{
-variables_all(id, org = "wb")
+variables_all(id, org = c("wb", "fao", "unhcr", "ihsn", "ilo"))
 }
 \arguments{
 \item{id}{a study id number. Accepts any of \code{id} (integer) and

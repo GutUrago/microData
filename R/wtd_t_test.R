@@ -82,7 +82,7 @@ wtd_t_test <- function(data, x, y = NULL, w = NULL, w.y = NULL,
                        paired = FALSE, mu = 0, conf.level = 0.95,
                        var.equal = TRUE, na.rm = TRUE) {
 
-    alternative <- arg_match0(alternative,
+    alternative <- rlang::arg_match0(alternative,
                                      values = c("two.sided", "less", "greater"))
 
     if (!missing(mu) && (length(mu) != 1 || is.na(mu)))
@@ -101,14 +101,14 @@ wtd_t_test <- function(data, x, y = NULL, w = NULL, w.y = NULL,
     x.name <- deparse1(substitute(x))
     dname <- x.name
     y.name <- deparse1(substitute(y))
-    x <- if (is.character(substitute(x))) sym(x) else enquo(x)
-    y <- if (is.character(substitute(y))) sym(y) else enquo(y)
-    w <- if (is.character(substitute(w))) sym(w) else enquo(w)
-    w.y <- if (is.character(substitute(w.y))) sym(w.y) else enquo(w.y)
-    x <- eval_tidy(x, data)
-    y <- eval_tidy(y, data)
-    w <- eval_tidy(w, data)
-    w.y <- eval_tidy(w.y, data)
+    x <- if (is.character(substitute(x))) rlang::sym(x) else rlang::enquo(x)
+    y <- if (is.character(substitute(y))) rlang::sym(y) else rlang::enquo(y)
+    w <- if (is.character(substitute(w))) rlang::sym(w) else rlang::enquo(w)
+    w.y <- if (is.character(substitute(w.y))) rlang::sym(w.y) else rlang::enquo(w.y)
+    x <- rlang::eval_tidy(x, data)
+    y <- rlang::eval_tidy(y, data)
+    w <- rlang::eval_tidy(w, data)
+    w.y <- rlang::eval_tidy(w.y, data)
 
     if (is.factor(y) && paired) {
         stop("For paired test 'y' cannot be a factor.")
@@ -120,18 +120,18 @@ wtd_t_test <- function(data, x, y = NULL, w = NULL, w.y = NULL,
 
     if (na.rm) {
         if (paired) {
-            ok <- complete.cases(x, y, w, w.y)
+            ok <- stats::complete.cases(x, y, w, w.y)
             x <- x[ok]
             y <- y[ok]
             w <- w[ok]
             w.y <- w.y[ok]
         } else {
-            xok <- complete.cases(x, w)
+            xok <- stats::complete.cases(x, w)
             x <- x[xok]
             w <- w[xok]
 
             if (!is.null(y)) {
-                yok <- complete.cases(y, w.y)
+                yok <- stats::complete.cases(y, w.y)
                 y <- y[yok]
                 w.y <- w.y[yok]
             }
@@ -254,12 +254,12 @@ wtd_t_test <- function(data, x, y = NULL, w = NULL, w.y = NULL,
     }
 
     p_value <- switch(alternative,
-                      "two.sided" = 2 * pt(-abs(t_stat), df),
-                      "less" = pt(t_stat, df),
-                      "greater" = pt(t_stat, df, lower.tail = FALSE))
+                      "two.sided" = 2 * stats::pt(-abs(t_stat), df),
+                      "less" = stats::pt(t_stat, df),
+                      "greater" = stats::pt(t_stat, df, lower.tail = FALSE))
 
     alpha <- 1 - conf.level
-    t_crit <- qt(1 - alpha / 2, df)
+    t_crit <- stats::qt(1 - alpha / 2, df)
     if (is.null(y)) {
         margin_error <- t_crit * stderr
         conf_interval <- c(mean_x - margin_error, mean_x + margin_error)

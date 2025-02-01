@@ -32,12 +32,12 @@ dummify <- function(data, ..., var_lev = TRUE, keep = TRUE) {
         if (is.matrix(eval(data, parent.frame())))
                 data <- as.data.frame(data)
 
-        vars <- exprs(...)
-        vars <- lapply(vars, \(x) if (is.character(x)) sym(x) else enquo(x))
+        vars <- rlang::exprs(...)
+        vars <- lapply(vars, \(x) if (is.character(x)) rlang::sym(x) else rlang::enquo(x))
 
         for (var in vars) {
-                var_name <- as_name(var)
-                x <- eval_tidy(var, data)
+                var_name <- rlang::as_name(var)
+                x <- rlang::eval_tidy(var, data)
 
                 if (!is.factor(x)) x <- as.factor(x)
                 levels(x) <- c(levels(x), "NA")

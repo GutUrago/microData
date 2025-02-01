@@ -22,37 +22,32 @@
 #' data_files("ALB_2012_LSMS_v01_M_v01_A_PUF", "wb")
 #' }
 
+data_files <- function(id, org = c("wb", "fao", "unhcr", "ihsn", "ilo")){
 
-data_files <- function(id, org = "wb"){
+        org <- match.arg(org)
+        base_url <- base_url(org)
 
+        req_url <- glue("{base_url}/{id}/data_files")
 
-        api_req <- create_request(org)
+        if (grepl("^\\d+$", id)) {
+                req_url <- glue("{req_url}?id_format=id")
+        }
 
-        if (!grepl("[A-Za-z]", id)){
-                api_req <- req_url_path_append(api_req, id, "data_files")
-                api_req <- req_url_query(api_req, id_format = "id")
-        } else {api_req <- req_url_path_append(api_req, id, "data_files")}
+        response <- request(req_url) |>
+                req_headers("Accept" = "application/json") |>
+                req_perform() |>
+                resp_body_json(simplifyVector = TRUE, flatten = TRUE)
 
-
-        api_resp <- get_response(api_req)
-
-
-        data_files  <- api_resp$datafiles
+        data_files  <- response$datafiles
 
         if (is.list(data_files)){
                 data_files <- lapply(data_files, function(x) as.data.frame(t(x)))
                 data_files <- do.call(rbind, data_files)
         } else if (!is.data.frame(data_files)){
-                stop("\nOops! It seems that there are no files provided for this study.")
+                cli::cli_abort("Oops! It seems that there are no files provided for this study.")
         }
-
-
-        data_files <- data_files[,1:7]
 
         return(data_files)
-        }
-
-
-
+}
 
 

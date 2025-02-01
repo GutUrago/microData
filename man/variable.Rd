@@ -4,7 +4,7 @@
 \alias{variable}
 \title{Variable Metadata}
 \usage{
-variable(id, var_id, org = "wb")
+variable(id, var_id, org = c("wb", "fao", "unhcr", "ihsn", "ilo"))
 }
 \arguments{
 \item{id}{a study id number. Accepts any of \code{id} (integer) and

@@ -24,20 +24,23 @@
 #' }
 
 
-variables_all <- function(id, org = "wb"){
+variables_all <- function(id, org = c("wb", "fao", "unhcr", "ihsn", "ilo")){
 
-        api_req <- create_request(org)
+        org <- match.arg(org)
+        base_url <- base_url(org)
 
-        if (!grepl("[A-Za-z]", id)){
-                api_req <- req_url_path_append(api_req, id)
-                api_req <- req_url_query(api_req, id_format = "id")
-        } else {api_req <- req_url_path_append(api_req, id)}
+        req_url <- glue("{base_url}/{id}/variables")
 
-        api_req <- req_url_path_append(api_req,  "variables")
+        if (grepl("^\\d+$", id)) {
+                req_url <- glue("{req_url}?id_format=id")
+        }
 
-        api_resp <- get_response(api_req)
+        response <- request(req_url) |>
+                req_headers("Accept" = "application/json") |>
+                req_perform() |>
+                resp_body_json(simplifyVector = TRUE, flatten = TRUE)
 
-        variables <- api_resp$variables
+        variables <- response$variables
 
         return(variables)
 }

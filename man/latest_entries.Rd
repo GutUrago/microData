@@ -4,7 +4,7 @@
 \alias{latest_entries}
 \title{Latest Catalog Entries}
 \usage{
-latest_entries(org = "wb", limit = NULL)
+latest_entries(org = c("wb", "fao", "unhcr", "ihsn", "ilo"), limit = NULL)
 }
 \arguments{
 \item{org}{a string that represents the name of an organization.}
