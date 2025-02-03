@@ -36,5 +36,10 @@ test_that("Correct specification", {
   expect_no_error(chisq_test(gender, education, w = w, data = micro_data))
 })
 
+test_that("Correct specification", {
+  expect_no_error(chisq_test(micro_data$gender, micro_data$education,
+                             w = micro_data$w))
+})
+
 
 

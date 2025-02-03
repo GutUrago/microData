@@ -24,6 +24,10 @@ test_that("w cannot contain negative values", {
                                    na.rm = FALSE))
 })
 
+test_that("Correct specification", {
+        expect_no_error(weighted_mean(x = as.numeric(height), w = as.numeric(w),
+                                      data = as.matrix(micro_data)))
+})
 
 test_that("Correct specification", {
         expect_no_error(weighted_mean(x = height, w = w, data = micro_data))
